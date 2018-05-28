@@ -1,70 +1,56 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
 metadata:
   name: {{ template "fullname" . }}
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
+  strategy:
+    type: Rolling
+  triggers:
+    - type: ConfigChange
   replicas: 1
   template:
     metadata:
-      annotations:
-        checksum/config: {{ include "oidcconfig" . | sha256sum }}
       labels:
         app: {{ template "fullname" . }}
     spec:
       volumes:
-        - name: oidcconfig
-          secret:
-            secretName: {{ template "fullname" . }}
-        - name: notebook-config
+        - name: {{ template "fullname" . }}-rewrite-config-vol
           configMap:
-            name: {{ template "fullname" . }}
-            items:
-            - key: notebook_config.py
-              path: notebook_config.py
+            name: {{ template "fullname" . }}-rewrite-config
+        - name: {{ template "fullname" . }}-nginx-secret-vol 
+          secret:
+            secretName: {{ template "fullname" . }}-nginx-secret
+        - name: {{ template "fullname" . }}-notebook-config-vol
+          configMap:
+            name: {{ template "fullname" . }}-notebook-config
         {{ if ne .Values.persistentStorage.existingClaim "" }}
         - name: {{ .Values.persistentStorage.existingClaimName }}
           persistentVolumeClaim:
             claimName: {{ .Values.persistentStorage.existingClaim }}
-        {{ end }}
-      securityContext:
-        runAsNonRoot: true
-        fsGroup: 999
+        {{ end }}  
       containers:
-      - name: auth-proxy
-        image: quay.io/uninett/goidc-proxy:v1.1.3
-        imagePullPolicy: Always
-        env:
-          - name: DATAPORTEN_CLIENTID
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "fullname" . }}
-                key: dataporten_client_id
-          - name: DATAPORTEN_CLIENTSECRET
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "fullname" . }}
-                key: dataporten_client_secret
-        ports:
-          - containerPort: 8080
-        securityContext:
-          runAsUser: 65534
-          readOnlyRootFilesystem: true
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
-          initialDelaySeconds: 30
-          timeoutSeconds: 30
-        volumeMounts:
-          - name: oidcconfig
-            mountPath: /conf
-        workingDir: /conf
-      - name: jupyter
-        image: {{ .Values.dockerImage }}
-        args: ["/usr/local/bin/start-notebook.sh"]
-        env:
+        - name: proxy-rewriter
+          image: rlaurika/openshift-nginx
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 512Mi
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: {{ template "fullname" . }}-rewrite-config-vol
+              mountPath: /etc/nginx/conf.d
+            - name: {{ template "fullname" . }}-nginx-secret-vol
+              mountPath: /etc/nginx/secrets
+        - name: jupyter
+          image: {{ .Values.dockerImage }}
+          env:
           {{ if .Values.env.jupyterLab }}
           - name: JUPYTER_ENABLE_LAB
             value: "1"
@@ -77,17 +63,19 @@ spec:
             value: 1g
           - name: SPARK_DRIVER_CORES
             value: '1'
-        resources:
-{{ toYaml .Values.resources | indent 10 }}
-        ports:
-        - containerPort: 8888
-        securityContext:
-          runAsUser: 999
-        volumeMounts:
-        - name: notebook-config
-          mountPath: /home/notebook/.jupyter/notebook_config.py
-          subPath: notebook_config.py
-        {{- if ne .Values.persistentStorage.existingClaim "" }}
-        - name: {{ .Values.persistentStorage.existingClaimName }}
-          mountPath: /mnt/{{ .Values.persistentStorage.existingClaimName }}
-        {{- end -}}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: 300m
+              memory: 1Gi
+          ports:
+          - containerPort: 8888
+          volumeMounts:
+          - name: {{ template "fullname" . }}-notebook-config-vol
+            mountPath: /home/notebook/.jupyter
+          {{- if ne .Values.persistentStorage.existingClaim "" }}
+          - name: {{ .Values.persistentStorage.existingClaimName }}
+            mountPath: /mnt/{{ .Values.persistentStorage.existingClaimName }}
+          {{- end -}}

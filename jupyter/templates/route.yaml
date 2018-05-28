@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    group: {{ template "fullname" . }}-spark
+spec:
+  host: {{ .Values.ingress.host }}
+  path: /
+  to:
+    kind: Service
+    name: {{ template "fullname" . }}

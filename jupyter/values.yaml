@@ -1,19 +1,23 @@
 ingress:
-  host: "local-chart.example.com"
+  host: "jupyter.rahtiapp.fi"
 resources:
   requests:
-    cpu: 100m
+    cpu: 500m
     memory: 512Mi
   limits:
-    cpu: 300m
+    cpu: 1000m
     memory: 1Gi
 persistentStorage:
-  existingClaim: ""
-  existingClaimName: "example-name"
+  existingClaim: "spark-pvc"
+  existingClaimName: "spark-pvc"
 env:
   sparkMasterUrl: "local[*]"
   jupyterLab: false
+<<<<<<< HEAD
 dockerImage: quay.io/uninett/jupyter-spark:20180608-ed0d171
+=======
+dockerImage: apurva3000/spark-jupyter-openshift:20180601
+>>>>>>> d7a4df4... jupyter for openshift
 githubToken: ""
 appstore_generated_data:
   dataporten:
