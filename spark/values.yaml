@@ -1,35 +1,33 @@
 workers:
-  replicas: 1
+  replicas: 4
   resources:
     requests:
-        cpu: 100m
-        memory: 1Gi
+        cpu: 4
+        memory: 4Gi
     limits:
-        cpu: 200m
-        memory: 1500Mi
+        cpu: 6
+        memory: 6Gi
 
 master:
   resources:
     requests:
-        cpu: 100m
-        memory: 1Gi
+        cpu: 4
+        memory: 4Gi
     limits:
+<<<<<<< HEAD
         cpu: 200m
         memory: 1500Mi
 masterImage: quay.io/uninett/jupyter-spark:20180608-ed0d171
 workerImage: quay.io/uninett/jupyter-spark:20180608-ed0d171
+=======
+        cpu: 6
+        memory: 6Gi
+masterImage: apurva3000/spark-jupyter-openshift:20180604
+workerImage: apurva3000/spark-jupyter-openshift:20180604
+>>>>>>> 4ee1152... spark for openshift
 ingress:
-  host: "host.example.com"
+  host: "spark.rahtiapp.fi"
 
 persistentStorage:
-  existingClaim: ""
-  existingClaimName: "example-name"
-
-appstore_generated_data:
-  dataporten:
-    scopes:
-      - ""
-    id: "0000"
-    client_secret: "0000"
-    authorized_groups:
-      - ""
+  existingClaim: "spark-pvc"
+  existingClaimName: "spark-pvc"

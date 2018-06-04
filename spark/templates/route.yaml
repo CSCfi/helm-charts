@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ template "fullname" . }}-master-route
+  labels:
+    group: {{ template "fullname" . }}
+spec:
+  host: {{ .Values.ingress.host }}
+  path: /
+  to:
+    kind: Service
+    name: {{ template "fullname" . }}-master-ui

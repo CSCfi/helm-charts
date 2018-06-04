@@ -21,6 +21,6 @@ metadata:
 spec:
   ports:
     - port: 80
-      targetPort: 8000
+      targetPort: 9001
   selector:
     app: {{ template "fullname" . }}-master
