@@ -3,16 +3,16 @@ workers:
   resources:
     requests:
         cpu: 4
-        memory: 4Gi
+        memory: 4G
     limits:
         cpu: 6
-        memory: 6Gi
+        memory: 6G
 
 master:
   resources:
     requests:
         cpu: 4
-        memory: 4Gi
+        memory: 4G
     limits:
 <<<<<<< HEAD
         cpu: 200m
@@ -21,10 +21,16 @@ masterImage: quay.io/uninett/jupyter-spark:20180608-ed0d171
 workerImage: quay.io/uninett/jupyter-spark:20180608-ed0d171
 =======
         cpu: 6
+<<<<<<< HEAD
         memory: 6Gi
 masterImage: apurva3000/spark-jupyter-openshift:20180604
 workerImage: apurva3000/spark-jupyter-openshift:20180604
 >>>>>>> 4ee1152... spark for openshift
+=======
+        memory: 6G
+masterImage: apurva3000/spark-jupyter-openshift:20180607
+workerImage: apurva3000/spark-jupyter-openshift:20180607
+>>>>>>> 1cb2841... da
 ingress:
   host: "spark.rahtiapp.fi"
 

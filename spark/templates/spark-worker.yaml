@@ -22,11 +22,13 @@ spec:
           imagePullPolicy: Always
           env:
             - name: SPARK_WORKER_MEMORY
-              value: '4G'
+              value: "{{ .Values.workers.resources.requests.memory }}"
             - name: SPARK_WORKER_CORES
-              value: '4'
+              value: "{{ .Values.workers.resources.requests.cpu }}"
             - name: SPARK_MASTER_SERVICE_HOST
               value: {{ template "fullname" . }}-master
+            - name: SPARK_WORKER_DIRS
+              value: "/tmp/worker"
             - name: START_COMMAND
               value: "/usr/local/bin/start-worker.sh"
           ports:

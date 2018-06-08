@@ -2,11 +2,11 @@ ingress:
   host: "jupyter.rahtiapp.fi"
 resources:
   requests:
-    cpu: 500m
-    memory: 512Mi
+    cpu: 2
+    memory: 2G
   limits:
-    cpu: 1000m
-    memory: 1Gi
+    cpu: 4
+    memory: 4G
 persistentStorage:
   existingClaim: "spark-pvc"
   existingClaimName: "spark-pvc"
@@ -19,11 +19,3 @@ dockerImage: quay.io/uninett/jupyter-spark:20180608-ed0d171
 dockerImage: apurva3000/spark-jupyter-openshift:20180601
 >>>>>>> d7a4df4... jupyter for openshift
 githubToken: ""
-appstore_generated_data:
-  dataporten:
-    scopes:
-      - "scope"
-    id: "0000-abc"
-    client_secret: "0000-0000"
-    authorized_groups:
-      - ""

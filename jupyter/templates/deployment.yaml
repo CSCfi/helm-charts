@@ -51,6 +51,8 @@ spec:
         - name: jupyter
           image: {{ .Values.dockerImage }}
           env:
+          - name: START_COMMAND
+            value: "/usr/local/bin/start-notebook.sh"
           {{ if .Values.env.jupyterLab }}
           - name: JUPYTER_ENABLE_LAB
             value: "1"
@@ -60,16 +62,16 @@ spec:
           - name: SPARK_OPTS
             value: --master={{ .Values.env.sparkMasterUrl }}
           - name: SPARK_DRIVER_MEMORY   # Need to set these values according to allocated resources
-            value: 1g
+            value: "{{ .Values.resources.requests.memory }}"
           - name: SPARK_DRIVER_CORES
-            value: '1'
+            value: "{{ .Values.resources.requests.cpu }}"
           resources:
             requests:
-              cpu: 100m
-              memory: 512Mi
+              cpu: "{{ .Values.resouces.requests.cpu }}"
+              memory: "{{ .Values.resources.requests.memory }}"
             limits:
-              cpu: 300m
-              memory: 1Gi
+              cpu: "{{ .Values.resources.limits.cpu }}"
+              memory: "{{ .Values.resources.limits.memory }}"
           ports:
           - containerPort: 8888
           volumeMounts:
