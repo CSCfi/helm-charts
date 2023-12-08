@@ -12,7 +12,7 @@ This Helm chart deploys a JupyterHub/Notebook on Rahti 2.
 
 Clone this repo and then install the chart:
 ```sh
-helm upgrade --install notebook . -f rahti-config.yaml
+helm upgrade --install notebook .
 ```
 
 You can now access your notebook.
