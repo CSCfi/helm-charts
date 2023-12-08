@@ -1,0 +1,30 @@
+# HedgeDoc PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: hedgedoc
+  name: uploads
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.hedgedoc.pvc.storageSpace }}
+  storageClassName: {{ .Values.hedgedoc.pvc.storageClassName | default "standard-csi" }}
+---
+
+# PostgreSQL PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app: postgresql-persistent
+  name: postgresql
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.postgres.pvc.storageSpace }}
+  storageClassName: {{ .Values.postgres.pvc.storageClassName | default "standard-csi" }}

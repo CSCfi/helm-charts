@@ -1,0 +1,88 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: postgresql-persistent
+  name: postgresql
+spec:
+  replicas: 1
+  selector:
+    name: postgresql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: postgresql
+    spec:
+      containers:
+      - env:
+        - name: POSTGRESQL_USER
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: {{ .Values.secret.name | default "postgres" }}
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: {{ .Values.secret.name | default "postgres" }}
+        - name: POSTGRESQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: database-name
+              name: {{ .Values.secret.name | default "postgres" }}
+        image: {{ .Values.postgres.image }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - /usr/libexec/check-container
+            - --live
+          {{- if .Values.postgres.livenessProbe.enabled }}
+          failureThreshold: {{ .Values.postgres.livenessProbe.failureThreshold }}
+          initialDelaySeconds: {{ .Values.postgres.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.postgres.livenessProbe.periodSeconds }}
+          successThreshold: {{ .Values.postgres.livenessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.postgres.livenessProbe.timeoutSeconds }}
+          {{- end }}
+        name: postgresql
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - /usr/libexec/check-container
+          {{- if .Values.postgres.readinessProbe.enabled }}
+          failureThreshold: {{ .Values.postgres.readinessProbe.failureThreshold }}
+          initialDelaySeconds: {{ .Values.postgres.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.postgres.readinessProbe.periodSeconds }}
+          successThreshold: {{ .Values.postgres.readinessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.postgres.readinessProbe.timeoutSeconds }}
+          {{- end }}
+        resources:
+          limits:
+            memory: {{ .Values.postgres.resources.limits.memory }}
+        volumeMounts:
+        - mountPath: /var/lib/pgsql/data
+          name: postgresql-data
+        {{- if .Values.openshift.enabled }}
+        securityContext:
+        {{- .Values.postgres.containerSecurityContext | toYaml | nindent 10 }}
+        {{- end }}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      {{- if .Values.openshift.enabled }}
+      securityContext:
+      {{- .Values.postgres.podSecurityContext | toYaml | nindent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: postgresql-data
+        persistentVolumeClaim:
+          claimName: postgresql
+  test: false
+  triggers:
+  - type: ConfigChange

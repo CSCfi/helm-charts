@@ -1,0 +1,8 @@
+===============================
+  CSC HedgeDoc Helm deployed
+===============================
+Congratulations!
+Your HedgeDoc applications is now deployed. Wait a little bit the time that the pod is fully deployed 
+and then you could access it through this URL:
+
+https://{{ .Values.hedgedoc.appname }}.{{ .Values.hedgedoc.domain }}

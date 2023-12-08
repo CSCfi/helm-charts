@@ -1,0 +1,73 @@
+# Enable this to deploy a route and add securityContext
+# Default: true
+openshift:
+  enabled: true
+
+# Set your postgresql secret password here
+secret:
+  name: postgres
+  databaseName: hedgedoc
+  databaseUser: hedgedoc
+  password: letmein
+
+# If openshift.enabled    
+route:
+  insecureEdgeTerminationPolicy: Redirect
+  termination: edge
+  
+# Parameters related to the deployment of HedgeDoc
+hedgedoc:
+  appname: my-hedgedoc
+  domain: 2.rahtiapp.fi
+  image: quay.io/hedgedoc/hedgedoc:1.9.4
+  podSecurityContext: {}
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    runAsUser:
+    runAsGroup:
+    capabilities:
+      drop:
+      - ALL
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  pvc:
+    storageSpace: 5Gi
+  service:
+    type: ClusterIP
+
+# Parameters related to the deployment of PostgreSQL
+postgres:
+  image: image-registry.apps.2.rahti.csc.fi/openshift/postgresql:12-el8
+  livenessProbe:
+    enabled: true
+    failureThreshold: 3
+    initialDelaySeconds: 120
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 10
+  readinessProbe:
+    enabled: true
+    failureThreshold: 3
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 10
+  resources:
+    limits:
+      memory: 512Mi
+  podSecurityContext: {}
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    runAsUser:
+    runAsGroup:
+    capabilities:
+      drop:
+      - ALL
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  pvc:
+    storageSpace: 5Gi
+  service:
+    type: ClusterIP

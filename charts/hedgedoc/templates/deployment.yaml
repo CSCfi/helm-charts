@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hedgedoc
+  name: hedgedoc
+spec:
+  selector:
+    matchLabels:
+      app: hedgedoc
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: hedgedoc
+      name: hedgedoc
+    spec:
+      containers:
+      - env:
+        - name: CMD_DOMAIN
+          value: {{ .Values.hedgedoc.appname }}.{{ .Values.hedgedoc.domain }}
+        - name: CMD_URL_ADDPORT
+          value: "false"
+        - name: CMD_PROTOCOL_USESSL
+          value: "true"
+        - name: CMD_DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: {{ .Values.secret.name | default "postgres" }}
+        - name: CMD_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: {{ .Values.secret.name | default "postgres" }}
+        - name: CMD_DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: database-name
+              name: {{ .Values.secret.name | default "postgres" }}
+        - name: CMD_DB_HOST
+          value: postgresql
+        - name: CMD_DB_PORT
+          value: "5432"
+        - name: CMD_DB_DIALECT
+          value: postgres
+        - name: CMD_ALLOW_FREEURL
+          value: "true"
+        - name: CMD_REQUIRE_FREEURL_AUTHENTICATION
+          value: "true"
+        image: {{ .Values.hedgedoc.image }}
+        imagePullPolicy: IfNotPresent
+        name: hedgedoc
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /hedgedoc/public/uploads
+          name: uploads
+        {{- if .Values.openshift.enabled}}
+        securityContext:
+        {{- .Values.hedgedoc.containerSecurityContext | toYaml | nindent 10 }}
+        {{- end }}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      {{- if .Values.openshift.enabled }}
+      securityContext:
+      {{- .Values.hedgedoc.podSecurityContext | toYaml | nindent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: uploads
+        persistentVolumeClaim:
+          claimName: uploads
