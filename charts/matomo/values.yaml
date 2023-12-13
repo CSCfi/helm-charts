@@ -9,8 +9,6 @@ mariadb:
   secret:
     databaseName: matomodb
     databaseUser: matomouser
-    databasePassword: letmein
-    rootPassword: letmein
   livenessProbe:
     enabled: true
     initialDelaySeconds: 30
@@ -34,4 +32,3 @@ matomo:
       termination: edge
   secret:
     matomoUser: matomouser
-    matomoPassword: letmein

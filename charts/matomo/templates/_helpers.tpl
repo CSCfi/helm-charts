@@ -60,3 +60,18 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/* 
+Generate mariadb passwords
+*/}}
+{{- define "matomo.mariadbPasswords" -}}
+database-password: {{ randAlphaNum 16 | quote }}
+database-root-password: {{ randAlphaNum 32 | quote }}
+{{- end }}
+
+{{/*
+Generate matomo password
+*/}}
+{{- define "matomo.userPassword" -}}
+matomo-password: {{ randAlphaNum 16 | quote }}
+{{- end }}

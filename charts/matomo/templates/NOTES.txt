@@ -6,3 +6,8 @@ Congratulations! Your matomo app is being installed an deployed.
 Get the application URL by running this command:
 
 oc get route --namespace={{ .Release.Namespace }}
+
+The password for the user you defined in the values files is generated randomly.
+To retrieve it, run this command:
+
+echo Password: $(oc get secret --namespace={{ .Release.Namespace }} matomo -o jsonpath="{.data.matomo-password}" | base64 -d)
