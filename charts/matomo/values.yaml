@@ -1,0 +1,37 @@
+mariadb:
+  image: image-registry.apps.2.rahti.csc.fi/openshift/mariadb:10.3-el8
+  name: mariadb
+  service:
+    type: ClusterIP
+  pvc:
+    storageSize: 5Gi
+    storageClassName: standard-csi
+  secret:
+    databaseName: matomodb
+    databaseUser: matomouser
+    databasePassword: letmein
+    rootPassword: letmein
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 30
+    timeoutSeconds: 1
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    timeoutSeconds: 1
+  resources:
+    limits:
+      memory: 512Mi
+
+matomo:
+  image: bitnami/matomo:latest
+  name: matomo
+  service:
+    type: ClusterIP
+  route:
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+  secret:
+    matomoUser: matomouser
+    matomoPassword: letmein

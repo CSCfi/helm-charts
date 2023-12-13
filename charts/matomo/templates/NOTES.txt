@@ -1,0 +1,8 @@
+===============================
+  CSC Matomo Helm deployed
+===============================
+Congratulations! Your matomo app is being installed an deployed.
+
+Get the application URL by running this command:
+
+oc get route --namespace={{ .Release.Namespace }}
