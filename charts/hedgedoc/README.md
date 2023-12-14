@@ -18,7 +18,6 @@ helm upgrade --install hedgedoc . -f {custom_values.yaml}
 | -------------------------------------- | ------------------------------------------------------- | ---------- |
 | `openshift.enabled`                    | If you are deploying on OKD 4                           | `true`     |
 | `secret.name`                          | Name for the secret                                     | `postgres` |
-| `secret.password`                      | Password for postgresql database                        | `letmein`  |
 | `secret.databaseName`                  | Set the name for the HedgeDoc database                  | `hedgedoc` |
 | `secret.databaseUser`                  | Set the user for the HedgeDoc database                  | `hedgedoc` |
 | `route.insecureEdgeTerminationPolicy`  | If `openshift.enabled`, will create a route             | `Redirect` |
