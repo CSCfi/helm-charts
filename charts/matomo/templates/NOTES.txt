@@ -10,4 +10,9 @@ oc get route --namespace={{ .Release.Namespace }}
 The password for the user is generated randomly.
 To retrieve it, run this command:
 
-echo Password: $(oc get secret --namespace={{ .Release.Namespace }} matomo -o jsonpath="{.data.matomo-password}" | base64 -d)
+echo Matomo user password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.matomo.name }} -o jsonpath="{.data.matomo-password}" | base64 -d)
+
+To retrieve the database password and the database root password, run these commands:
+
+echo database password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.mariadb.name }} -o jsonpath="{.data.database-password}" | base64 -d)
+echo database root password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.mariadb.name }} -o jsonpath="{.data.database-root-password}" | base64 -d)
