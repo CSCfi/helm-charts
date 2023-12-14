@@ -77,8 +77,8 @@ spec:
       - mariadb
       from:
         kind: ImageStreamTag
-        name: mariadb:10.3-el8
-        namespace: openshift
+        name: {{ .Values.mariadb.imageStream.name }}:{{ .Values.mariadb.imageStream.tag }}
+        namespace: {{ .Values.mariadb.imageStream.namespace }}
     type: ImageChange
   - type: ConfigChange
 

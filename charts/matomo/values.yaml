@@ -1,5 +1,9 @@
 mariadb:
   image: image-registry.apps.2.rahti.csc.fi/openshift/mariadb:10.3-el8
+  imageStream:
+    name: mariadb
+    tag: 10.3-el8
+    namespace: openshift
   name: mariadb
   service:
     type: ClusterIP
