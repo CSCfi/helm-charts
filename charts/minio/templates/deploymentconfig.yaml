@@ -1,0 +1,63 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: {{ .Values.minio.clusterName }}
+  name: {{ .Values.minio.clusterName }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.minio.clusterName }}
+    spec:
+      initContainers:
+      - image: alpine
+        command: ["/bin/sh","-c","if [ ! -f /data/files/.minio.sys/config/config.json ]; then mkdir -p /data/files/.minio.sys/config/; cp /mnt/default-config-json/config.json /data/files/.minio.sys/config/config.json; fi" ]
+        name: config-init
+        volumeMounts:
+        - mountPath: /data/files                                                                                                                                                      
+          name: minio-vol  
+        - mountPath: /mnt/default-config-json/
+          name: default-config-json
+      containers:
+      - image: {{ .Values.minio.image }}
+        name: {{ .Values.minio.clusterName }}
+        ports:
+        - containerPort: 9000
+          protocol: TCP
+        resources:
+        {{- .Values.minio.resources | toYaml | nindent 10 }}
+        {{- if .Values.minio.readinessProbe.enabled }}
+        readinessProbe:
+          httpGet:
+          {{- .Values.minio.readinessProbe.httpGet | toYaml | nindent 12 }}
+          {{- end }}
+        volumeMounts:
+        - mountPath: /data/files
+          name: minio-vol
+        command:
+        - minio
+        - server
+        - /data/files
+        - --console-address
+        - :9001
+        env:
+        - name: MINIO_ROOT_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.minio.clusterName }}-secret
+              key: accessKey
+        - name: MINIO_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.minio.clusterName }}-secret
+              key: secretKey
+      volumes:
+      - name: minio-vol
+        persistentVolumeClaim:
+          claimName: {{ .Values.minio.pvc.name }}
+      - configMap:
+          defaultMode: 420
+          name: default-config-json
+        name: default-config-json

@@ -1,0 +1,41 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: {{ .Values.minio.clusterName }}
+  name: {{ .Values.minio.clusterName }}
+  annotations:
+    haproxy.router.openshift.io/ip_whitelist: {{ .Values.minio.whiteList }}
+spec:
+  host: {{ .Values.minio.clusterName }}.{{ .Values.minio.domainSuffix }}
+  port:
+    targetPort: 9000
+  to:
+    kind: Service
+    name: {{ .Values.minio.clusterName }}
+    weight: 100
+  tls:
+    termination: {{ .Values.minio.route.tls.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.minio.route.tls.insecureEdgeTerminationPolicy }}
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: {{ .Values.minio.clusterName }}
+  name: {{ .Values.minio.clusterName }}-console
+  annotations:
+    haproxy.router.openshift.io/ip_whitelist: {{ .Values.minio.whiteList }}
+spec:
+  host: {{ .Values.minio.clusterName }}-console.{{ .Values.minio.domainSuffix }}
+  port:
+    targetPort: 9001
+  to:
+    kind: Service
+    name: {{ .Values.minio.clusterName }}
+    weight: 100
+  tls:
+    termination: {{ .Values.minio.route.tls.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.minio.route.tls.insecureEdgeTerminationPolicy }}
+    

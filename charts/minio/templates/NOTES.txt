@@ -1,0 +1,14 @@
+===============================
+  CSC Minio Helm deployed
+===============================
+Congratulations! Your minio app is being installed and deployed.
+
+Get the application URLs by running this command:
+
+oc get route --namespace={{ .Release.Namespace }}
+
+The password for the user is generated randomly.
+To retrieve it, run this command:
+
+echo Minio access key: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.minio.clusterName }}-secret -o jsonpath="{.data.accessKey}" | base64 -d)
+echo Minio secret key: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.minio.clusterName }}-secret -o jsonpath="{.data.secretKey}" | base64 -d)
