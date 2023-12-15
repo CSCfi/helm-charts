@@ -35,4 +35,15 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
     version: 0.0.1-set.by.chartpress
-generated: "2023-12-08T12:53:00.704266649Z"
+  matomo:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-12-15T10:00:16.937745076Z"
+    description: A Helm chart for Kubernetes
+    digest: 4b4d74a671b9f02b7283c6eb3e7a788aed0ee96337ddbcfdc370f6034e984daa
+    name: matomo
+    type: application
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/matomo-0.1.0/matomo-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-12-15T10:00:16.937755255Z"
