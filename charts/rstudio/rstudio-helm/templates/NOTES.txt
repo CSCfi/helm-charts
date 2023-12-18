@@ -1,0 +1,11 @@
+===================================
+  CSC Rstudio Shiny Helm deployed
+===================================
+Congratulations!
+Your Rstudio/Shiny application is now deployed. Wait a little bit the time that the buildconfig is completed.
+
+You can follow the build of the image with this command:
+$ oc logs bc/{{ .Values.appName }} --namespace {{ .Release.Namespace }} -f
+
+You can retrieve URLs via this command:
+$ oc get route --namespace {{ .Release.Namespace }}

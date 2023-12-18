@@ -1,0 +1,38 @@
+{{- if .Values.openshift.enabled }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: {{ .Values.appName }}
+  name: rstudio
+spec:
+  host: {{ .Values.route.host }}
+  port:
+    targetPort: 8787
+  tls:
+    insecureEdgeTerminationPolicy: {{ .Values.route.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.route.termination }}
+  to:
+    kind: Service
+    name: {{ .Values.appName }}
+    weight: 100
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: {{ .Values.appName }}
+  name: shiny
+spec:
+  host: {{ .Values.route.host }}
+  port:
+    targetPort: 3838
+  tls:
+    insecureEdgeTerminationPolicy: {{ .Values.route.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.route.termination }}
+  to:
+    kind: Service
+    name: {{ .Values.appName }}
+    weight: 100
+{{- end }}
