@@ -6,6 +6,9 @@ metadata:
     description: Defines how to build the application
     template.alpha.openshift.io/wait-for-ready: "true"
 spec:
+  resources:
+    limits:
+      memory: 2Gi
   source:
     type: Git
     git:
