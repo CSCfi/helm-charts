@@ -6,12 +6,12 @@ metadata:
     app: {{ .Values.appName }}
   name: rstudio
 spec:
-  host: {{ .Values.route.host }}
+  host: {{ .Values.rstudio.route.host }}
   port:
     targetPort: 8787
   tls:
-    insecureEdgeTerminationPolicy: {{ .Values.route.insecureEdgeTerminationPolicy }}
-    termination: {{ .Values.route.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.rstudio.route.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.rstudio.route.termination }}
   to:
     kind: Service
     name: {{ .Values.appName }}
@@ -25,12 +25,12 @@ metadata:
     app: {{ .Values.appName }}
   name: shiny
 spec:
-  host: {{ .Values.route.host }}
+  host: {{ .Values.shiny.route.host }}
   port:
     targetPort: 3838
   tls:
-    insecureEdgeTerminationPolicy: {{ .Values.route.insecureEdgeTerminationPolicy }}
-    termination: {{ .Values.route.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.shiny.route.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.shiny.route.termination }}
   to:
     kind: Service
     name: {{ .Values.appName }}
