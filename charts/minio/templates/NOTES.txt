@@ -3,12 +3,13 @@
 ===============================
 Congratulations! Your minio app is being installed and deployed.
 
-Get the application URLs by running this command:
+Get the application console URL by running this command:
 
-oc get route --namespace={{ .Release.Namespace }}
+  export MINIO=$(oc get route --namespace={{ .Release.Namespace }} -o yaml | yq '.items[1].spec.host')
+  echo "MINIO server URL: http://$MINIO"
 
 The password for the user is generated randomly.
 To retrieve it, run this command:
 
-echo Minio access key: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.minio.clusterName }}-secret -o jsonpath="{.data.accessKey}" | base64 -d)
-echo Minio secret key: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.minio.clusterName }}-secret -o jsonpath="{.data.secretKey}" | base64 -d)
+  echo Minio access key: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.minio.clusterName }}-secret -o jsonpath="{.data.accessKey}" | base64 -d)
+  echo Minio secret key: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.minio.clusterName }}-secret -o jsonpath="{.data.secretKey}" | base64 -d)
