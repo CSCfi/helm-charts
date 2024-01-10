@@ -6,7 +6,7 @@
 This Helm chart deploys MLflow on Rahti2.
 
 ## Test and Deploy
-Different steps are necessary to deploy this Helm Chart to Rahti4:  
+Different steps are necessary to deploy this Helm Chart to Rahti2:  
 
 1. Before installing the Helm Chart, be sure to create Allas credentials for an externalS3 configuration.  
    You can achieve this by [sourcing](https://docs.csc.fi/cloud/pouta/install-client/#configure-your-terminal-environment-for-openstack) your cPouta project and then type this command:  
