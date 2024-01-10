@@ -8,27 +8,14 @@ This Helm chart deploys MLflow on Rahti2.
 ## Test and Deploy
 Different steps are necessary to deploy this Helm Chart to Rahti4:  
 
-1. We will create our own PostgreSQL pod using bitnami postgres image.  
-   For this, you can use the `preConf.sh` script from this repo. This file will create a PostgreSQL Deployment, the Secrets regarding the databases needed by MLflow (with random base64 password) and the Route for accessing your MLflow application.  
-
-   To check the output, simply run the script:
-   ```sh
-   ./preConf.sh
-   ```
-   
-   To apply the output, run this command:
-   ```sh
-   ./preConf.sh | oc apply -f -
-   ```
-
-2. Before installing the Helm Chart, be sure to create Allas credentials for an externalS3 configuration.  
+1. Before installing the Helm Chart, be sure to create Allas credentials for an externalS3 configuration.  
    You can achieve this by [sourcing](https://docs.csc.fi/cloud/pouta/install-client/#configure-your-terminal-environment-for-openstack) your cPouta project and then type this command:  
    ```sh
    openstack ec2 credentials create
    ```
    Create also an Allas bucket for this deployment. (For example "mlflow")  
 
-3. Deploy MLflow with the `config.yaml` file:  
+2. Deploy MLflow with the `config.yaml` file:  
    ```sh
    helm install mlflow . --set externalS3.accessKeyID={ACCESS_KEY} --set externalS3.accessKeySecret={SECRET_KEY} --set externalS3.bucket={BUCKET_NAME}
    ```
