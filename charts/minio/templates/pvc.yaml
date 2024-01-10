@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.minio.pvc.name }}
+  labels:
+    app: {{ .Values.minio.clusterName }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.minio.pvc.storageSize }}
+  storageClassName: {{ .Values.minio.pvc.storageClassName }}
