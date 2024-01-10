@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ template "mlflow.v0.tracking.fullname" . }}
+spec:
+  port:
+    targetPort: {{ include "mlflow.v0.tracking.portName" . }}
+  tls:
+    insecureEdgeTerminationPolicy: {{ .Values.route.tls.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.route.tls.termination }}
+  to:
+    kind: Service
+    name: {{ template "mlflow.v0.tracking.fullname" . }}
+    weight: 100
