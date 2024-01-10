@@ -202,8 +202,8 @@ tracking:
   ## @param tracking.podSecurityContext.fsGroup Set mlflow pod's Security Context fsGroup
   ##
   podSecurityContext:
-    enabled: true
-    fsGroup: 
+    enabled: false
+    fsGroup: 1001
   ## Configure Container Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   ## @param tracking.containerSecurityContext.enabled Enabled containers' Security Context
@@ -217,9 +217,9 @@ tracking:
   ## @param tracking.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
   ##
   containerSecurityContext:
-    enabled: true
-    runAsUser: 
-    runAsGroup: 
+    enabled: false
+    runAsUser: 1001
+    runAsGroup: 1001
     runAsNonRoot: true
     privileged: false
     readOnlyRootFilesystem: true
@@ -906,8 +906,8 @@ run:
   ## @param run.podSecurityContext.fsGroup Set Run pod's Security Context fsGroup
   ##
   podSecurityContext:
-    enabled: true
-    fsGroup: 
+    enabled: false
+    fsGroup: 1001
   ## Configure Container Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   ## @param run.containerSecurityContext.enabled Enabled Run containers' Security Context
@@ -921,9 +921,9 @@ run:
   ## @param run.containerSecurityContext.seccompProfile.type Set Run container's Security Context seccomp profile
   ##
   containerSecurityContext:
-    enabled: true
-    runAsUser: 
-    runAsGroup: 
+    enabled: false
+    runAsUser: 1001
+    runAsGroup: 1001
     runAsNonRoot: true
     privileged: false
     readOnlyRootFilesystem: true
@@ -1189,8 +1189,8 @@ volumePermissions:
   ##   "auto" is especially useful for OpenShift which has scc with dynamic user ids (and 0 is not allowed)
   ##
   containerSecurityContext:
-    enabled: true
-    runAsUser: 
+    enabled: false
+    runAsUser: 0
 
 waitContainer:
   ## @param waitContainer.image.registry [default: REGISTRY_NAME] Init container wait-container image registry
@@ -1228,8 +1228,8 @@ waitContainer:
   ## @param waitContainer.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
   ##
   containerSecurityContext:
-    enabled: true
-    runAsUser: 
+    enabled: false
+    runAsUser: 1001
     runAsNonRoot: true
     privileged: false
     readOnlyRootFilesystem: true
@@ -1250,11 +1250,11 @@ waitContainer:
 ## @param postgresql.primary.service.ports.postgresql PostgreSQL service port
 ##
 postgresql:
-  enabled: false
+  enabled: true
   auth:
-    username: bn_mlflow
-    password: ""
-    database: bitnami_mlflow
+    username: mlflow
+    password: "letmein"
+    database: mlflow_db
     existingSecret: ""
   architecture: standalone
   primary:
