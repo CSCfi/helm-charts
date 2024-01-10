@@ -66,6 +66,17 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/matomo-0.1.0/matomo-0.1.0.tgz
     version: 0.1.0
+  minio:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-01-10T13:38:01.77337466Z"
+    description: A Helm chart for Kubernetes
+    digest: c2c69d6cc3b214f7164362938dbb4e1508f0c661e237f0eacac8d8a823d35b79
+    name: minio
+    type: application
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/minio-0.1.0/minio-0.1.0.tgz
+    version: 0.1.0
   rstudio-helm:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -111,4 +122,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2024-01-10T13:29:29.615782313Z"
+generated: "2024-01-10T13:38:01.773388586Z"
