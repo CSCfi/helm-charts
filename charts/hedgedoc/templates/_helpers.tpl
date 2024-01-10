@@ -60,3 +60,10 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/* 
+Generate postgres database password
+*/}}
+{{- define "hedgedoc.postgresPassword" -}}
+database-password: {{ randAlphaNum 16 | quote }}
+{{- end }}

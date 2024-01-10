@@ -8,7 +8,6 @@ secret:
   name: postgres
   databaseName: hedgedoc
   databaseUser: hedgedoc
-  password: letmein
 
 # If openshift.enabled    
 route:
