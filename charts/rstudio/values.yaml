@@ -1,0 +1,39 @@
+openshift:
+  enabled: true
+
+appName: csc-rstudio-shiny
+
+rstudio:
+  podSecurityContext: {}
+  containerSecurityContext:
+    runAsUser:
+    runAsGroup:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+      - ALL
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  pvc:
+    mountName: rstudio-server-home
+    storageSize: 5Gi
+  route:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+    host: ""
+
+shiny:
+  pvc:
+    mountName: shiny-server
+    storageSize: 5Gi
+  route:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+    host: ""
+
+buildConfig:
+  gitRepoUri: https://github.com/CSCfi/helm-charts.git
+  gitBranch: main
+  contextDir: charts/rstudio/source
+  
