@@ -3,16 +3,17 @@
 ===============================
 Congratulations! Your matomo app is being installed an deployed.
 
-Get the application URL by running this command:
+Get the application URL by running these commands:
 
-oc get route --namespace={{ .Release.Namespace }}
+  export MATOMO=$(oc get route --namespace={{ .Release.Namespace }} -o yaml | yq '.items[0].spec.host')
+  echo "Matomo server URL: http://$MATOMO"
 
 The password for the user is generated randomly.
 To retrieve it, run this command:
 
-echo Matomo user password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.matomo.name }} -o jsonpath="{.data.matomo-password}" | base64 -d)
+  echo Matomo user password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.matomo.name }} -o jsonpath="{.data.matomo-password}" | base64 -d)
 
 To retrieve the database password and the database root password, run these commands:
 
-echo database password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.mariadb.name }} -o jsonpath="{.data.database-password}" | base64 -d)
-echo database root password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.mariadb.name }} -o jsonpath="{.data.database-root-password}" | base64 -d)
+  echo database password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.mariadb.name }} -o jsonpath="{.data.database-password}" | base64 -d)
+  echo database root password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.mariadb.name }} -o jsonpath="{.data.database-root-password}" | base64 -d)
