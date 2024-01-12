@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ .Values.prometheus.appName }}-route
+spec:
+  port:
+    targetPort: 9091
+  to:
+    kind: Service
+    name: {{ .Values.prometheus.appName }}-service
+  tls:
+    termination: {{ .Values.prometheus.route.tls.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.prometheus.route.tls.insecureEdgeTerminationPolicy }}

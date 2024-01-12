@@ -1,0 +1,46 @@
+prometheus:
+  appName: prometheus
+  image: prom/prometheus:v2.45.2
+  retentionTime: 15d
+
+  limits:
+    memory: 4Gi
+  requests:
+    memory: 4Gi
+
+  secret:
+    user: admin
+
+  pvc:
+    storageSize: 5Gi
+
+  service:
+    type: ClusterIP
+
+  route:
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+
+grafana:
+  appName: grafana
+  image: grafana/grafana:9.5.15
+
+  limits:
+    memory: 1Gi
+  requests:
+    memory: 1Gi
+    
+  secret:
+    adminUsername: admin
+
+  pvc:
+    storageSize: 5Gi
+
+  service:
+    type: ClusterIP
+
+  route:
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
