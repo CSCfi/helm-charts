@@ -6,4 +6,4 @@ roleRef:
   name: view
 subjects:
 - kind: ServiceAccount
-  name: {{ .Values.prometheus.sa }}
+  name: {{ .Values.prometheus.appName }}-sa

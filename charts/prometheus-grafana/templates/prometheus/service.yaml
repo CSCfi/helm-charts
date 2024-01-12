@@ -8,4 +8,4 @@ spec:
       targetPort: 9091
   selector:
     app: {{ .Values.prometheus.appName }}
-type: {{ .Values.prometheus.service.type }}
+  type: {{ .Values.prometheus.service.type }}

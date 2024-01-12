@@ -15,8 +15,8 @@ spec:
       labels:
         app: {{ .Values.prometheus.appName }}
     spec:
-      serviceAccount: {{ .Values.prometheus.sa }}
-      serviceAccountName: {{ .Values.prometheus.sa }}
+      serviceAccount: {{ .Values.prometheus.appName }}-sa
+      serviceAccountName: {{ .Values.prometheus.appName }}-sa
       initContainers:
       - image: docker-registry.rahti.csc.fi/da-images/alpine-htpasswd:latest
         env:

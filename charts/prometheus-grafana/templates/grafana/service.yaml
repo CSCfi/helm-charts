@@ -9,4 +9,4 @@ spec:
     targetPort: 3000
   selector:
     app: {{ .Values.grafana.appName }}
-type: {{ .Values.grafana.service.type }}
+  type: {{ .Values.grafana.service.type }}
