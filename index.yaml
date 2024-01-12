@@ -123,6 +123,17 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/mlflow-0.4.0/mlflow-0.4.0.tgz
     version: 0.4.0
+  prometheus-grafana:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-01-12T10:49:12.031244806Z"
+    description: A Helm chart for Kubernetes
+    digest: f2871eeb53f2aa992a29abd2fc9a7c20bd7d6354fb1cfae704756a9394bb2e3e
+    name: prometheus-grafana
+    type: application
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/prometheus-grafana-0.1.0/prometheus-grafana-0.1.0.tgz
+    version: 0.1.0
   rstudio-helm:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -168,4 +179,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2024-01-11T12:39:15.530687845Z"
+generated: "2024-01-12T10:49:12.031259904Z"
