@@ -14,6 +14,23 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.12.1
+      
+      - name: Helm Deps
+        run: |
+          for dir in $(ls -d charts/*); do
+            helm dependency update $dir;
+          done
+
+      - name: Helm Lint
+        run: |
+          for dir in $(ls -d charts/*); do
+            helm lint $dir
+          done
+          
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
