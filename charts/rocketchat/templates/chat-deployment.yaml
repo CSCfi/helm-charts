@@ -1,0 +1,221 @@
+apiVersion: {{ template "deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ template "rocketchat.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "rocketchat.name" . }}
+    helm.sh/chart: {{ include "rocketchat.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- if .Values.deploymentLabels }}
+{{ toYaml .Values.deploymentLabels | indent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "rocketchat.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "rocketchat.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        {{- if .Values.podLabels }}
+{{ toYaml .Values.podLabels | indent 8 }}
+        {{- end }}
+
+      annotations:
+        checksum/secret: {{ include (print .Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- if .Values.podAnnotations }}
+{{ toYaml .Values.podAnnotations | indent 8 }}
+        {{- end }}
+
+
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      {{- if .Values.securityContext.enabled }}
+      securityContext:
+        fsGroup: {{ .Values.securityContext.fsGroup }}
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+      {{- end }}
+      serviceAccountName: {{ template "rocketchat.serviceAccountName" . }}
+      {{- if .Values.extraInitContainers }}
+      initContainers:
+        {{- toYaml .Values.extraInitContainers | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: rocketchat
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: DEPLOY_PLATFORM
+          value: helm-chart
+        - name: INSTANCE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        {{- if .Values.existingMongodbSecret }}
+        - name: MONGO_URL
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.existingMongodbSecret }}
+              key: mongo-uri
+        - name: MONGO_OPLOG_URL
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.existingMongodbSecret }}
+              key: mongo-oplog-uri
+        {{- else }}
+        - name: MONGO_URL
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rocketchat.fullname" . }}
+              key: mongo-uri
+        - name: MONGO_OPLOG_URL
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rocketchat.fullname" . }}
+              key: mongo-oplog-uri
+        {{- end }}
+        {{- if .Values.host }}
+        - name: ROOT_URL
+          value: https://{{ .Values.host }}
+        {{- end }}
+        {{- if .Values.smtp.enabled }}
+        {{- if not .Values.smtp.existingSecret }}
+        - name: MAIL_URL
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rocketchat.fullname" . }}
+              key: mail-url
+        {{- else }}
+        - name: MAIL_URL
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.smtp.existingSecret }}
+              key: mail-url
+        {{- end }}
+        {{- end }}
+        {{- if and .Values.registrationToken .Release.IsInstall }}
+        - name: REG_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rocketchat.fullname" . }}
+              key: reg-token
+        {{- end }}
+        {{- if and .Values.license .Release.IsInstall }}
+        - name: ROCKETCHAT_LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rocketchat.fullname" . }}
+              key: license
+        {{- end }}
+        {{- if .Values.prometheusScraping.enabled }}
+        - name: OVERWRITE_SETTING_Prometheus_Enabled
+          value: "true"
+        - name: OVERWRITE_SETTING_Prometheus_Port
+          value: "{{ .Values.prometheusScraping.port }}"
+        {{- end }}
+        # Environment variables for microservices option
+        {{- if .Values.microservices.enabled }}
+        - name: TRANSPORTER
+          value: nats://{{ .Release.Name }}-nats:4222
+        - name: MOLECULER_LOG_LEVEL
+          value: {{ .Values.microservices.logLevel | quote }}
+        - name: HEARTBEAT_INTERVAL
+          value: {{ .Values.microservices.heartbeatInterval | quote }}
+        - name: HEARTBEAT_TIMEOUT
+          value: {{ .Values.microservices.heartbeatTimeout | quote }}
+        - name: RETRY_ENABLED
+          value: 'yes'
+        - name: MS_METRICS
+          value: {{ .Values.prometheusScraping.enabled | default "false" | quote }}
+        {{- end}} # end of microservices envvar. options
+{{- with .Values.extraEnv }}
+	{{- include "common.tplvalues.render" (dict "value" . "context" $) | nindent 8 }}
+{{- end }}
+        ports:
+        - name: http
+          containerPort: 3000
+        {{- if .Values.prometheusScraping.enabled }}
+        - name: metrics
+          containerPort: {{ .Values.prometheusScraping.port }}
+        {{- end}}
+        {{- if .Values.livenessProbe.enabled }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.livenessProbe.path }}
+            port: http
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.livenessProbe.successThreshold }}
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+        {{- end }}
+        {{- if .Values.readinessProbe.enabled }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.readinessProbe.path }}
+            port: http
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+        {{- end }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        volumeMounts:
+        - name: rocket-data
+          mountPath: /app/uploads
+        - name: tmp
+          mountPath: /tmp
+        {{- if .Values.extraVolumeMounts }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumeMounts "context" $) | nindent 8 }}
+        {{- end }}          
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      - name: rocket-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ template "rocketchat.fullname" . }}{{- end }}
+      {{- else }}
+        emptyDir: {}
+      {{- end }}
+      {{- if .Values.extraVolumes }}
+      {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumes "context" $) | nindent 6 }}
+      {{- end }}
+{{- if or .Values.podAntiAffinity .Values.affinity }}
+      affinity:
+{{- if .Values.affinity }}
+{{ toYaml .Values.affinity | indent 8 }}
+{{- end }}
+{{- if eq .Values.podAntiAffinity "hard" }}
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: {{ .Values.podAntiAffinityTopologyKey }}
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: {{ include "rocketchat.name" . }}
+{{- else if eq .Values.podAntiAffinity "soft" }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              topologyKey: {{ .Values.podAntiAffinityTopologyKey }}
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: {{ include "rocketchat.name" . }}
+                  app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+{{- end }}
