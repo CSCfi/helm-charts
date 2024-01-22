@@ -1,0 +1,29 @@
+rocketchat:
+  appName: rocketchat
+  image: rocket.chat:6.5.2
+  service:
+    type: ClusterIP
+
+  route:
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+
+
+
+mongodb:
+  appName: mongo
+  image: registry.access.redhat.com/rhscl/mongodb-26-rhel7:latest
+  dbUser: mongo
+  dbName: sample
+  password: letmein
+  adminPassword: superman
+
+  service:
+    ports:
+      mongodb: 27017
+    type: ClusterIP
+  
+  pvc:
+    storageSize: 8Gi
+

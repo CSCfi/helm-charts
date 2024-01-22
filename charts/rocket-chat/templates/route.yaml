@@ -1,0 +1,13 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ .Values.rocketchat.appName }}-route
+spec:
+  to:
+    kind: Service
+    name: {{ .Values.rocketchat.appName }}-service
+  port:
+    targetPort: 3000-tcp
+  tls:
+    insecureEdgeTerminationPolicy: {{ .Values.rocketchat.route.tls.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.rocketchat.route.tls.termination }}
