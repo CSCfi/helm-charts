@@ -10,7 +10,7 @@ imagePullSecrets: []
 
 ## Host for the application
 ## set it to a domain pointing to your loadbalancer
-# host:
+host: ""
 
 replicaCount: 1
 minAvailable: 1
@@ -105,10 +105,10 @@ mongodb:
   initdbScriptsConfigMap: rocketchat-mongodb-fix-clustermonitor-role-configmap
 
   auth:
-    # rootPassword: Provide a root passowrd
+    # rootPassword: Provide a root password
     usernames:
       - rocketchat
-    # passwords: [] Provide a password(s)
+    # passwords: [] Provide a password
     databases:
       - rocketchat
 
@@ -217,6 +217,7 @@ service:
 
 route:
   enabled: true
+  host: "rocketchat-test"
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect

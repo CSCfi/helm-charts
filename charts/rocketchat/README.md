@@ -2,11 +2,11 @@
 
 [Rocket.Chat](https://rocket.chat/) is free, unlimited and open source. Replace email, HipChat & Slack with the ultimate team chat software solution.
 
-> **WARNING**: Upgrading to chart version 5.4.3 or higher might require extra steps to successfully update MongoDB and Rocket.Chat. See [Upgrading to 5.4.3](#to-543) for more details.
+> **WARNING**: This deployment is meant for CSC Rahti / Lumi-K platform and based on the original version that you can find here: https://github.com/RocketChat/helm-charts/
 
 ## Introduction
 
-This chart bootstraps a [Rocket.Chat](https://rocket.chat/) Deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager. It provisions a fully featured Rocket.Chat installation.
+This chart bootstraps a [Rocket.Chat](https://rocket.chat/) Deployment on a [OKD](https://okd.io) cluster using the [Helm](https://helm.sh) package manager. It provisions a fully featured Rocket.Chat installation.
 
 In addition, this chart supports scaling of Rocket.Chat for increased server capacity and high availability (requires enterprise license).  For more information on Rocket.Chat and its capabilities, see its [documentation](https://rocket.chat/docs/).
 
@@ -20,12 +20,7 @@ By default, the MongoDB chart requires PV support on underlying infrastructure (
 To install the chart with the release name `rocketchat`:
 
 ```console
-$ helm install rocketchat rocketchat/rocketchat --set mongodb.auth.passwords={rocketchatPassword},mongodb.auth.rootPassword=rocketchatRootPassword
-```
-
-If you got a registration token for [Rocket.Chat Cloud](https://cloud.rocket.chat), you can also include it: 
-```console
-$ helm install rocketchat rocketchat/rocketchat --set mongodb.auth.passwords={rocketchatPassword},mongodb.auth.rootPassword=rocketchatRootPassword,registrationToken=<paste the token here>
+$ helm upgrade --install rocketchat . --set mongodb.auth.passwords={rocketchatPassword},mongodb.auth.rootPassword=rocketchatRootPassword
 ```
 
 Usage of `Values.yaml` file is recommended over using command line arguments `--set`. You must set at least the database password and root password in the values file.
@@ -37,10 +32,17 @@ mongodb:
       - rocketchat
     rootPassword: rocketchatroot
 ```
+Regarding the OpenShift route, you must provide the `host` and `route.host`. By default, `route.host` is `rocketchat-test` and for `host` it can be either `apps.okd.lumi-k.csc.fi` if deployed on Lumi-K or `2.rahtiapp.fi` if deployed on Rahti 2.  
 
+```yaml
+host: "apps.okd.lumi-k.csc.fi" # or "2.rahtiapp.fi"
+...
+route:
+  host: "rocketchat-test"
+```
 Now use the following command to deploy
 ```shell
-helm install rocketchat -f Values.yaml rocketchat/rocketchat
+helm install rocketchat . -f Values.yaml
 ```
 
 > Starting chart version 5.4.3, due to mongodb dependency, username, password and database entries must be arrays of the same length. Rocket.Chat will use the first entries of those arrays for its own use. `mongodb.auth.usernames` array defaults to `{rocketchat}` and `mongodb.auth.databases` array defaults to `{rocketchat}`
@@ -62,7 +64,7 @@ The following table lists the configurable parameters of the Rocket.Chat chart a
 | `image.repository`                     | Image repository                                                                                                                                                                                                                                                                                                                                                                                                                                               | `registry.rocket.chat/rocketchat/rocket.chat` |
 | `image.tag`                            | Image tag                                                                                                                                                                                                                                                                                                                                                                                                                                                      | `3.18.3`                           |
 | `image.pullPolicy`                     | Image pull policy                                                                                                                                                                                                                                                                                                                                                                                                                                              | `IfNotPresent`                     |
-| `host`                                 | Hostname for Rocket.Chat. Also used for ingress (if enabled)                                                                                                                                                                                                                                                                                                                                                                                                   | `""`                               |
+| `host`                                 | Hostname for Rocket.Chat. Also used for ingress or route (if enabled)                                                                                                                                                                                                                                                                                                                                                                                                   | `""`                               |
 | `replicaCount`                         | Number of replicas to run                                                                                                                                                                                                                                                                                                                                                                                                                                      | `1`                                |
 | `smtp.enabled`                         | Enable SMTP for sending mails                                                                                                                                                                                                                                                                                                                                                                                                                                  | `false`                            |
 | `smtp.existingSecret`                  | Use existing secret for SMTP account                                                                                                                                                                                                                                                                                                                                                                                                                           | `""`                               |
@@ -123,6 +125,10 @@ The following table lists the configurable parameters of the Rocket.Chat chart a
 | `readinessProbe.failureThreshold`      | Minimum consecutive failures for the probe                                                                                                                                                                                                                                                                                                                                                                                                                     | `3`                                |
 | `readinessProbe.successThreshold`      | Minimum consecutive successes for the probe                                                                                                                                                                                                                                                                                                                                                                                                                    | `1`                                |
 | `registrationToken`                    | Registration Token for [Rocket.Chat Cloud ](https://cloud.rocket.chat)                                                                                                                                                                                                                                                                                                                                                                                         | ""                                 |
+| `route.enabled`                    | Enable OpenShift route                                                                                                                                                                                                                                                                                                                                                                                         | "true"                                 |
+| `route.host`                    | Name of the route host route                                                                                                                                                                                                                                                                                                                                                                                         | "rocketchat-test"                                 |
+| `route.tls.termination`                    | TLS termination for OpenShift Route                                                                                                                                                                                                                                                                                                                                                                                       | "edge"                                 |
+| `route.tls.insecureEdgeTermination`                    | Insecure Edge Termination for OpenShift Route                                                                                                                                                                                                                                                                                                                                                                                       | "Redirect"                                 |
 | `service.annotations`                  | Annotations for the Rocket.Chat service                                                                                                                                                                                                                                                                                                                                                                                                                        | `{}`                               |
 | `service.labels`                       | Additional labels for the Rocket.Chat service                                                                                                                                                                                                                                                                                                                                                                                                                  | `{}`                               |
 | `service.type`                         | The service type to use                                                                                                                                                                                                                                                                                                                                                                                                                                        | `ClusterIP`                        |
@@ -137,7 +143,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install rocketchat -f values.yaml rocketchat/rocketchat
+$ helm install rocketchat . -f values.yaml
 ```
 
 ### Database Setup
@@ -182,7 +188,7 @@ extraVolumeMounts:
 To increase the capacity of the server, you can scale up the number of Rocket.Chat server instances across available computing resources in your cluster, for example,
 
 ```bash
-$ kubectl scale --replicas=3 deployment/rocketchat
+$ oc scale --replicas=3 deployment/rocketchat
 ```
 
 By default, this chart creates one MongoDB instance as a Primary in a replicaset.  This is the minimum requirement to run Rocket.Chat 1.x+.    You can also scale up the capacity and availability of the MongoDB cluster independently.  Please see the [MongoDB chart](https://github.com/bitnami/charts/tree/master/bitnami/mongodb) for configuration information.
@@ -204,38 +210,3 @@ data:
   mongo-uri: mongodb://user:password@localhost:27017/rocketchat
   mongo-oplog-uri: mongodb://user:password@localhost:27017/local?replicaSet=rs0&authSource=admin
 ```
-
-
-## Upgrading
-
-### To 5.4.3
-
-Due to changes on upstream MongoDB chart, some variables have been renamed (previously deprecated), which, in turn changed how this chart generates its manifests. Values that need changing -
-- `mongodb.auth.username` is no longer supported, and has been changed to `mongodb.auth.usernames` array. If you set it to something custom (defaults to `rocketchat`), make sure you update it to an array and the entry is the **first** entry in that array as that's what Rocket.Chat will use to connect to the database.
-- `mongodb.auth.password` is no longer supported either and has been changed to `mongodb.auth.passwords` array. Update your values file to make it an array and make sure it's the first entry of that array.
-- `mongodb.auth.database` is no longer supported either and has been changed to its plural version, `mongodb.auth.databases`. Update your values file, convert it to an array and make sure it's the first entry of that list.
-- `mongodb.auth.rootUsername` and `mongodb.auth.rootPassword` are staying the same.
-
-*`usernames`, `passwords` and `databases` arrays must be of the same length. Rocket.Chat chart will use the first entry for its mongodb connection string in `MONGO_URL` and `MONGO_OPLOG_URL`.*
-
-On each chart update, the used image tag gets updated, **in most cases**. Same is true for the MongoDB chart we use as our dependency. Pre-5.4.3, we had been using the chart version 10.x.x, but starting 5.4.3, the dependency chart version has been bumped to the latest available version, 13.x.x. This chart defaults to mongodb 6.0.x as of the time of writing this.
-
-As a warning, this chart will not handle MongoDB upgrades and will depend on the user to make sure it's running on the supported version. The upgrade will fail if any of the following requirements are not met -
-- must not skip a MongoDB release. E.g. 4.2.x to 5.0.x will fail
-- current `featureCompatibilityVersion` must be compatible with the version user is trying to upgrade to. E.g. if current database version and feature compatibility is 4.4 and 4.2 respectively, but user is trying to upgrade to 5.0, it'll fail
-
-The chart will not check if the mongodb version is supported by the Rocket.Chat version considering deployments, that might occur in an airgapped environment. It is up to the user to make sure of that. Users can check Rocket.Chat's release notes to confirm that.
-
-To get the currently deployed MongoDB version, the easiest method is to get into the mongo shell and running `db.version()`.
-
-It is advised to pin your MongoDB dependency in the values file.
-```yaml
-mongodb:
-  image:
-    tag: # find from https://hub.docker.com/r/bitnami/mongodb/tags
-```
-
-Refernces:
-- [Run a shell inside a container (to check mongodb version)](https://kubernetes.io/docs/tasks/debug/debug-application/get-shell-running-container/)
-- [MongoDB upgrade official documentation](https://www.mongodb.com/docs/manual/tutorial/upgrade-revision/)
-- [MongoDB helm chart options](https://artifacthub.io/packages/helm/bitnami/mongodb)
