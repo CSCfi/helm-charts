@@ -1,0 +1,27 @@
+apiVersion: v2
+name: rocketchat
+version: 6.4.4
+appVersion: 6.4.4
+dependencies:
+  - name: nats
+    repository: https://nats-io.github.io/k8s/helm/charts
+    version: 0.15.x
+    condition: microservices.enabled
+description: Prepare to take off with the ultimate chat platform, experience the next level of team communications
+keywords:
+  - chat
+  - communication
+  - http
+  - web
+  - application
+  - nodejs
+  - javascript
+  - meteor
+home: https://rocket.chat/
+icon: https://raw.githubusercontent.com/RocketChat/Rocket.Chat.Artwork/master/Logos/icon.svg
+sources:
+  - https://github.com/RocketChat/Docker.Official.Image/
+engine: gotpl
+maintainers:
+  - email: cloud@rocket.chat
+    name: RocketChat
