@@ -45,6 +45,29 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
     version: 0.0.1-set.by.chartpress
+  - apiVersion: v2
+    appVersion: 4.0.2
+    created: "2024-02-02T11:28:42.510803384Z"
+    description: Multi-user Jupyter installation
+    digest: 29e1b21e4f2100cf77bf5630d03eba8b8c3b8940e6fd87a4b5c54e0c3dbb53b5
+    home: https://z2jh.jupyter.org
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    keywords:
+    - jupyter
+    - jupyterhub
+    - z2jh
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - email: erik@sundellopensource.se
+      name: Erik Sundell
+    - name: Simon Li
+      url: https://github.com/manics/
+    name: jupyterhub
+    sources:
+    - https://github.com/jupyterhub/zero-to-jupyterhub-k8s
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
+    version: 0.0.1-set.by.chartpress
   matomo:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -179,4 +202,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2024-01-12T10:49:12.031259904Z"
+generated: "2024-02-02T11:28:42.944026991Z"
