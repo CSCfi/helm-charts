@@ -103,7 +103,7 @@ Airflow Webserver:     kubectl port-forward svc/{{ include "airflow.fullname" . 
 {{- if .Values.route.enabled }}
 Route is enabled, you can access your dashboard by executing the following command:
   
-  export AIRFLOW_UI=$(oc get route --namespace={{ .Release.Namespace }} -o yaml | yq '.items[0].spec.host') && echo "Airflow Webserver URL: http://$AIRFLOW_UI"
+    export AIRFLOW_UI=$(oc get route --namespace={{ .Release.Namespace }} -o yaml | yq '.items[0].spec.host') && echo "Airflow Webserver URL: http://$AIRFLOW_UI"
 {{- end }}
 
 {{- if .Values.flower.enabled }}
