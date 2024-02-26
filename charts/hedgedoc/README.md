@@ -17,9 +17,6 @@ helm upgrade --install hedgedoc . -f {custom_values.yaml}
 | Name                                   | Description                                             | Value      |
 | -------------------------------------- | ------------------------------------------------------- | ---------- |
 | `openshift.enabled`                    | If you are deploying on OKD 4                           | `true`     |
-| `secret.name`                          | Name for the secret                                     | `postgres` |
-| `secret.databaseName`                  | Set the name for the HedgeDoc database                  | `hedgedoc` |
-| `secret.databaseUser`                  | Set the user for the HedgeDoc database                  | `hedgedoc` |
 | `route.insecureEdgeTerminationPolicy`  | If `openshift.enabled`, will create a route             | `Redirect` |
 | `route.termination`                    | If `openshift.enabled`, will create a route             | `edge`     |
 
@@ -37,26 +34,7 @@ helm upgrade --install hedgedoc . -f {custom_values.yaml}
 
 ### PostgreSQL parameters
 
-| Name                                          | Description                                             | Value                                                            |
-| --------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------- |
-| `postgres.image  `                            | Name of the `postgresql` image                          | `image-registry.apps.2.rahti.csc.fi/openshift/postgresql:12-el8` |
-| `postgres.livenessProbe.enabled`              | Enable or not `livenessProbe`                           | `true`                                                           |
-| `postgres.livenessProbe.failureThreshold`     | Set the `livenessProbe.failureThreshold`                | `3`                                                              |
-| `postgres.livenessProbe.initialDelaySeconds`  | Set the `livenessProbe.initialDelaySeconds`             | `120`                                                            |
-| `postgres.livenessProbe.periodSeconds`        | Set the `livenessProbe.periodSeconds`                   | `10`                                                             |
-| `postgres.livenessProbe.successThreshold`     | Set the `livenessProbe.successThreshold`                | `1`                                                              |
-| `postgres.livenessProbe.timeoutSeconds`       | Set the `livenessProbe.timeoutSeconds`                  | `10`                                                             |
-| `postgres.readinessProbe.enabled`             | Enable or not `readinessProbe`                          | `true`                                                           |
-| `postgres.readinessProbe.failureThreshold`    | Set the `readinessProbe.failureThreshold`               | `3`                                                              |
-| `postgres.readinessProbe.initialDelaySeconds` | Set the `readinessProbe.initialDelaySeconds`            | `5`                                                              |
-| `postgres.readinessProbe.periodSeconds`       | Set the `readinessProbe.periodSeconds`                  | `10`                                                             |
-| `postgres.readinessProbe.successThreshold`    | Set the `readinessProbe.successThreshold`               | `1`                                                              |
-| `postgres.readinessProbe.timeoutSeconds`      | Set the `readinessProbe.timeoutSeconds`                 | `10`                                                             |
-| `postgres.resources.limits.memory`            | Set the resources limits memory                         | `512Mi`                                                          |
-| `postgres.podSecurityContext`                 | Set SecurityContext for the pod                         | `{}`                                                             |
-| `postgres.containerSecurityContext`           | Set SecurityContext for the container                   | `allowPrivilegeEscalation: false`<br>`runAsUser:`<br>`runAsGroup:`<br>`capabilities:`<br>&nbsp;&nbsp;`drop:`<br>&nbsp;&nbsp;`- ALL`<br>`runAsNonRoot: true`<br>`seccompProfile:`<br>&nbsp;&nbsp;`type: RuntimeDefault` |
-| `postgres.pvc.storageSpace`                   | Storage space for the PersistentVolume                  | `5Gi`                                                            |
-| `postgres.service.type`                       | Set the Service type                                    | `ClusterIP`                                                      |
+Since we are using the `bitnami/postgresql` Helm Chart as a dependency, you can take a look to the [PostgreSQL ArtifactHub](https://artifacthub.io/packages/helm/bitnami/postgresql/13.4.4) to check the different values
 
 ## Cleanup
 To delete all the resources, simply uninstall the Helm Chart:

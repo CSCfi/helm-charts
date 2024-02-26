@@ -138,6 +138,12 @@ mongodb:
 
   volumePermissions: { enabled: false }
 
+  podSecurityContext:
+    enabled: false
+
+  containerSecurityContext:
+    enabled: false
+
 ## Enable persistence using Persistent Volume Claims
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
 ##

@@ -1258,6 +1258,17 @@ postgresql:
     existingSecret: ""
   architecture: standalone
   primary:
+    podSecurityContext:
+      enabled: false
+    containerSecurityContext:
+      enabled: false
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      seccompProfile:
+        type: RuntimeDefault
     service:
       ports:
         postgresql: 5432
@@ -1271,6 +1282,44 @@ postgresql:
           PGPASSWORD=$POSTGRES_POSTGRES_PASSWORD psql -U postgres <<< "GRANT ALL PRIVILEGES ON DATABASE {{ include "mlflow.v0.database-auth.name" . }} to {{ .Values.auth.username }}"
           PGPASSWORD=$POSTGRES_POSTGRES_PASSWORD psql -U postgres <<< "ALTER DATABASE {{ include "mlflow.v0.database-auth.name" . }} OWNER TO {{ .Values.auth.username }}"
 
+  readReplicas:
+    podSecurityContext:
+      enabled: false
+    containerSecurityContext:
+      enabled: false
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      seccompProfile:
+        type: RuntimeDefault
+          
+  backup:
+    cronjob:
+      podSecurityContext:
+        enabled: false
+      containerSecurityContext:
+        enabled: false
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        seccompProfile:
+          type: RuntimeDefault
+
+  metrics:
+    containerSecurityContext:
+      enabled: false
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      seccompProfile:
+        type: RuntimeDefault
+        
 ## @section External PostgreSQL configuration
 ## All of these values are only used when postgresql.enabled is set to false
 ## @param externalDatabase.host Database host
