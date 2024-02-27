@@ -1121,12 +1121,12 @@
                     "properties": {
                         "user": {
                             "description": "The database user.",
-                            "type": "string",
+                            "type": ["string", "null"],
                             "default": "postgres"
                         },
                         "pass": {
                             "description": "The user's password.",
-                            "type": "string",
+                            "type": ["string", "null"],
                             "default": "postgres"
                         },
                         "protocol": {
