@@ -2346,6 +2346,35 @@ postgresql:
     username: # Must match with data.metadataConnection.user
     password: # Must match with data.metadataConnection.pass
 
+  tls:
+    enabled: false
+  
+  # SecurityContext disabled by default for OpenShift.
+  primary:
+    persistence:
+      size: 5Gi
+    podSecurityContext:
+      enabled: false
+    containerSecurityContext:
+      enabled: false
+
+  readReplicas:
+    podSecurityContext:
+      enabled: false
+    containerSecurityContext:
+      enabled: false
+          
+  backup:
+    cronjob:
+      podSecurityContext:
+        enabled: false
+      containerSecurityContext:
+        enabled: false
+
+  metrics:
+    containerSecurityContext:
+      enabled: false
+
 # Config settings to go into the mounted airflow.cfg
 #
 # Please note that these values are passed through the `tpl` function, so are

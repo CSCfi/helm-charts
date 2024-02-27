@@ -21,6 +21,11 @@ apiVersion: v2
 name: airflow
 version: 1.12.0-dev
 appVersion: 2.8.1
+dependencies:
+- condition: postgresql.enabled
+  name: postgresql
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 13.x.x
 description: The official Helm chart to deploy Apache Airflow, a platform to
   programmatically author, schedule, and monitor workflows
 home: https://airflow.apache.org/
