@@ -3,12 +3,6 @@
 openshift:
   enabled: true
 
-# Set your postgresql secret password here
-secret:
-  name: postgres
-  databaseName: hedgedoc
-  databaseUser: hedgedoc
-
 # If openshift.enabled    
 route:
   insecureEdgeTerminationPolicy: Redirect
@@ -36,37 +30,68 @@ hedgedoc:
     type: ClusterIP
 
 # Parameters related to the deployment of PostgreSQL
-postgres:
-  image: image-registry.apps.2.rahti.csc.fi/openshift/postgresql:12-el8
-  livenessProbe:
-    enabled: true
-    failureThreshold: 3
-    initialDelaySeconds: 120
-    periodSeconds: 10
-    successThreshold: 1
-    timeoutSeconds: 10
-  readinessProbe:
-    enabled: true
-    failureThreshold: 3
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    successThreshold: 1
-    timeoutSeconds: 10
-  resources:
-    limits:
-      memory: 512Mi
-  podSecurityContext: {}
-  containerSecurityContext:
-    allowPrivilegeEscalation: false
-    runAsUser:
-    runAsGroup:
-    capabilities:
-      drop:
-      - ALL
-    runAsNonRoot: true
-    seccompProfile:
-      type: RuntimeDefault
-  pvc:
-    storageSpace: 5Gi
-  service:
-    type: ClusterIP
+postgresql:
+  enabled: true
+
+  auth:
+    enablePostgresUser: false
+    existingSecret: postgres
+
+  tls:
+    enabled: false
+  
+  # SecurityContext disabled by default for OpenShift.
+  primary:
+    service:
+      type: ClusterIP
+    persistence:
+      size: 5Gi
+    podSecurityContext:
+      enabled: false
+    containerSecurityContext:
+      enabled: false
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      seccompProfile:
+        type: RuntimeDefault
+
+  readReplicas:
+    podSecurityContext:
+      enabled: false
+    containerSecurityContext:
+      enabled: false
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      seccompProfile:
+        type: RuntimeDefault
+          
+  backup:
+    cronjob:
+      podSecurityContext:
+        enabled: false
+      containerSecurityContext:
+        enabled: false
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        seccompProfile:
+          type: RuntimeDefault
+
+  metrics:
+    containerSecurityContext:
+      enabled: false
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      seccompProfile:
+        type: RuntimeDefault

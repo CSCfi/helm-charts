@@ -28,19 +28,19 @@ spec:
           valueFrom:
             secretKeyRef:
               key: database-user
-              name: {{ .Values.secret.name | default "postgres" }}
+              name: postgres
         - name: CMD_DB_PASSWORD
           valueFrom:
             secretKeyRef:
               key: database-password
-              name: {{ .Values.secret.name | default "postgres" }}
+              name: postgres
         - name: CMD_DB_DATABASE
           valueFrom:
             secretKeyRef:
               key: database-name
-              name: {{ .Values.secret.name | default "postgres" }}
+              name: postgres
         - name: CMD_DB_HOST
-          value: postgresql
+          value: hedgedoc-postgresql
         - name: CMD_DB_PORT
           value: "5432"
         - name: CMD_DB_DIALECT
