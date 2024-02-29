@@ -354,27 +354,6 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
     version: 0.0.1-set.by.chartpress
-  matomo:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2024-01-10T09:52:55.525105728Z"
-    description: A Helm chart for Kubernetes
-    digest: ef38a26b99388e62a077cabe9c81663cc9c28910a7623e0040130d2cc4d0c85a
-    name: matomo
-    type: application
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/matomo-0.1.1/matomo-0.1.1.tgz
-    version: 0.1.1
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2023-12-15T10:00:16.937745076Z"
-    description: A Helm chart for Kubernetes
-    digest: 4b4d74a671b9f02b7283c6eb3e7a788aed0ee96337ddbcfdc370f6034e984daa
-    name: matomo
-    type: application
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/matomo-0.1.0/matomo-0.1.0.tgz
-    version: 0.1.0
   matomo-helm:
   - apiVersion: v2
     created: "2024-02-29T09:50:20.321449979Z"
@@ -386,17 +365,6 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/matomo-helm-1.0.0/matomo-helm-1.0.0.tgz
     version: 1.0.0
-  minio:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2024-01-10T13:38:01.77337466Z"
-    description: A Helm chart for Kubernetes
-    digest: c2c69d6cc3b214f7164362938dbb4e1508f0c661e237f0eacac8d8a823d35b79
-    name: minio
-    type: application
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/minio-0.1.0/minio-0.1.0.tgz
-    version: 0.1.0
   minio-helm:
   - apiVersion: v2
     created: "2024-02-29T09:50:20.499815196Z"
@@ -454,17 +422,6 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/mlflow-0.4.0/mlflow-0.4.0.tgz
     version: 0.4.0
-  prometheus-grafana:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2024-01-12T10:49:12.031244806Z"
-    description: A Helm chart for Kubernetes
-    digest: f2871eeb53f2aa992a29abd2fc9a7c20bd7d6354fb1cfae704756a9394bb2e3e
-    name: prometheus-grafana
-    type: application
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/prometheus-grafana-0.1.0/prometheus-grafana-0.1.0.tgz
-    version: 0.1.0
   prometheus-grafana-helm:
   - apiVersion: v2
     created: "2024-02-29T09:50:20.854691737Z"
