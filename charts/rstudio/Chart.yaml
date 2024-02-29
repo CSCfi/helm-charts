@@ -1,6 +1,7 @@
 apiVersion: v2
 name: rstudio-helm
 description: RStudio Helm Chart for Rahti platform
+  Link to the repo https://github.com/CSCfi/helm-charts
 version: 1.0.0
 sources:
 - https://github.com/CSCfi/helm-charts
