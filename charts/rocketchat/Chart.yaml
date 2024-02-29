@@ -11,7 +11,8 @@ dependencies:
     repository: https://nats-io.github.io/k8s/helm/charts
     version: 0.15.x
     condition: microservices.enabled
-description: Prepare to take off with the ultimate chat platform, experience the next level of team communications
+description: Prepare to take off with the ultimate chat platform, experience the next level of team communications.
+  Link to the repo https://github.com/CSCfi/helm-charts
 keywords:
   - chat
   - communication

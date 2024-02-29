@@ -20,7 +20,7 @@ By default, the MongoDB chart requires PV support on underlying infrastructure (
 To install the chart with the release name `rocketchat`:
 
 ```console
-$ helm upgrade --install rocketchat . --set mongodb.auth.passwords={rocketchatPassword},mongodb.auth.rootPassword=rocketchatRootPassword
+helm upgrade --install rocketchat . --set mongodb.auth.passwords={rocketchatPassword},mongodb.auth.rootPassword=rocketchatRootPassword
 ```
 
 Usage of `Values.yaml` file is recommended over using command line arguments `--set`. You must set at least the database password and root password in the values file.
@@ -41,7 +41,7 @@ route:
   host: "rocketchat-test"
 ```
 Now use the following command to deploy
-```shell
+```console
 helm install rocketchat . -f Values.yaml
 ```
 
@@ -52,7 +52,7 @@ helm install rocketchat . -f Values.yaml
 To uninstall/delete the `rocketchat` deployment:
 
 ```console
-$ helm delete rocketchat
+helm delete rocketchat
 ```
 
 ## Configuration

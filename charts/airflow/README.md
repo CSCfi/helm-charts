@@ -24,6 +24,8 @@
 [Apache Airflow](https://airflow.apache.org/) is a platform to programmatically author, schedule and monitor workflows.
 
 ## Introduction
+The default quota in a project is not enough to run Airflow (4 CPU). You must request at least 8 CPU.
+
 
 This chart will bootstrap an [Airflow](https://airflow.apache.org) deployment on a [OpenShift](http://okd.io)
 cluster using the [Helm](https://helm.sh) package manager.
@@ -37,7 +39,7 @@ cluster using the [Helm](https://helm.sh) package manager.
 
 As mentioned in the documentation, you must create a [Webserver Secret Key](https://airflow.apache.org/docs/helm-chart/stable/production-guide.html#webserver-secret-key). To do this, type this command:  
 
-   ```sh
+   ```
    oc create secret generic webserver-secret --from-literal="webserver-secret-key=$(python3 -c 'import secrets; print(secrets.token_hex(16))')"
    ```
 
@@ -45,6 +47,12 @@ Values from `posgresql.auth` must be defined. They must match with the values fr
 
 You can change the default user for the Webserver by modifying the values `webserver.defaultUser`
 
+Once done, you can install the chart with Helm:
+
+  ```
+  helm install airflow .
+  ```
+  
 ## Documentation
 
 Full documentation for Helm Chart (latest **stable** release) lives [on the website](https://airflow.apache.org/docs/helm-chart/).
