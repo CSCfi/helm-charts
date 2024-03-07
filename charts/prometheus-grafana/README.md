@@ -11,6 +11,8 @@ If you want to use it with different values, you can edit `values.yaml` file and
 helm upgrade --install graf-prom . -f {custom_values.yaml}
 ```
 
+The password to access Grafana WebUI is generated randomly and won't change if you upgrade your chart.
+
 ## Parameters
 
 ### HedgeDoc parameters
@@ -18,29 +20,28 @@ helm upgrade --install graf-prom . -f {custom_values.yaml}
 | Name                                                 | Description                                             | Value                             |
 | ---------------------------------------------------- | ------------------------------------------------------- | --------------------------------- |
 | `prometheus.appName`                                 | Name of your app.                                       | `prometheus`                      |
-| `prometheus.image`                                   | Name of the `prometheus` image                          | `prom/prometheus:v2.45.2`         |
+| `prometheus.image`                                   | Name of the `prometheus` image                          | `prom/prometheus:v2.50.1`         |
 | `prometheus.retentionTime`                           | Define how long data is kept in time-series database    | `15d`                             |
 | `prometheus.limits.memory`                           | Define the maximum of amount of memory                  | `4Gi`                             |
 | `prometheus.requests.memory`                         | Define the minimum guaranteed amount of memory          | `4Gi`                             |
-| `prometheus.secret.user`                             | Name of the user to connect to prometheus webUI         | `admin`                           |
 | `prometheus.pvc.storageSize`                         | Define the size of the Persistent Volume Claim          | `5Gi`                             |
 | `prometheus.service.type`                            | Define the service type                                 | `ClusterIP`                       |
-| `prometheus.route.tls.termination`                   | Create an OpenShift route                               | `edge`                            |
-| `prometheus.route.tls.insecureEdgeTerminationPolicy` | Create an OpenShift route                               | `Redirect`                        |
 
 ### Grafana parameters
 
-| Name                                                 | Description                                             | Value                             |
-| ---------------------------------------------------- | ------------------------------------------------------- | --------------------------------- |
-| `grafana.appName`                                    | Name of your app.                                       | `grafana`                         |
-| `grafana.image`                                      | Name of the `prometheus` image                          | `grafana/grafana:9.5.15`          |
-| `grafana.limits.memory`                              | Define the maximum of amount of memory                  | `1Gi`                             |
-| `grafana.requests.memory`                            | Define the minimum guaranteed amount of memory          | `1Gi`                             |
-| `grafana.secret.adminUsername`                       | Name of the user to connect to prometheus webUI         | `admin`                           |
-| `grafana.pvc.storageSize`                            | Define the size of the Persistent Volume Claim          | `5Gi`                             |
-| `grafana.service.type`                               | Define the service type                                 | `ClusterIP`                       |
-| `grafana.route.tls.termination`                      | Create an OpenShift route                               | `edge`                            |
-| `grafana.route.tls.insecureEdgeTerminationPolicy`    | Create an OpenShift route                               | `Redirect`                        |
+| Name                                                 | Description                                             | Value                                      |
+| ---------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------ |
+| `grafana.appName`                                    | Name of your app.                                       | `grafana`                                  |
+| `grafana.image`                                      | Name of the `prometheus` image                          | `grafana/grafana:10.2.4`                   |
+| `grafana.limits.memory`                              | Define the maximum of amount of memory                  | `1Gi`                                      |
+| `grafana.requests.memory`                            | Define the minimum guaranteed amount of memory          | `1Gi`                                      |
+| `grafana.secret.random_pw_secret_key`                | Key to store the password                               | `PASS`                                     |
+| `grafana.secret.adminUsername`                       | Name of the user to connect to prometheus webUI         | `admin`                                    |
+| `grafana.secret.adminPassword`                       | Function that retrieve the generated password           | `'{{- include "random_pw_reusable" . - }}` |
+| `grafana.service.type`                               | Define the service type                                 | `ClusterIP`                                |
+| `grafana.route.tls.termination`                      | Create an OpenShift route                               | `edge`                                     |
+| `grafana.route.tls.insecureEdgeTerminationPolicy`    | Create an OpenShift route                               | `Redirect`                                 |
+| `grafana.pvc.storageSize`                            | Define the size of the Persistent Volume Claim          | `5Gi`                                      |
 
 ## Cleanup
 To delete all the resources, simply uninstall the Helm Chart:

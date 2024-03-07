@@ -17,26 +17,6 @@ spec:
     spec:
       serviceAccount: {{ .Values.prometheus.appName }}-sa
       serviceAccountName: {{ .Values.prometheus.appName }}-sa
-      initContainers:
-      - image: docker-registry.rahti.csc.fi/da-images/alpine-htpasswd:latest
-        env:
-        - name: USER
-          valueFrom:
-            secretKeyRef:
-              key: user
-              name: {{ .Values.prometheus.appName }}-nginx-secret
-        - name: PASS
-          valueFrom:
-            secretKeyRef:
-              key: pass
-              name: {{ .Values.prometheus.appName }}-nginx-secret
-        command: ["/bin/sh","-c","htpasswd -bc /tmp/secret-file/passwd $USER $PASS"]
-        name: htpasswd-generator
-        volumeMounts:
-          - name: {{ .Values.prometheus.appName }}-htpasswd-tmp
-            mountPath: "/tmp/secret-file"
-          - name: {{ .Values.prometheus.appName }}-nginx-secret
-            mountPath: "/tmp/secret-env"
       containers:
       - name: {{ .Values.prometheus.appName }}
         args:
@@ -59,23 +39,6 @@ spec:
           name: {{ .Values.prometheus.appName }}-config
         - mountPath: /data
           name: {{ .Values.prometheus.appName }}-data
-      - name: nginx
-        image: cscfi/nginx-okd
-        imagePullPolicy: Always
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          limits:
-            cpu: 300m
-            memory: 512Mi
-        ports:
-          - containerPort: 9091
-        volumeMounts:
-          - name: {{ .Values.prometheus.appName }}-nginx-config
-            mountPath: /etc/nginx
-          - name: {{ .Values.prometheus.appName }}-htpasswd-tmp
-            mountPath: /etc/nginx/secrets
       restartPolicy: Always
       volumes:
       - name: {{ .Values.prometheus.appName }}-config
@@ -85,11 +48,4 @@ spec:
       - name: {{ .Values.prometheus.appName }}-data
         persistentVolumeClaim:
           claimName: {{ .Values.prometheus.appName }}-data
-      - name: {{ .Values.prometheus.appName }}-nginx-secret
-        secret:
-          secretName: {{ .Values.prometheus.appName }}-nginx-secret
-      - name: {{ .Values.prometheus.appName }}-htpasswd-tmp
-        emptyDir: {}
-      - name: {{ .Values.prometheus.appName }}-nginx-config
-        configMap:
-          name: {{ .Values.prometheus.appName }}-nginx-config
+          

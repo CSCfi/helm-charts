@@ -1,6 +1,6 @@
 prometheus:
   appName: prometheus
-  image: prom/prometheus:v2.45.2
+  image: prom/prometheus:v2.50.1
   retentionTime: 15d
 
   limits:
@@ -8,23 +8,15 @@ prometheus:
   requests:
     memory: 4Gi
 
-  secret:
-    user: admin
-
   pvc:
     storageSize: 5Gi
 
   service:
     type: ClusterIP
 
-  route:
-    tls:
-      termination: edge
-      insecureEdgeTerminationPolicy: Redirect
-
 grafana:
   appName: grafana
-  image: grafana/grafana:9.5.15
+  image: grafana/grafana:10.2.4
 
   limits:
     memory: 1Gi
@@ -32,7 +24,9 @@ grafana:
     memory: 1Gi
     
   secret:
+    random_pw_secret_key: PASS
     adminUsername: admin
+    adminPassword: '{{- include "random_pw_reusable" . -}}'
 
   pvc:
     storageSize: 5Gi
