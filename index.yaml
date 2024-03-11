@@ -991,6 +991,21 @@ entries:
     version: 1.12.0-dev
   hedgedoc-helm:
   - apiVersion: v2
+    created: "2024-03-11T12:23:14.221717546Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    description: Hedgedoc Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: ff6a6671290ebbe79bcfa9011bd5f3d8171fd192f5be125cd8b6ffccf84ee06d
+    name: hedgedoc-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-helm-1.1.0/hedgedoc-helm-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
     created: "2024-02-29T09:50:19.964378571Z"
     dependencies:
     - condition: postgresql.enabled
@@ -1151,6 +1166,16 @@ entries:
     version: 0.0.1-set.by.chartpress
   matomo-helm:
   - apiVersion: v2
+    created: "2024-03-11T12:23:14.428208569Z"
+    description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 9d1725e7b9765d39f7dd1cf421b70872c71151b050014edb434ee3e150a46edb
+    name: matomo-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/matomo-helm-1.1.0/matomo-helm-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
     created: "2024-02-29T09:50:20.321449979Z"
     description: Matomo Helm Chart for Rahti platform
     digest: 90c1699baf0a9a9f0763154e6f62299ad4da4c7c58aa379727617e4552dcffc5
@@ -1161,6 +1186,16 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/matomo-helm-1.0.0/matomo-helm-1.0.0.tgz
     version: 1.0.0
   minio-helm:
+  - apiVersion: v2
+    created: "2024-03-11T12:23:14.706254817Z"
+    description: Minio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: cfbc25300cd44b5cb31d0d24bc9b98af9ef3b22ec88e75225cfcf93ac02e05a3
+    name: minio-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/minio-helm-1.1.0/minio-helm-1.1.0.tgz
+    version: 1.1.0
   - apiVersion: v2
     created: "2024-02-29T09:50:20.499815196Z"
     description: Minio Helm Chart for Rahti platform
@@ -1330,4 +1365,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2024-03-11T10:47:00.977964618Z"
+generated: "2024-03-11T12:23:14.706346269Z"
