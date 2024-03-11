@@ -76,10 +76,10 @@ Define a function that lookup the secret on upgrade. If install, it requires the
   {{- if .Release.IsUpgrade -}}
     {{- $data := default dict (lookup "v1" "Secret" .Release.Namespace .Values.grafana.appName).data -}}
     {{- if $data -}}
-      {{- index $data .Values.secret.random_pw_secret_key | b64dec -}}
+      {{- index $data .Values.grafana.random_pw_secret_key | b64dec -}}
     {{- end -}}
   {{- else -}}
-    {{- if and (required "You must pass .Values.grafana.appName (the name of a secret to retrieve password from on upgrade)" .Values.grafana.appName) (required "You must pass .Values.secret.random_pw_secret_key (the name of the key in the secret to retrieve password from on upgrade)" .Values.secret.random_pw_secret_key) -}}
+    {{- if and (required "You must pass .Values.grafana.appName (the name of a secret to retrieve password from on upgrade)" .Values.grafana.appName) (required "You must pass .Values.grafana.random_pw_secret_key (the name of the key in the secret to retrieve password from on upgrade)" .Values.grafana.random_pw_secret_key) -}}
       {{- (include "generate_static_password" .) -}}
     {{- end -}}
   {{- end -}}

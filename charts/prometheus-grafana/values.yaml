@@ -23,10 +23,10 @@ grafana:
   requests:
     memory: 1Gi
     
+  random_pw_secret_key: admin-password
   secret:
-    random_pw_secret_key: PASS
-    adminUsername: admin
-    adminPassword: '{{- include "random_pw_reusable" . -}}'
+    admin-username: admin
+    admin-password: '{{- include "random_pw_reusable" . -}}'
 
   pvc:
     storageSize: 5Gi
