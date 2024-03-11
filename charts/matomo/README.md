@@ -24,8 +24,12 @@ helm upgrade --install matomo . -f {custom_values.yaml}
 | `mariadb.service.type`                       | Set the Service type                                         | `ClusterIP`                                                     |
 | `mariadb.pvc.storageSize`                    | Storage size for the PersistentVolume                        | `5Gi`                                                           |
 | `mariadb.pvc.storageClassName`               | Storage Class Name for the PersistentVolume                  | `standard-csi`                                                  |
-| `mariadb.secret.databaseName`                | Name of your database                                        | `matomodb`                                                      |
-| `mariadb.secret.databaseUser`                | Name of the database user                                    | `matomouser`                                                    |
+| `mariadb.random_pw_secret_key`               | Key to store the password                                    | `database-password`                                             |
+| `mariadb.random_root_pw_secret_key`          | Key to store the root password                               | `database-root-password`                                        |
+| `mariadb.secret.database-name`               | Name of the database                                         | `matomodb`                                                      |
+| `mariadb.secret.database-user`               | Name of the database user                                    | `matomouser`                                                    |
+| `mariadb.secret.database-password`           | Function that retrieve the generated password                | `'{{- include "random_mariadb_pw_reusable" . -}}'`              |
+| `mariadb.secret.database-password`           | Function that retrieve the generated root password           | `'{{- include "random_mariadb_root_pw_reusable" . -}}'`         |
 | `mariadb.livenessProbe.enabled`              | Enable or not `livenessProbe`                                | `true`                                                          |
 | `mariadb.livenessProbe.initialDelaySeconds`  | Set the `livenessProbe.initialDelaySeconds`                  | `30`                                                            |
 | `mariadb.livenessProbe.timeoutSeconds`       | Set the `livenessProbe.timeoutSeconds`                       | `1`                                                             |
@@ -36,17 +40,21 @@ helm upgrade --install matomo . -f {custom_values.yaml}
  
 ### Matomo parameters
 
-| Name                                             | Description                                                          | Value                   |
-| ------------------------------------------------ | -------------------------------------------------------------------- | ----------------------- |
-| `matomo.image`                                   | Name of the `matomo` image.                                          | `bitnami/matomo:latest` |
-| `matomo.name`                                    | Name of your app.                                                    | `matomo`                |
-| `matomo.service.type`                            | Set the Service type                                                 | `ClusterIP`             |
-| `matomo.route.tls.insecureEdgeTerminationPolicy` | Set the termination policy regarding insecure traffic for the route  | `Redirect`              |
-| `matomo.route.tls.termination`                   | Set the termination for the route                                    | `edge`                  |
-| `matomo.secret.matomoUser`                       | Name of the database user                                            | `matomouser`            |
+| Name                                             | Description                                                          | Value                                             |
+| ------------------------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------- |
+| `matomo.image`                                   | Name of the `matomo` image.                                          | `bitnami/matomo:latest`                           |
+| `matomo.name`                                    | Name of your app.                                                    | `matomo`                                          |
+| `matomo.service.type`                            | Set the Service type                                                 | `ClusterIP`                                       |
+| `matomo.route.tls.insecureEdgeTerminationPolicy` | Set the termination policy regarding insecure traffic for the route  | `Redirect`                                        |
+| `matomo.route.tls.termination`                   | Set the termination for the route                                    | `edge`                                            |
+| `matomo.random_pw_secret_key`                    | Key to store the password                                            | `matomo-password`                                 |
+| `matomo.secret.matomo-username`                  | Name of the matomo user                                              | `matomouser`                                      |
+| `matomo.secret.matomo-password`                  | Function that retrieve the generated password                        | `'{{- include "random_matomo_pw_reusable" . -}}'` |
 
 The password for the mariadb database and the root password are generated randomly. A function is created in the `_helpers.tpl` file.  
 It's the same behavior for the matomo user password.
+
+The passwords won't change if you upgrade the Chart.
 
 Follow the instructions after deploying the Helm Chart to retrieve the passwords.
 
