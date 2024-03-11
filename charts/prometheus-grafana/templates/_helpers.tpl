@@ -51,45 +51,36 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Define a function that generate static password
 */}}
-{{- define "prometheus-grafana.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "prometheus-grafana.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
+{{- define "generate_static_password" -}}
+{{- /* Create "tmp_vars" dict inside ".Release" to store various stuff. */ -}}
+{{- if not (index .Release "tmp_vars") -}}
+{{-   $_ := set .Release "tmp_vars" dict -}}
+{{- end -}}
+{{- /* Some random ID of this password, in case there will be other random values alongside this instance. */ -}}
+{{- $key := printf "%s_%s" .Release.Name "password" -}}
+{{- /* If $key does not yet exist in .Release.tmp_vars, then... */ -}}
+{{- if not (index .Release.tmp_vars $key) -}}
+{{- /* ... store random password under the $key */ -}}
+{{-   $_ := set .Release.tmp_vars $key (randAlphaNum 20) -}}
+{{- end -}}
+{{- /* Retrieve previously generated value. */ -}}
+{{- index .Release.tmp_vars $key -}}
+{{- end -}}
 
-{{/* 
-Generate prometheus secret password
+{{/*
+Define a function that lookup the secret on upgrade. If install, it requires the name of secret to create and the key to store the password.
 */}}
-{{- define "prometheus.secretPassword" -}}
-pass: {{ randAlphaNum 16 | quote }}
-{{- end }}
-
-{{/* 
-Generate grafana secret password
-*/}}
-{{- define "grafana.secretPassword" -}}
-admin-password: {{ randAlphaNum 16 | quote }}
-{{- end }}
-
-# {{/*
-# Generate prometheus static password for multiple use
-# */}}
-# {{- define "prometheus.staticPassword" -}}
-# {{- /* Create "tmp_vars" dict inside ".Release" to store various stuff. */ -}}
-# {{- if not (index .Release "tmp_vars") -}}
-# {{-   $_ := set .Release "tmp_vars" dict -}}
-# {{- end -}}
-# {{- /* Some random ID of this password, in case there will be other random values alongside this instance. */ -}}
-# {{- $key := printf "%s_%s" .Release.Name "password" -}}
-# {{- /* If $key does not yet exist in .Release.tmp_vars, then... */ -}}
-# {{- if not (index .Release.tmp_vars $key) -}}
-# {{- /* ... store random password under the $key */ -}}
-# {{-   $_ := set .Release.tmp_vars $key (randAlphaNum 16 | quote ) -}}
-# {{- end -}}
-# {{- /* Retrieve previously generated value. */ -}}
-# {{- index .Release.tmp_vars $key -}}
-# {{- end -}}
+{{- define "random_pw_reusable" -}}
+  {{- if .Release.IsUpgrade -}}
+    {{- $data := default dict (lookup "v1" "Secret" .Release.Namespace .Values.grafana.appName).data -}}
+    {{- if $data -}}
+      {{- index $data .Values.grafana.random_pw_secret_key | b64dec -}}
+    {{- end -}}
+  {{- else -}}
+    {{- if and (required "You must pass .Values.grafana.appName (the name of a secret to retrieve password from on upgrade)" .Values.grafana.appName) (required "You must pass .Values.grafana.random_pw_secret_key (the name of the key in the secret to retrieve password from on upgrade)" .Values.grafana.random_pw_secret_key) -}}
+      {{- (include "generate_static_password" .) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

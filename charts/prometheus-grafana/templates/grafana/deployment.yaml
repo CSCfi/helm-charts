@@ -26,22 +26,12 @@ spec:
           valueFrom:
             secretKeyRef:
               key: admin-username
-              name: grafana-secret
+              name: {{ .Values.grafana.appName }}
         - name: ADMIN_PASSWORD
           valueFrom:
             secretKeyRef:
               key: admin-password
-              name: grafana-secret
-        - name: BASIC_AUTH_USER
-          valueFrom:
-            secretKeyRef:
-              key: user
-              name: prometheus-nginx-secret
-        - name: BASIC_AUTH_PASS
-          valueFrom:
-            secretKeyRef:
-              key: pass
-              name: prometheus-nginx-secret
+              name: {{ .Values.grafana.appName }}
         args:
         - '--homepath=/usr/share/grafana'
         - '--config=/etc/grafana/grafana.ini'
