@@ -6,3 +6,7 @@ Your HedgeDoc applications is now deployed. Wait a little bit the time that the 
 and then you could access it through this URL:
 
 https://{{ .Values.hedgedoc.appname }}.{{ .Values.hedgedoc.domain }}
+
+The postgresql database password is generated automatically. To check its value, run this command:
+
+  echo PostgreSQL Password: $(oc get secret --namespace={{ .Release.Namespace }} postgres -o jsonpath="{.data.database-password}" | base64 -d)

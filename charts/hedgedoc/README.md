@@ -31,10 +31,16 @@ helm upgrade --install hedgedoc . -f {custom_values.yaml}
 | `hedgedoc.containerSecurityContext`    | Set SecurityContext for the container                   | `allowPrivilegeEscalation: false`<br>`runAsUser:`<br>`runAsGroup:`<br>`capabilities:`<br>&nbsp;&nbsp;`drop:`<br>&nbsp;&nbsp;`- ALL`<br>`runAsNonRoot: true`<br>`seccompProfile:`<br>&nbsp;&nbsp;`type: RuntimeDefault` |
 | `hedgedoc.pvc.storageSpace`            | Storage space for the PersistentVolume                  | `5Gi`                             |
 | `hedgedoc.service.type`                | Set the Service type                                    | `ClusterIP`                       |
+| `hedgedoc.random_pw_secret_key`        | Key to store the password                               | `database-password`               |
+| `hedgedoc.secret.database-name`        | Name of the database                                    | `postgres`                        |
+| `hedgedoc.secret.database-user`        | Name of the postgres user                               | `postgres`                        |
+| `hedgedoc.secret.database-password`    | Function that retrieve the generated password           | `'{{- include "random_pw_reusable" . -}}'` |
 
 ### PostgreSQL parameters
 
-Since we are using the `bitnami/postgresql` Helm Chart as a dependency, you can take a look to the [PostgreSQL ArtifactHub](https://artifacthub.io/packages/helm/bitnami/postgresql/13.4.4) to check the different values
+Since we are using the `bitnami/postgresql` Helm Chart as a dependency, you can take a look to the [PostgreSQL ArtifactHub](https://artifacthub.io/packages/helm/bitnami/postgresql/13.4.4) to check the different values.
+
+The postgres database password is generated randomly and won't change if you upgrade the Chart.
 
 ## Cleanup
 To delete all the resources, simply uninstall the Helm Chart:

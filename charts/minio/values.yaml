@@ -16,6 +16,11 @@ minio:
       path: /minio/health/ready
       port: 9000
       scheme: HTTP
+  random_accesskey_secret_key: accessKey
+  random_secretkey_secret_key: secretKey
+  secret:
+    accessKey: '{{- include "random_minio_accesskey_reusable" . -}}'
+    secretKey: '{{- include "random_minio_secretkey_reusable" . -}}'
   pvc:
     name: minio-pvc
     storageSize: 5Gi

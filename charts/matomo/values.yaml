@@ -10,9 +10,13 @@ mariadb:
   pvc:
     storageSize: 5Gi
     storageClassName: standard-csi
+  random_pw_secret_key: database-password
+  random_root_pw_secret_key: database-root-password
   secret:
-    databaseName: matomodb
-    databaseUser: matomouser
+    database-name: matomodb
+    database-user: matomouser
+    database-password: '{{- include "random_mariadb_pw_reusable" . -}}'
+    database-root-password: '{{- include "random_mariadb_root_pw_reusable" . -}}'
   livenessProbe:
     enabled: true
     initialDelaySeconds: 30
@@ -34,5 +38,7 @@ matomo:
     tls:
       insecureEdgeTerminationPolicy: Redirect
       termination: edge
+  random_pw_secret_key: matomo-password
   secret:
-    matomoUser: matomouser
+    matomo-username: matomouser
+    matomo-password: '{{- include "random_matomo_pw_reusable" . -}}'
