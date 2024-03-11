@@ -35,7 +35,7 @@ The password to access Grafana WebUI is generated randomly and won't change if y
 | `grafana.image`                                      | Name of the `prometheus` image                          | `grafana/grafana:10.2.4`                   |
 | `grafana.limits.memory`                              | Define the maximum of amount of memory                  | `1Gi`                                      |
 | `grafana.requests.memory`                            | Define the minimum guaranteed amount of memory          | `1Gi`                                      |
-| `grafana.secret.random_pw_secret_key`                | Key to store the password                               | `PASS`                                     |
+| `grafana.secret.random_pw_secret_key`                | Key to store the password                               | `admin-password`                           |
 | `grafana.secret.adminUsername`                       | Name of the user to connect to prometheus webUI         | `admin`                                    |
 | `grafana.secret.adminPassword`                       | Function that retrieve the generated password           | `'{{- include "random_pw_reusable" . - }}` |
 | `grafana.service.type`                               | Define the service type                                 | `ClusterIP`                                |
