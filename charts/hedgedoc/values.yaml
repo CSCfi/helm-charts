@@ -28,6 +28,11 @@ hedgedoc:
     storageSpace: 5Gi
   service:
     type: ClusterIP
+  random_pw_secret_key: database-password
+  secret:
+    database-name: postgres
+    database-user: postgres
+    database-password: '{{- include "random_pw_reusable" . -}}'
 
 # Parameters related to the deployment of PostgreSQL
 postgresql:

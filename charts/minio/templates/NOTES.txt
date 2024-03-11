@@ -11,5 +11,5 @@ Get the application console URL by running this command:
 The password for the user is generated randomly.
 To retrieve it, run this command:
 
-  echo Minio access key: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.minio.clusterName }}-secret -o jsonpath="{.data.accessKey}" | base64 -d)
-  echo Minio secret key: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.minio.clusterName }}-secret -o jsonpath="{.data.secretKey}" | base64 -d)
+  echo Minio access key: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.minio.clusterName }} -o jsonpath="{.data.accessKey}" | base64 -d)
+  echo Minio secret key: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.minio.clusterName }} -o jsonpath="{.data.secretKey}" | base64 -d)
