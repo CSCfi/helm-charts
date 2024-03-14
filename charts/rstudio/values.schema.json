@@ -1,0 +1,131 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "appName": {
+            "type": "string"
+        },
+        "buildConfig": {
+            "properties": {
+                "contextDir": {
+                    "type": "string"
+                },
+                "gitBranch": {
+                    "type": "string"
+                },
+                "gitRepoUri": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "openshift": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "rstudio": {
+            "properties": {
+                "containerSecurityContext": {
+                    "properties": {
+                        "allowPrivilegeEscalation": {
+                            "type": "boolean"
+                        },
+                        "capabilities": {
+                            "properties": {
+                                "drop": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "runAsGroup": {
+                            "type": "null"
+                        },
+                        "runAsNonRoot": {
+                            "type": "boolean"
+                        },
+                        "runAsUser": {
+                            "type": "null"
+                        },
+                        "seccompProfile": {
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "podSecurityContext": {
+                    "properties": {},
+                    "type": "object"
+                },
+                "pvc": {
+                    "properties": {
+                        "mountName": {
+                            "type": "string"
+                        },
+                        "storageSize": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "route": {
+                    "properties": {
+                        "host": {
+                            "type": "string"
+                        },
+                        "insecureEdgeTerminationPolicy": {
+                            "type": "string"
+                        },
+                        "termination": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "shiny": {
+            "properties": {
+                "pvc": {
+                    "properties": {
+                        "mountName": {
+                            "type": "string"
+                        },
+                        "storageSize": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "route": {
+                    "properties": {
+                        "host": {
+                            "type": "string"
+                        },
+                        "insecureEdgeTerminationPolicy": {
+                            "type": "string"
+                        },
+                        "termination": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}

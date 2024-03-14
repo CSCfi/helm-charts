@@ -12,7 +12,7 @@ route:
 hedgedoc:
   appname: my-hedgedoc
   domain: 2.rahtiapp.fi
-  image: quay.io/hedgedoc/hedgedoc:1.9.4
+  image: quay.io/hedgedoc/hedgedoc:1.9.9
   podSecurityContext: {}
   containerSecurityContext:
     allowPrivilegeEscalation: false
