@@ -991,6 +991,22 @@ entries:
     version: 1.12.0-dev
   hedgedoc-helm:
   - apiVersion: v2
+    created: "2024-03-15T09:18:46.871892064Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    description: Hedgedoc Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: a4de780ebba6fba1271f20d1fdafdba5c7efdc69f6ae6d18d5245a2aa74d065c
+    icon: https://raw.githubusercontent.com/hedgedoc/hedgedoc/develop/frontend/src/app/icon.png
+    name: hedgedoc-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-helm-1.1.1/hedgedoc-helm-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
     created: "2024-03-11T12:23:14.221717546Z"
     dependencies:
     - condition: postgresql.enabled
@@ -1041,6 +1057,24 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-helm-0.1.0/hedgedoc-helm-0.1.0.tgz
     version: 0.1.0
   jupyterhub:
+  - apiVersion: v2
+    appVersion: 4.0.2
+    created: "2024-03-15T09:18:47.039032601Z"
+    description: Multi-user Jupyter installation Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 3b8d672810ce433e091bdfe5a27fd719b0a9e633c3aa816c04c18cc61117c1b2
+    home: https://z2jh.jupyter.org
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    keywords:
+    - jupyter
+    - jupyterhub
+    - z2jh
+    kubeVersion: '>=1.23.0-0'
+    name: jupyterhub
+    sources:
+    - https://github.com/jupyterhub/zero-to-jupyterhub-k8s
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-1.1.1/jupyterhub-1.1.1.tgz
+    version: 1.1.1
   - apiVersion: v2
     appVersion: 4.0.2
     created: "2023-12-08T12:31:25.132977083Z"
@@ -1166,6 +1200,17 @@ entries:
     version: 0.0.1-set.by.chartpress
   matomo-helm:
   - apiVersion: v2
+    created: "2024-03-15T09:18:47.214903767Z"
+    description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: c3693431c9384de48a088e2c601908d6b53c317a728a1ff83752bc29a2c6ceac
+    icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4
+    name: matomo-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/matomo-helm-1.1.1/matomo-helm-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
     created: "2024-03-11T12:23:14.428208569Z"
     description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
     digest: 9d1725e7b9765d39f7dd1cf421b70872c71151b050014edb434ee3e150a46edb
@@ -1186,6 +1231,17 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/matomo-helm-1.0.0/matomo-helm-1.0.0.tgz
     version: 1.0.0
   minio-helm:
+  - apiVersion: v2
+    created: "2024-03-15T09:18:47.418380953Z"
+    description: Minio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 17dcb58953159964785eed2b7852941ad06c633c4732e0d3b1fce4f78bebc680
+    icon: https://min.io/resources/img/logo.svg
+    name: minio-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/minio-helm-1.1.1/minio-helm-1.1.1.tgz
+    version: 1.1.1
   - apiVersion: v2
     created: "2024-03-11T12:23:14.706254817Z"
     description: Minio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
@@ -1254,6 +1310,18 @@ entries:
     version: 0.4.0
   prometheus-grafana-helm:
   - apiVersion: v2
+    created: "2024-03-15T09:18:47.555037358Z"
+    description: Prometheus and Grafana Helm Chart for Rahti platform Link to the
+      repo https://github.com/CSCfi/helm-charts
+    digest: f78ffcf33591d7b6e86c6d85dbdbd77d1cd0104342d92202898f63ea7ba9d9e8
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Grafana_icon.svg/351px-Grafana_icon.svg.png
+    name: prometheus-grafana-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/prometheus-grafana-helm-1.1.1/prometheus-grafana-helm-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
     created: "2024-03-11T10:47:00.527070147Z"
     description: Prometheus and Grafana Helm Chart for Rahti platform Link to the
       repo https://github.com/CSCfi/helm-charts
@@ -1312,6 +1380,17 @@ entries:
     version: 6.4.4
   rstudio-helm:
   - apiVersion: v2
+    created: "2024-03-15T09:18:47.854721147Z"
+    description: RStudio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: ec04283aa321ca849cb3eee6264bb5f764fa097343e580956bb8ef83a8f58736
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/0e/Eo_circle_light-blue_white_letter-r.svg
+    name: rstudio-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/rstudio-helm-1.0.1/rstudio-helm-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     created: "2024-02-29T09:50:21.27455699Z"
     description: RStudio Helm Chart for Rahti platform
     digest: 7ccaec709563df0a35ae7694b2465b43947e55b2588da03ad393a0efd2be39c7
@@ -1365,4 +1444,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2024-03-11T12:23:14.706346269Z"
+generated: "2024-03-15T09:18:48.007706344Z"
