@@ -5,4 +5,4 @@ description: RStudio Helm Chart for Rahti platform
 version: 1.0.1
 sources:
 - https://github.com/CSCfi/helm-charts
-icon: 
+icon: https://upload.wikimedia.org/wikipedia/commons/0/0e/Eo_circle_light-blue_white_letter-r.svg
