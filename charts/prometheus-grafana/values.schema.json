@@ -1,0 +1,125 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "grafana": {
+            "properties": {
+                "appName": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "limits": {
+                    "properties": {
+                        "memory": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "pvc": {
+                    "properties": {
+                        "storageSize": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "random_pw_secret_key": {
+                    "type": "string"
+                },
+                "requests": {
+                    "properties": {
+                        "memory": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "route": {
+                    "properties": {
+                        "tls": {
+                            "properties": {
+                                "insecureEdgeTerminationPolicy": {
+                                    "type": "string"
+                                },
+                                "termination": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "secret": {
+                    "properties": {
+                        "admin-password": {
+                            "type": "string"
+                        },
+                        "admin-username": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "service": {
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "prometheus": {
+            "properties": {
+                "appName": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "limits": {
+                    "properties": {
+                        "memory": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "pvc": {
+                    "properties": {
+                        "storageSize": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "requests": {
+                    "properties": {
+                        "memory": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "retentionTime": {
+                    "type": "string"
+                },
+                "service": {
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}

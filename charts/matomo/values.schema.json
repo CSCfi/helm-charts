@@ -1,0 +1,163 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "mariadb": {
+            "properties": {
+                "image": {
+                    "type": "string"
+                },
+                "imageStream": {
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "namespace": {
+                            "type": "string"
+                        },
+                        "tag": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "livenessProbe": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "initialDelaySeconds": {
+                            "type": "integer"
+                        },
+                        "timeoutSeconds": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "pvc": {
+                    "properties": {
+                        "storageClassName": {
+                            "type": "string"
+                        },
+                        "storageSize": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "random_pw_secret_key": {
+                    "type": "string"
+                },
+                "random_root_pw_secret_key": {
+                    "type": "string"
+                },
+                "readinessProbe": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "initialDelaySeconds": {
+                            "type": "integer"
+                        },
+                        "timeoutSeconds": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "resources": {
+                    "properties": {
+                        "limits": {
+                            "properties": {
+                                "memory": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "secret": {
+                    "properties": {
+                        "database-name": {
+                            "type": "string"
+                        },
+                        "database-password": {
+                            "type": "string"
+                        },
+                        "database-root-password": {
+                            "type": "string"
+                        },
+                        "database-user": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "service": {
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "matomo": {
+            "properties": {
+                "image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "random_pw_secret_key": {
+                    "type": "string"
+                },
+                "route": {
+                    "properties": {
+                        "tls": {
+                            "properties": {
+                                "insecureEdgeTerminationPolicy": {
+                                    "type": "string"
+                                },
+                                "termination": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "secret": {
+                    "properties": {
+                        "matomo-password": {
+                            "type": "string"
+                        },
+                        "matomo-username": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "service": {
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}

@@ -2,6 +2,7 @@ apiVersion: v2
 name: matomo-helm
 description: Matomo Helm Chart for Rahti platform
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 1.1.0
+version: 1.1.1
 sources:
 - https://github.com/CSCfi/helm-charts
+icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4
