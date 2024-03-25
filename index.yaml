@@ -989,6 +989,23 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/airflow-1.12.0-dev/airflow-1.12.0-dev.tgz
     version: 1.12.0-dev
+  hedgedoc:
+  - apiVersion: v2
+    created: "2024-03-25T12:17:26.781243807Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    description: Hedgedoc Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 21eb5ff447506f95693aaa2adc09c8d36e6c1155a45e8cc123c365b2d7ac5745
+    icon: https://raw.githubusercontent.com/hedgedoc/hedgedoc/develop/frontend/src/app/icon.png
+    name: hedgedoc
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-1.1.2/hedgedoc-1.1.2.tgz
+    version: 1.1.2
   hedgedoc-helm:
   - apiVersion: v2
     created: "2024-03-15T09:18:46.871892064Z"
@@ -1444,4 +1461,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2024-03-15T09:18:48.007706344Z"
+generated: "2024-03-25T12:17:26.781307005Z"
