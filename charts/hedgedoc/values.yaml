@@ -10,7 +10,7 @@ route:
   
 # Parameters related to the deployment of HedgeDoc
 hedgedoc:
-  appname: my-hedgedoc-tris
+  appname: my-hedgedoc
   domain: 2.rahtiapp.fi
   image: quay.io/hedgedoc/hedgedoc:1.9.9
   podSecurityContext: {}
