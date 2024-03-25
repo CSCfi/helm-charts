@@ -40,7 +40,7 @@ spec:
               key: database-name
               name: postgres
         - name: CMD_DB_HOST
-          value: hedgedoc-postgresql
+          value: {{ include "postgresql.v1.primary.fullname" . }}-postgresql
         - name: CMD_DB_PORT
           value: "5432"
         - name: CMD_DB_DIALECT
