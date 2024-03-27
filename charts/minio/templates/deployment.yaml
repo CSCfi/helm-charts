@@ -1,11 +1,15 @@
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: {{ .Values.minio.clusterName }}
   name: {{ .Values.minio.clusterName }}
 spec:
-  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.minio.clusterName }}
+  strategy:
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -21,8 +25,9 @@ spec:
         - mountPath: /mnt/default-config-json/
           name: default-config-json
       containers:
-      - image: {{ .Values.minio.image }}
-        name: {{ .Values.minio.clusterName }}
+      - name: {{ .Values.minio.clusterName }}
+        imagePullPolicy: IfNotPresent
+        image: {{ .Values.minio.image }}
         ports:
         - containerPort: 9000
           protocol: TCP
@@ -31,11 +36,11 @@ spec:
         {{- if .Values.minio.readinessProbe.enabled }}
         readinessProbe:
           httpGet:
-          {{- .Values.minio.readinessProbe.httpGet | toYaml | nindent 12 }}
-          {{- end }}
+        {{- .Values.minio.readinessProbe.httpGet | toYaml | nindent 12 }}
+        {{- end }}
         volumeMounts:
-        - mountPath: /data/files
-          name: minio-vol
+        - name: minio-vol
+          mountPath: /data/files
         command:
         - minio
         - server

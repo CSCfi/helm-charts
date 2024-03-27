@@ -4,4 +4,6 @@ metadata:
   annotations:
     description: Keeps track of changes in the appliation image
   name: {{ .Values.appName }}
-  
+spec:
+  lookupPolicy:
+    local: true
