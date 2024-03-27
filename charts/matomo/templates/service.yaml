@@ -9,7 +9,7 @@ spec:
   - name: mariadb
     port: 3306
   selector:
-    name: {{ .Values.mariadb.name }}
+    app: {{ .Values.mariadb.name }}
   type: {{ .Values.mariadb.service.type }}
 
 ---
@@ -30,5 +30,5 @@ spec:
     protocol: TCP
     targetPort: 8443
   selector:
-    deploymentconfig: {{ .Values.matomo.name }}
+    app: {{ .Values.matomo.name }}
   type: {{ .Values.matomo.service.type }}
