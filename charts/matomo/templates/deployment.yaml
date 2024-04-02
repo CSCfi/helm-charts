@@ -11,7 +11,7 @@ spec:
     matchLabels:
       app: {{ .Values.mariadb.name }}
   strategy:
-    type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       labels:
