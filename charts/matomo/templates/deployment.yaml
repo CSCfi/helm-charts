@@ -1,19 +1,21 @@
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
+  labels:
+    app: {{ .Values.mariadb.name }}
   annotations:
     template.alpha.openshift.io/wait-for-ready: "true"
-  name: mariadb
+  name: {{ .Values.mariadb.name }}
 spec:
-  replicas: 1
   selector:
-    name: mariadb
+    matchLabels:
+      app: {{ .Values.mariadb.name }}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        name: mariadb
+        app: {{ .Values.mariadb.name }}
     spec:
       containers:
       - env:
@@ -46,7 +48,7 @@ spec:
             port: 3306
           timeoutSeconds: {{ .Values.mariadb.livenessProbe.timeoutSeconds }}
         {{- end }}
-        name: mariadb
+        name: {{ .Values.mariadb.name }}
         ports:
         - containerPort: 3306
         {{- if .Values.mariadb.readinessProbe.enabled }}
@@ -70,44 +72,24 @@ spec:
       - name: {{ .Values.mariadb.name }}-data
         persistentVolumeClaim:
           claimName: {{ .Values.mariadb.name }}
-  triggers:
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - mariadb
-      from:
-        kind: ImageStreamTag
-        name: {{ .Values.mariadb.imageStream.name }}:{{ .Values.mariadb.imageStream.tag }}
-        namespace: {{ .Values.mariadb.imageStream.namespace }}
-    type: ImageChange
-  - type: ConfigChange
 
 ---
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
-    app: matomo
-  name: matomo
+    app: {{ .Values.matomo.name }}
+  name: {{ .Values.matomo.name }}
 spec:
-  replicas: 1
   selector:
-    app: matomo
-    deploymentconfig: matomo
+    matchLabels:
+      app: {{ .Values.matomo.name }}
   strategy:
-    resources: {}
-    rollingParams:
-      intervalSeconds: 1
-      maxSurge: 25%
-      maxUnavailable: 25%
-      timeoutSeconds: 600
-      updatePeriodSeconds: 1
-    type: Rolling
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        app: matomo
-        deploymentconfig: matomo
+        app: {{ .Values.matomo.name }}
     spec:
       containers:
       - env:
@@ -138,7 +120,7 @@ spec:
                 name: {{ .Values.mariadb.name }}
         image: {{ .Values.matomo.image }}
         imagePullPolicy: Always
-        name: matomo
+        name: {{ .Values.matomo.name }}
         ports:
         - containerPort: 8080
           protocol: TCP

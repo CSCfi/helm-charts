@@ -1,24 +1,33 @@
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     app: {{ .Values.appName }}
   name: {{ .Values.appName }}
 spec:
-  replicas: 1
   selector:
+    matchLabels:
       app: {{ .Values.appName }}
   strategy:
-    type: Rolling
+    type: Recreate
   template:
     metadata:
       labels:
         app: {{ .Values.appName }}
     spec:
-      containers:
-      - image: {{ .Values.appName }}:latest
+      serviceAccount: build-reader
+      initContainers:
+      - name: wait-for-build
         imagePullPolicy: IfNotPresent
-        name: {{ .Values.appName }}
+        image: quay.io/openshift/origin-cli:4.16
+        command:
+        - sh
+        - -c
+        - oc wait --for=jsonpath='{.status.phase}'=Complete build -l buildconfig={{ .Values.appName }} --timeout=900s
+      containers:
+      - name: {{ .Values.appName }}
+        imagePullPolicy: IfNotPresent
+        image: image-registry.openshift-image-registry.svc:5000/{{ .Release.Namespace }}/{{ .Values.appName }}:latest
         ports:
         - containerPort: 3838
           protocol: TCP
@@ -33,14 +42,11 @@ spec:
         securityContext:
         {{- .Values.rstudio.containerSecurityContext | toYaml | nindent 10 }}
         {{- end }}
-      {{- if .Values.openshift.enabled }}
-      dnsPolicy: ClusterFirst
       restartPolicy: Always
-      schedulerName: default-scheduler
+      {{- if .Values.openshift.enabled }}
       securityContext:
       {{- .Values.rstudio.podSecurityContext | toYaml | nindent 8 }}
       {{- end }}
-      terminationGracePeriodSeconds: 30
       volumes:
       - name: {{ .Values.rstudio.pvc.mountName }}
         persistentVolumeClaim:
@@ -48,13 +54,3 @@ spec:
       - name: {{ .Values.shiny.pvc.mountName }}
         persistentVolumeClaim:
           claimName: {{ .Values.shiny.pvc.mountName }}
-  triggers:
-  - type: ConfigChange
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - {{ .Values.appName }}
-      from:
-        kind: ImageStreamTag
-        name: {{ .Values.appName }}:latest
-    type: ImageChange

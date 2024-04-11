@@ -5,7 +5,7 @@ helm upgrade --install minio .
 ```
 
 ## Explanations
-This Helm Chart helps you to deploy Minio on CSC Rahti 2 (Openshift 4).  
+This Helm Chart helps you to deploy Minio on CSC Rahti (Openshift 4).  
 If you want to use it with different values, you can edit `values.yaml` file and then run:  
 ```sh
 helm upgrade --install minio . -f {custom_values.yaml}

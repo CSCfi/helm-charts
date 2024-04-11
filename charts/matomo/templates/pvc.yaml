@@ -2,6 +2,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.mariadb.name }}
+  annotations:
+    helm.sh/resource-policy: "keep"
 spec:
   accessModes:
   - ReadWriteOnce

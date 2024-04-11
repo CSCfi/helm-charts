@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: build-reader
+subjects:
+  - kind: ServiceAccount
+    name: build-reader
+roleRef:
+  kind: Role
+  name: build-reader
+  apiGroup: rbac.authorization.k8s.io
