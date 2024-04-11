@@ -1148,6 +1148,18 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
     version: 0.0.1-set.by.chartpress
+  matomo:
+  - apiVersion: v2
+    created: "2024-04-11T09:50:13.78464224Z"
+    description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 0c3b72c62ed6eb5d6df084064c4c6bdc9d98aca2c58d101d10e784be1d3db6e8
+    icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4
+    name: matomo
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/matomo-1.2.1/matomo-1.2.1.tgz
+    version: 1.2.1
   matomo-helm:
   - apiVersion: v2
     created: "2024-03-15T09:18:47.214903767Z"
@@ -1180,6 +1192,18 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/matomo-helm-1.0.0/matomo-helm-1.0.0.tgz
     version: 1.0.0
+  minio:
+  - apiVersion: v2
+    created: "2024-04-11T09:50:13.887825657Z"
+    description: Minio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 4afeeaa4c06c8ccfb6e1773ee34defd2be99393117b1d5a8cd07bc5c6cb70164
+    icon: https://min.io/resources/img/logo.svg
+    name: minio
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/minio-1.2.1/minio-1.2.1.tgz
+    version: 1.2.1
   minio-helm:
   - apiVersion: v2
     created: "2024-03-15T09:18:47.418380953Z"
@@ -1328,6 +1352,18 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/rocketchat-6.4.4/rocketchat-6.4.4.tgz
     version: 6.4.4
+  rstudio:
+  - apiVersion: v2
+    created: "2024-04-11T09:50:14.004703892Z"
+    description: RStudio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: bd6e7dcd8f4c32eb970684ceb29bee2dce2bb48c2ed8b8f0b3131d9254c24253
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/0e/Eo_circle_light-blue_white_letter-r.svg
+    name: rstudio
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/rstudio-1.2.1/rstudio-1.2.1.tgz
+    version: 1.2.1
   rstudio-helm:
   - apiVersion: v2
     created: "2024-03-15T09:18:47.854721147Z"
@@ -1394,4 +1430,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2024-03-25T12:17:26.781307005Z"
+generated: "2024-04-11T09:50:14.004783871Z"
