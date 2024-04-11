@@ -92,7 +92,7 @@ hub:
   extraVolumeMounts: []
   image:
     name: quay.io/jupyterhub/k8s-hub
-    tag: "3.2.1"
+    tag: "3.3.6"
     pullPolicy:
     pullSecrets: []
   resources: {}
@@ -266,7 +266,7 @@ proxy:
       # tag is automatically bumped to new patch versions by the
       # watch-dependencies.yaml workflow.
       #
-      tag: "v2.10.7" # ref: https://hub.docker.com/_/traefik?tab=tags
+      tag: "v3.0" # ref: https://hub.docker.com/_/traefik?tab=tags
       pullPolicy:
       pullSecrets: []
     hsts:
@@ -313,7 +313,7 @@ proxy:
       allowPrivilegeEscalation: false
     image:
       name: quay.io/jupyterhub/k8s-secret-sync
-      tag: "3.2.1"
+      tag: "3.3.6"
       pullPolicy:
       pullSecrets: []
     resources: {}
@@ -353,7 +353,7 @@ singleuser:
   networkTools:
     image:
       name: quay.io/jupyterhub/k8s-network-tools
-      tag: "3.2.1"
+      tag: "3.3.6"
       pullPolicy:
       pullSecrets: []
     resources: {}
@@ -405,7 +405,7 @@ singleuser:
       storageAccessModes: [ReadWriteOnce]
   image:
     name: quay.io/jupyterhub/k8s-singleuser-sample
-    tag: "3.2.1"
+    tag: "3.3.6"
     pullPolicy:
     pullSecrets: []
   startTimeout: 300
@@ -614,7 +614,7 @@ prePuller:
     # image and the configuration below relates to the hook-image-awaiter Job
     image:
       name: quay.io/jupyterhub/k8s-image-awaiter
-      tag: "3.2.1"
+      tag: "3.3.6"
       pullPolicy:
       pullSecrets: []
     containerSecurityContext:
