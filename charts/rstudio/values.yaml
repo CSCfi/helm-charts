@@ -21,7 +21,7 @@ rstudio:
   route:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
-    host: rstudiov2-tristan # REQUIRED
+    host:  # REQUIRED
   random_pw_secret_key: nginx-password
   secret:
     USER: rstudio
@@ -34,7 +34,7 @@ shiny:
   route:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
-    host: shinyv2-tristan # REQUIRED
+    host:  # REQUIRED
 
 buildConfig:
   gitRepoUri: https://github.com/CSCfi/helm-charts.git
