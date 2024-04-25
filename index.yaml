@@ -1178,38 +1178,6 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/matomo-1.2.1/matomo-1.2.1.tgz
     version: 1.2.1
-  matomo-helm:
-  - apiVersion: v2
-    created: "2024-03-15T09:18:47.214903767Z"
-    description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
-    digest: c3693431c9384de48a088e2c601908d6b53c317a728a1ff83752bc29a2c6ceac
-    icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4
-    name: matomo-helm
-    sources:
-    - https://github.com/CSCfi/helm-charts
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/matomo-helm-1.1.1/matomo-helm-1.1.1.tgz
-    version: 1.1.1
-  - apiVersion: v2
-    created: "2024-03-11T12:23:14.428208569Z"
-    description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
-    digest: 9d1725e7b9765d39f7dd1cf421b70872c71151b050014edb434ee3e150a46edb
-    name: matomo-helm
-    sources:
-    - https://github.com/CSCfi/helm-charts
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/matomo-helm-1.1.0/matomo-helm-1.1.0.tgz
-    version: 1.1.0
-  - apiVersion: v2
-    created: "2024-02-29T09:50:20.321449979Z"
-    description: Matomo Helm Chart for Rahti platform
-    digest: 90c1699baf0a9a9f0763154e6f62299ad4da4c7c58aa379727617e4552dcffc5
-    name: matomo-helm
-    sources:
-    - https://github.com/CSCfi/helm-charts
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/matomo-helm-1.0.0/matomo-helm-1.0.0.tgz
-    version: 1.0.0
   minio:
   - apiVersion: v2
     created: "2024-04-11T09:50:13.887825657Z"
@@ -1222,38 +1190,6 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/minio-1.2.1/minio-1.2.1.tgz
     version: 1.2.1
-  minio-helm:
-  - apiVersion: v2
-    created: "2024-03-15T09:18:47.418380953Z"
-    description: Minio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
-    digest: 17dcb58953159964785eed2b7852941ad06c633c4732e0d3b1fce4f78bebc680
-    icon: https://min.io/resources/img/logo.svg
-    name: minio-helm
-    sources:
-    - https://github.com/CSCfi/helm-charts
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/minio-helm-1.1.1/minio-helm-1.1.1.tgz
-    version: 1.1.1
-  - apiVersion: v2
-    created: "2024-03-11T12:23:14.706254817Z"
-    description: Minio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
-    digest: cfbc25300cd44b5cb31d0d24bc9b98af9ef3b22ec88e75225cfcf93ac02e05a3
-    name: minio-helm
-    sources:
-    - https://github.com/CSCfi/helm-charts
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/minio-helm-1.1.0/minio-helm-1.1.0.tgz
-    version: 1.1.0
-  - apiVersion: v2
-    created: "2024-02-29T09:50:20.499815196Z"
-    description: Minio Helm Chart for Rahti platform
-    digest: d5e5a2011349efd96816c9d6fa03a7a5aaffad839880ff0878e52da3e968fa01
-    name: minio-helm
-    sources:
-    - https://github.com/CSCfi/helm-charts
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/minio-helm-1.0.0/minio-helm-1.0.0.tgz
-    version: 1.0.0
   mlflow:
   - annotations:
       category: MachineLearning
@@ -1382,38 +1318,6 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/rstudio-1.2.1/rstudio-1.2.1.tgz
     version: 1.2.1
-  rstudio-helm:
-  - apiVersion: v2
-    created: "2024-03-15T09:18:47.854721147Z"
-    description: RStudio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
-    digest: ec04283aa321ca849cb3eee6264bb5f764fa097343e580956bb8ef83a8f58736
-    icon: https://upload.wikimedia.org/wikipedia/commons/0/0e/Eo_circle_light-blue_white_letter-r.svg
-    name: rstudio-helm
-    sources:
-    - https://github.com/CSCfi/helm-charts
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/rstudio-helm-1.0.1/rstudio-helm-1.0.1.tgz
-    version: 1.0.1
-  - apiVersion: v2
-    created: "2024-02-29T09:50:21.27455699Z"
-    description: RStudio Helm Chart for Rahti platform
-    digest: 7ccaec709563df0a35ae7694b2465b43947e55b2588da03ad393a0efd2be39c7
-    name: rstudio-helm
-    sources:
-    - https://github.com/CSCfi/helm-charts
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/rstudio-helm-1.0.0/rstudio-helm-1.0.0.tgz
-    version: 1.0.0
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2024-01-10T13:29:29.615770421Z"
-    description: A Helm chart for Kubernetes
-    digest: de174153ae4ce0b55bd4d01de05bcb16827ad9c85274903ecbc3aa57f57ba49a
-    name: rstudio-helm
-    type: application
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/rstudio-helm-0.1.0/rstudio-helm-0.1.0.tgz
-    version: 0.1.0
   spark:
   - annotations:
       category: Infrastructure
