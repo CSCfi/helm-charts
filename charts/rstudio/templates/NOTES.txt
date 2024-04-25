@@ -15,6 +15,11 @@ You can retrieve Rstudio URL via this command:
   export RSTUDIO=$(oc get route --namespace {{ .Release.Namespace }} -o yaml | yq '.items[0].spec.host')
   echo "Rstudio server URL: http://$RSTUDIO/"
 
+To retrieve USER and PASSWORD:
+
+  echo USER: $(oc get secret --namespace={{ .Release.Namespace }} nginx-password -o jsonpath="{.data.USER}" | base64 -d)
+  echo PASSWORD: $(oc get secret --namespace={{ .Release.Namespace }} nginx-password -o jsonpath="{.data.PASSWORD}" | base64 -d)
+
 And for the Shiny Server:
 
   export SHINY=$(oc get route --namespace {{ .Release.Namespace }} -o yaml | yq '.items[1].spec.host')

@@ -6,15 +6,15 @@ metadata:
     app: {{ .Values.appName }}
   name: rstudio
 spec:
-  host: {{ .Values.rstudio.route.host }}
+  host: {{ required "A valid .Values.rstudio.route.host entry is required!" .Values.rstudio.route.host }}.2.rahtiapp.fi
   port:
-    targetPort: 8787
+    targetPort: 8081
   tls:
     insecureEdgeTerminationPolicy: {{ .Values.rstudio.route.insecureEdgeTerminationPolicy }}
     termination: {{ .Values.rstudio.route.termination }}
   to:
     kind: Service
-    name: {{ .Values.appName }}
+    name: nginx-okd
     weight: 100
 
 ---
@@ -25,7 +25,7 @@ metadata:
     app: {{ .Values.appName }}
   name: shiny
 spec:
-  host: {{ .Values.shiny.route.host }}
+  host: {{ required "A valid .Values.shiny.route.host entry is required!" .Values.shiny.route.host }}.2.rahtiapp.fi
   port:
     targetPort: 3838
   tls:

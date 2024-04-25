@@ -7,3 +7,14 @@ metadata:
 spec:
   lookupPolicy:
     local: true
+---
+
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+    description: Keeps track of changes in the appliation image
+  name: nginx-okd
+spec:
+  lookupPolicy:
+    local: true
