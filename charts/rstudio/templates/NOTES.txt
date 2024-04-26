@@ -12,7 +12,7 @@ Once the build is over, you can access your Rstudio by retrieving the URL:
 
 You can retrieve Rstudio URL via this command:
   
-  export RSTUDIO=$(oc get route --namespace {{ .Release.Namespace }} -o yaml | yq '.items[0].spec.host')
+  export RSTUDIO=$(oc get route rstudio --namespace {{ .Release.Namespace }} -o yaml | yq .spec.host)
   echo "Rstudio server URL: http://$RSTUDIO/"
 
 To retrieve USER and PASSWORD:
@@ -22,5 +22,5 @@ To retrieve USER and PASSWORD:
 
 And for the Shiny Server:
 
-  export SHINY=$(oc get route --namespace {{ .Release.Namespace }} -o yaml | yq '.items[1].spec.host')
+  export SHINY=$(oc get route shiny --namespace {{ .Release.Namespace }} -o yaml | yq .spec.host)
   echo "Shiny App URL: http://$SHINY/"

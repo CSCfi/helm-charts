@@ -22,7 +22,7 @@ rstudio:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
     host:  # REQUIRED
-  random_pw_secret_key: nginx-password
+  random_pw_secret_key: PASSWORD
   secret:
     USER: rstudio
     PASSWORD: '{{- include "random_pw_reusable" . -}}'
