@@ -21,7 +21,11 @@ rstudio:
   route:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
-    host: ""
+    host:  # REQUIRED
+  random_pw_secret_key: PASSWORD
+  secret:
+    USER: rstudio
+    PASSWORD: '{{- include "random_pw_reusable" . -}}'
 
 shiny:
   pvc:
@@ -30,7 +34,7 @@ shiny:
   route:
     insecureEdgeTerminationPolicy: Redirect
     termination: edge
-    host: ""
+    host:  # REQUIRED
 
 buildConfig:
   gitRepoUri: https://github.com/CSCfi/helm-charts.git
