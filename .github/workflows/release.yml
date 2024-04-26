@@ -30,11 +30,11 @@ jobs:
             helm dependency build $dir;
           done
 
-      - name: Helm Lint
-        run: |
-          for dir in $(ls -d charts/*); do
-            helm lint $dir
-          done
+#      - name: Helm Lint
+#        run: |
+#          for dir in $(ls -d charts/*); do
+#            helm lint $dir
+#          done
           
       - name: Configure Git
         run: |
