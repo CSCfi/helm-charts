@@ -15,7 +15,13 @@ RUN apt-get update && apt-get upgrade -y && apt-get install --no-install-recomme
     libbz2-dev \
     liblzma-dev \
     librsvg2-dev \
+    libudunits2-dev \
+    libgdal-dev \
+    libgeos-dev \
+    libproj-dev \
+    libmysqlclient-dev \
     strace \
+    mlocate \
     nano && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -47,7 +53,9 @@ COPY start.sh /usr/local/bin/start.sh
 RUN rstudio-server verify-installation
 
 RUN chmod -R go+rwX /home /home/rstudio /tmp/downloaded_packages /var/run/rstudio-server /var/lib/rstudio-server /var/log/rstudio && \
-    rm /var/lib/rstudio-server/rstudio-os.sqlite /var/run/rstudio-server/rstudio-rsession/rstudio-server-d.pid
+    rm /var/lib/rstudio-server/rstudio-os.sqlite /var/run/rstudio-server/rstudio-rsession/rstudio-server-d.pid && \
+    echo 'r-libs-user=~/R/library' >>/etc/rstudio/rsession.conf && \
+    echo "R_LIBS=\${R_LIBS-'/home/rstudio-server/R/library'}" >/usr/local/lib/R/etc/Renviron.site
 
 USER $APP_UID:$APP_GID
 WORKDIR $HOME
