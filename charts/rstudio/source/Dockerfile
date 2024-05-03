@@ -54,7 +54,8 @@ RUN rstudio-server verify-installation
 
 RUN chmod -R go+rwX /home /home/rstudio /tmp/downloaded_packages /var/run/rstudio-server /var/lib/rstudio-server /var/log/rstudio && \
     rm /var/lib/rstudio-server/rstudio-os.sqlite /var/run/rstudio-server/rstudio-rsession/rstudio-server-d.pid && \
-    echo "R_LIBS=\${R_LIBS-'/home/rstudio-server/R/library'}" > /usr/local/lib/R/etc/Renviron.site
+    echo 'r-libs-user=~/R/library' >>/etc/rstudio/rsession.conf && \
+    echo "R_LIBS=\${R_LIBS-'/home/rstudio-server/R/library'}" >/usr/local/lib/R/etc/Renviron.site
 
 USER $APP_UID:$APP_GID
 WORKDIR $HOME
