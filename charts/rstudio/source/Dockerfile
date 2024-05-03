@@ -21,6 +21,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install --no-install-recomme
     libproj-dev \
     libmysqlclient-dev \
     strace \
+    mlocate \
     nano && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
