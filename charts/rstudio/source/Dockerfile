@@ -15,6 +15,11 @@ RUN apt-get update && apt-get upgrade -y && apt-get install --no-install-recomme
     libbz2-dev \
     liblzma-dev \
     librsvg2-dev \
+    libudunits2-dev \
+    libgdal-dev \
+    libgeos-dev \
+    libproj-dev \
+    libmysqlclient-dev \
     strace \
     nano && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
