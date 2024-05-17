@@ -27,8 +27,8 @@ RUN apt-get update && apt-get upgrade -y && apt-get install --no-install-recomme
 
 # Setup various variables
 ENV TZ="Europe/Helsinki" \
-    USERNAME="rstudio" \
-    HOME="/home/rstudio" \
+    USERNAME="rstudio-server" \
+    HOME="/home/" \
     TINI_VERSION=v0.19.0 \
     APP_UID=999 \
     APP_GID=999 \
@@ -46,20 +46,20 @@ RUN install2.r -e shiny rmarkdown shinythemes shinydashboard && \
     mkdir -p /var/log/shiny-server && \
     chown rstudio:rstudio /var/log/shiny-server && \
     chmod go+w -R /var/log/shiny-server /usr/local/lib/R /srv /var/lib/shiny-server && \
-    chmod ugo+rwx -R /usr/lib/rstudio-server/www
+    chmod ugo+rwx -R /usr/lib/rstudio-server/www && \
+    echo 'r-libs-user=~/R/library' >>/etc/rstudio/rsession.conf && \
+    echo "R_LIBS=\${R_LIBS-'/home/rstudio-server/R/library'}" >/usr/local/lib/R/etc/Renviron.site
 
 COPY start.sh /usr/local/bin/start.sh
 
 RUN rstudio-server verify-installation
 
 RUN chmod -R go+rwX /home /home/rstudio /tmp/downloaded_packages /var/run/rstudio-server /var/lib/rstudio-server /var/log/rstudio && \
-    rm /var/lib/rstudio-server/rstudio-os.sqlite /var/run/rstudio-server/rstudio-rsession/rstudio-server-d.pid && \
-    echo 'r-libs-user=~/R/library' >>/etc/rstudio/rsession.conf && \
-    echo "R_LIBS=\${R_LIBS-'/home/rstudio-server/R/library'}" >/usr/local/lib/R/etc/Renviron.site
+    rm /var/lib/rstudio-server/rstudio-os.sqlite /var/run/rstudio-server/rstudio-rsession/rstudio-server-d.pid
 
 USER $APP_UID:$APP_GID
 WORKDIR $HOME
-EXPOSE 8787 3838
+EXPOSE 3838
 
 ENTRYPOINT ["/sbin/tini", "-g", "--"]
 CMD ["/usr/local/bin/start.sh"]
