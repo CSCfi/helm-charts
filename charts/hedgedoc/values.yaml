@@ -28,13 +28,13 @@ hedgedoc:
     storageSpace: 5Gi
   service:
     type: ClusterIP
-  random_pw_secret_key: database-password
+  random_pw_secret_key: database-password # Used by random_pw_reusable function in _helpers.tpl
   secret:
     database-name: postgres
     database-user: postgres
     database-password: '{{- include "random_pw_reusable" . -}}'
 
-# Parameters related to the deployment of PostgreSQL
+# Parameters related to the deployment of PostgreSQL in Rahti
 postgresql:
   enabled: true
 
@@ -45,58 +45,13 @@ postgresql:
   tls:
     enabled: false
   
-  # SecurityContext disabled by default for OpenShift.
-  primary:
-    service:
-      type: ClusterIP
-    persistence:
-      size: 5Gi
-    podSecurityContext:
-      enabled: false
-    containerSecurityContext:
-      enabled: false
-      runAsNonRoot: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-      seccompProfile:
-        type: RuntimeDefault
+  # Use to remove the SCC and use the OpenShift SCC
+  compatibility:
+    openshift:
+      adaptSecurityContext: force
 
-  readReplicas:
-    podSecurityContext:
-      enabled: false
-    containerSecurityContext:
-      enabled: false
-      runAsNonRoot: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-      seccompProfile:
-        type: RuntimeDefault
-          
-  backup:
-    cronjob:
-      podSecurityContext:
-        enabled: false
-      containerSecurityContext:
-        enabled: false
-        runAsNonRoot: true
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop:
-          - ALL
-        seccompProfile:
-          type: RuntimeDefault
-
-  metrics:
-    containerSecurityContext:
-      enabled: false
-      runAsNonRoot: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-      seccompProfile:
-        type: RuntimeDefault
+# Parameters related to the deployment of an external PostgreSQL (like Pukki)
+postgresqlExternal:
+  enabled: false
+  # If using an external database, enter the DNS name or public IP
+  externalDatabase:
