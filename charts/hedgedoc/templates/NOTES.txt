@@ -7,6 +7,18 @@ and then you could access it through this URL:
 
 https://{{ .Values.hedgedoc.appname }}.{{ .Values.hedgedoc.domain }}
 
+{{ if .Values.postgresql.enabled }}
 The postgresql database password is generated automatically. To check its value, run this command:
 
   echo PostgreSQL Password: $(oc get secret --namespace={{ .Release.Namespace }} postgres -o jsonpath="{.data.database-password}" | base64 -d)
+
+{{ else if .Values.postgresqlExternal.enabled }}
+You decided to use an external database named {{ index .Values.hedgedoc.secret "database-name" }} reachable through {{ .Values.postgresqlExternal.externalDatabase }}
+{{ else }}
+!!! WARNING !!! 
+No PostgreSQL database is deployed.
+Your pod may fail.
+
+Enable either the values postgresql.enabled
+If you want to use an existing external database, enable the value postgresqlExternal.enabled
+{{ end }}

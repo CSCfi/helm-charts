@@ -109,205 +109,8 @@
                     },
                     "type": "object"
                 },
-                "backup": {
-                    "properties": {
-                        "cronjob": {
-                            "properties": {
-                                "containerSecurityContext": {
-                                    "properties": {
-                                        "allowPrivilegeEscalation": {
-                                            "type": "boolean"
-                                        },
-                                        "capabilities": {
-                                            "properties": {
-                                                "drop": {
-                                                    "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "type": "array"
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "enabled": {
-                                            "type": "boolean"
-                                        },
-                                        "runAsNonRoot": {
-                                            "type": "boolean"
-                                        },
-                                        "seccompProfile": {
-                                            "properties": {
-                                                "type": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                },
-                                "podSecurityContext": {
-                                    "properties": {
-                                        "enabled": {
-                                            "type": "boolean"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    },
-                    "type": "object"
-                },
                 "enabled": {
                     "type": "boolean"
-                },
-                "metrics": {
-                    "properties": {
-                        "containerSecurityContext": {
-                            "properties": {
-                                "allowPrivilegeEscalation": {
-                                    "type": "boolean"
-                                },
-                                "capabilities": {
-                                    "properties": {
-                                        "drop": {
-                                            "items": {
-                                                "type": "string"
-                                            },
-                                            "type": "array"
-                                        }
-                                    },
-                                    "type": "object"
-                                },
-                                "enabled": {
-                                    "type": "boolean"
-                                },
-                                "runAsNonRoot": {
-                                    "type": "boolean"
-                                },
-                                "seccompProfile": {
-                                    "properties": {
-                                        "type": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    },
-                    "type": "object"
-                },
-                "primary": {
-                    "properties": {
-                        "containerSecurityContext": {
-                            "properties": {
-                                "allowPrivilegeEscalation": {
-                                    "type": "boolean"
-                                },
-                                "capabilities": {
-                                    "properties": {
-                                        "drop": {
-                                            "items": {
-                                                "type": "string"
-                                            },
-                                            "type": "array"
-                                        }
-                                    },
-                                    "type": "object"
-                                },
-                                "enabled": {
-                                    "type": "boolean"
-                                },
-                                "runAsNonRoot": {
-                                    "type": "boolean"
-                                },
-                                "seccompProfile": {
-                                    "properties": {
-                                        "type": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            },
-                            "type": "object"
-                        },
-                        "persistence": {
-                            "properties": {
-                                "size": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        },
-                        "podSecurityContext": {
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean"
-                                }
-                            },
-                            "type": "object"
-                        },
-                        "service": {
-                            "properties": {
-                                "type": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    },
-                    "type": "object"
-                },
-                "readReplicas": {
-                    "properties": {
-                        "containerSecurityContext": {
-                            "properties": {
-                                "allowPrivilegeEscalation": {
-                                    "type": "boolean"
-                                },
-                                "capabilities": {
-                                    "properties": {
-                                        "drop": {
-                                            "items": {
-                                                "type": "string"
-                                            },
-                                            "type": "array"
-                                        }
-                                    },
-                                    "type": "object"
-                                },
-                                "enabled": {
-                                    "type": "boolean"
-                                },
-                                "runAsNonRoot": {
-                                    "type": "boolean"
-                                },
-                                "seccompProfile": {
-                                    "properties": {
-                                        "type": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            },
-                            "type": "object"
-                        },
-                        "podSecurityContext": {
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    },
-                    "type": "object"
                 },
                 "tls": {
                     "properties": {
@@ -316,9 +119,27 @@
                         }
                     },
                     "type": "object"
+                },
+                "compatibility": {
+                    "properties": {
+                        "openshift": {
+                            "properties": {
+                                "adaptSecurityContext": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
                 }
             },
             "type": "object"
+        },
+        "postgresqlExternal": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
         },
         "route": {
             "properties": {

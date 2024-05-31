@@ -39,8 +39,13 @@ spec:
             secretKeyRef:
               key: database-name
               name: postgres
+        {{- if .Values.postgresql.enabled }}
         - name: CMD_DB_HOST
           value: {{ include "postgresql.v1.primary.fullname" . }}-postgresql
+        {{- else if .Values.postgresqlExternal.enabled }}
+        - name: CMD_DB_HOST
+          value: {{ .Values.postgresqlExternal.externalDatabase }}
+        {{- end }}
         - name: CMD_DB_PORT
           value: "5432"
         - name: CMD_DB_DIALECT
