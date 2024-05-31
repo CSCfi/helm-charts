@@ -138,9 +138,6 @@
             "properties": {
                 "enabled": {
                     "type": "boolean"
-                },
-                "externalDatabase": {
-                    "type": "string"
                 }
             }
         },

@@ -24,7 +24,6 @@ spec:
           value: "false"
         - name: CMD_PROTOCOL_USESSL
           value: "true"
-        {{- if .Values.postgresql.enabled }}
         - name: CMD_DB_USERNAME
           valueFrom:
             secretKeyRef:
@@ -40,35 +39,17 @@ spec:
             secretKeyRef:
               key: database-name
               name: postgres
+        {{- if .Values.postgresql.enabled }}
         - name: CMD_DB_HOST
           value: {{ include "postgresql.v1.primary.fullname" . }}-postgresql
-        - name: CMD_DB_PORT
-          value: "5432"
-        - name: CMD_DB_DIALECT
-          value: postgres
         {{- else if .Values.postgresqlExternal.enabled }}
-        - name: CMD_DB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              key: database-user
-              name: postgres
-        - name: CMD_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: database-password
-              name: postgres
-        - name: CMD_DB_DATABASE
-          valueFrom:
-            secretKeyRef:
-              key: database-name
-              name: postgres
         - name: CMD_DB_HOST
           value: {{ .Values.postgresqlExternal.externalDatabase }}
+        {{- end }}
         - name: CMD_DB_PORT
           value: "5432"
         - name: CMD_DB_DIALECT
           value: postgres
-        {{- end }}
         - name: CMD_ALLOW_FREEURL
           value: "true"
         - name: CMD_REQUIRE_FREEURL_AUTHENTICATION
