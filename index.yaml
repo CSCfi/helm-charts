@@ -1,0 +1,1408 @@
+apiVersion: v1
+entries:
+  airflow:
+  - annotations:
+      artifacthub.io/changes: |
+        - description: Add support for scheduler name to PODs templates
+          kind: added
+          links:
+          - name: '#33843'
+            url: https://github.com/apache/airflow/pull/33843
+        - description: Support KEDA scaling for triggerer
+          kind: added
+          links:
+          - name: '#32302'
+            url: https://github.com/apache/airflow/pull/32302
+        - description: Add support for container lifecycle hooks
+          kind: added
+          links:
+          - name: '#32349'
+            url: https://github.com/apache/airflow/pull/32349
+        - description: Support naming customization on helm chart resources
+          kind: added
+          links:
+          - name: '#31066'
+            url: https://github.com/apache/airflow/pull/31066
+        - description: Adding ``startupProbe`` to scheduler and webserver
+          kind: added
+          links:
+          - name: '#33107'
+            url: https://github.com/apache/airflow/pull/33107
+        - description: Allow disabling token mounts using ``automountServiceAccountToken``
+          kind: added
+          links:
+          - name: '#32808'
+            url: https://github.com/apache/airflow/pull/32808
+        - description: Add support for defining custom priority classes
+          kind: added
+          links:
+          - name: '#31615'
+            url: https://github.com/apache/airflow/pull/31615
+        - description: Add support for ``runtimeClassName``
+          kind: added
+          links:
+          - name: '#31868'
+            url: https://github.com/apache/airflow/pull/31868
+        - description: Add support for custom query in workers KEDA trigger
+          kind: added
+          links:
+          - name: '#32308'
+            url: https://github.com/apache/airflow/pull/32308
+        - description: Add ``containerSecurityContext`` for cleanup job
+          kind: changed
+          links:
+          - name: '#34351'
+            url: https://github.com/apache/airflow/pull/34351
+        - description: Add existing secret support for PGBouncer metrics exporter
+          kind: changed
+          links:
+          - name: '#32724'
+            url: https://github.com/apache/airflow/pull/32724
+        - description: Allow templating in webserver ingress hostnames
+          kind: changed
+          links:
+          - name: '#33142'
+            url: https://github.com/apache/airflow/pull/33142
+        - description: Allow templating in flower ingress hostnames
+          kind: changed
+          links:
+          - name: '#33363'
+            url: https://github.com/apache/airflow/pull/33363
+        - description: Add configmap annotations to StatsD and webserver
+          kind: changed
+          links:
+          - name: '#33340'
+            url: https://github.com/apache/airflow/pull/33340
+        - description: Add pod security context to PgBouncer
+          kind: changed
+          links:
+          - name: '#32662'
+            url: https://github.com/apache/airflow/pull/32662
+        - description: Add an option to use a direct DB connection in KEDA when PgBouncer
+            is enabled
+          kind: changed
+          links:
+          - name: '#32608'
+            url: https://github.com/apache/airflow/pull/32608
+        - description: Allow templating in cleanup.schedule
+          kind: changed
+          links:
+          - name: '#32570'
+            url: https://github.com/apache/airflow/pull/32570
+        - description: Template dag processor ``waitformigration`` containers ``extraVolumeMounts``
+          kind: changed
+          links:
+          - name: '#32100'
+            url: https://github.com/apache/airflow/pull/32100
+        - description: Ability to inject extra containers into PgBouncer
+          kind: changed
+          links:
+          - name: '#33686'
+            url: https://github.com/apache/airflow/pull/33686
+        - description: Allowing ability to add custom env into PgBouncer container
+          kind: changed
+          links:
+          - name: '#33438'
+            url: https://github.com/apache/airflow/pull/33438
+        - description: Add support for env variables in the StatsD container
+          kind: changed
+          links:
+          - name: '#33175'
+            url: https://github.com/apache/airflow/pull/33175
+        - description: Add ``airflow db migrate`` command to database migration job
+          kind: fixed
+          links:
+          - name: '#34178'
+            url: https://github.com/apache/airflow/pull/34178
+        - description: Pass ``workers.terminationGracePeriodSeconds`` into KubeExecutor pod
+            template
+          kind: fixed
+          links:
+          - name: '#33514'
+            url: https://github.com/apache/airflow/pull/33514
+        - description: CeleryExecutor namespace depends on Airflow version
+          kind: fixed
+          links:
+          - name: '#32753'
+            url: https://github.com/apache/airflow/pull/32753
+        - description: Fix dag processor not including webserver config volume
+          kind: fixed
+          links:
+          - name: '#32644'
+            url: https://github.com/apache/airflow/pull/32644
+        - description: Dag processor liveness probe include ``--local`` and ``--job-type``
+            args
+          kind: fixed
+          links:
+          - name: '#32426'
+            url: https://github.com/apache/airflow/pull/32426
+        - description: Revising flower_url_prefix considering default value
+          kind: fixed
+          links:
+          - name: '#33134'
+            url: https://github.com/apache/airflow/pull/33134
+        - description: 'Docs: Add more explicit "embedded postgres" exclusion for production'
+          kind: changed
+          links:
+          - name: '#33034'
+            url: https://github.com/apache/airflow/pull/33034
+        - description: 'Docs: Update git-sync description'
+          kind: changed
+          links:
+          - name: '#32181'
+            url: https://github.com/apache/airflow/pull/32181
+        - description: 'Misc: Default Airflow version to 2.7.1'
+          kind: changed
+          links:
+          - name: '#34186'
+            url: https://github.com/apache/airflow/pull/34186
+        - description: 'Misc: Update PostgreSQL subchart to 12.10.0'
+          kind: changed
+          links:
+          - name: '#33747'
+            url: https://github.com/apache/airflow/pull/33747
+        - description: 'Misc: Update git-sync to 3.6.9'
+          kind: changed
+          links:
+          - name: '#33748'
+            url: https://github.com/apache/airflow/pull/33748
+        - description: 'Misc: Remove unnecessary loops to load env from helm values'
+          kind: changed
+          links:
+          - name: '#33506'
+            url: https://github.com/apache/airflow/pull/33506
+        - description: 'Misc: Replace ``common.tplvalues.render`` with ``tpl`` in ingress
+            template files'
+          kind: changed
+          links:
+          - name: '#33384'
+            url: https://github.com/apache/airflow/pull/33384
+        - description: 'Misc: Remove K8S 1.23 support'
+          kind: changed
+          links:
+          - name: '#32899'
+            url: https://github.com/apache/airflow/pull/32899
+        - description: 'Misc: Fix chart named template comments'
+          kind: changed
+          links:
+          - name: '#32681'
+            url: https://github.com/apache/airflow/pull/32681
+        - description: 'Misc: Remove outdated comment from chart values in the workers KEDA
+            conf section'
+          kind: changed
+          links:
+          - name: '#32300'
+            url: https://github.com/apache/airflow/pull/32300
+        - description: 'Misc: Remove unnecessary ``or`` function in template files'
+          kind: changed
+          links:
+          - name: '#34415'
+            url: https://github.com/apache/airflow/pull/34415
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://airflow.apache.org/docs/helm-chart/1.12.0/
+      artifacthub.io/screenshots: |
+        - title: DAGs View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/dags.png
+        - title: Datasets View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/datasets.png
+        - title: Grid View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/grid.png
+        - title: Graph View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/graph.png
+        - title: Calendar View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/calendar.png
+        - title: Variable View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/variable_hidden.png
+        - title: Gantt Chart
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/gantt.png
+        - title: Task Duration
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/duration.png
+        - title: Code View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/code.png
+    apiVersion: v2
+    appVersion: 2.8.1
+    created: "2024-02-29T09:50:19.743242122Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    description: The official Helm chart to deploy Apache Airflow, a platform to programmatically
+      author, schedule, and monitor workflows
+    digest: 04f04af9d382d0f8d9586cae00ae1833d1fb6fb59ea7a2c427c8856de43eaa7a
+    home: https://airflow.apache.org/
+    icon: https://airflow.apache.org/images/airflow_dark_bg.png
+    keywords:
+    - apache
+    - airflow
+    - workflow
+    - scheduler
+    maintainers:
+    - email: dev@airflow.apache.org
+      name: Apache Airflow PMC
+    name: airflow
+    sources:
+    - https://github.com/apache/airflow
+    type: application
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/airflow-1.12.0-dev/airflow-1.12.0-dev.tgz
+    version: 1.12.0-dev
+  - annotations:
+      artifacthub.io/changes: |
+        - description: Add support for scheduler name to PODs templates
+          kind: added
+          links:
+          - name: '#33843'
+            url: https://github.com/apache/airflow/pull/33843
+        - description: Support KEDA scaling for triggerer
+          kind: added
+          links:
+          - name: '#32302'
+            url: https://github.com/apache/airflow/pull/32302
+        - description: Add support for container lifecycle hooks
+          kind: added
+          links:
+          - name: '#32349'
+            url: https://github.com/apache/airflow/pull/32349
+        - description: Support naming customization on helm chart resources
+          kind: added
+          links:
+          - name: '#31066'
+            url: https://github.com/apache/airflow/pull/31066
+        - description: Adding ``startupProbe`` to scheduler and webserver
+          kind: added
+          links:
+          - name: '#33107'
+            url: https://github.com/apache/airflow/pull/33107
+        - description: Allow disabling token mounts using ``automountServiceAccountToken``
+          kind: added
+          links:
+          - name: '#32808'
+            url: https://github.com/apache/airflow/pull/32808
+        - description: Add support for defining custom priority classes
+          kind: added
+          links:
+          - name: '#31615'
+            url: https://github.com/apache/airflow/pull/31615
+        - description: Add support for ``runtimeClassName``
+          kind: added
+          links:
+          - name: '#31868'
+            url: https://github.com/apache/airflow/pull/31868
+        - description: Add support for custom query in workers KEDA trigger
+          kind: added
+          links:
+          - name: '#32308'
+            url: https://github.com/apache/airflow/pull/32308
+        - description: Add ``containerSecurityContext`` for cleanup job
+          kind: changed
+          links:
+          - name: '#34351'
+            url: https://github.com/apache/airflow/pull/34351
+        - description: Add existing secret support for PGBouncer metrics exporter
+          kind: changed
+          links:
+          - name: '#32724'
+            url: https://github.com/apache/airflow/pull/32724
+        - description: Allow templating in webserver ingress hostnames
+          kind: changed
+          links:
+          - name: '#33142'
+            url: https://github.com/apache/airflow/pull/33142
+        - description: Allow templating in flower ingress hostnames
+          kind: changed
+          links:
+          - name: '#33363'
+            url: https://github.com/apache/airflow/pull/33363
+        - description: Add configmap annotations to StatsD and webserver
+          kind: changed
+          links:
+          - name: '#33340'
+            url: https://github.com/apache/airflow/pull/33340
+        - description: Add pod security context to PgBouncer
+          kind: changed
+          links:
+          - name: '#32662'
+            url: https://github.com/apache/airflow/pull/32662
+        - description: Add an option to use a direct DB connection in KEDA when PgBouncer
+            is enabled
+          kind: changed
+          links:
+          - name: '#32608'
+            url: https://github.com/apache/airflow/pull/32608
+        - description: Allow templating in cleanup.schedule
+          kind: changed
+          links:
+          - name: '#32570'
+            url: https://github.com/apache/airflow/pull/32570
+        - description: Template dag processor ``waitformigration`` containers ``extraVolumeMounts``
+          kind: changed
+          links:
+          - name: '#32100'
+            url: https://github.com/apache/airflow/pull/32100
+        - description: Ability to inject extra containers into PgBouncer
+          kind: changed
+          links:
+          - name: '#33686'
+            url: https://github.com/apache/airflow/pull/33686
+        - description: Allowing ability to add custom env into PgBouncer container
+          kind: changed
+          links:
+          - name: '#33438'
+            url: https://github.com/apache/airflow/pull/33438
+        - description: Add support for env variables in the StatsD container
+          kind: changed
+          links:
+          - name: '#33175'
+            url: https://github.com/apache/airflow/pull/33175
+        - description: Add ``airflow db migrate`` command to database migration job
+          kind: fixed
+          links:
+          - name: '#34178'
+            url: https://github.com/apache/airflow/pull/34178
+        - description: Pass ``workers.terminationGracePeriodSeconds`` into KubeExecutor pod
+            template
+          kind: fixed
+          links:
+          - name: '#33514'
+            url: https://github.com/apache/airflow/pull/33514
+        - description: CeleryExecutor namespace depends on Airflow version
+          kind: fixed
+          links:
+          - name: '#32753'
+            url: https://github.com/apache/airflow/pull/32753
+        - description: Fix dag processor not including webserver config volume
+          kind: fixed
+          links:
+          - name: '#32644'
+            url: https://github.com/apache/airflow/pull/32644
+        - description: Dag processor liveness probe include ``--local`` and ``--job-type``
+            args
+          kind: fixed
+          links:
+          - name: '#32426'
+            url: https://github.com/apache/airflow/pull/32426
+        - description: Revising flower_url_prefix considering default value
+          kind: fixed
+          links:
+          - name: '#33134'
+            url: https://github.com/apache/airflow/pull/33134
+        - description: 'Docs: Add more explicit "embedded postgres" exclusion for production'
+          kind: changed
+          links:
+          - name: '#33034'
+            url: https://github.com/apache/airflow/pull/33034
+        - description: 'Docs: Update git-sync description'
+          kind: changed
+          links:
+          - name: '#32181'
+            url: https://github.com/apache/airflow/pull/32181
+        - description: 'Misc: Default Airflow version to 2.7.1'
+          kind: changed
+          links:
+          - name: '#34186'
+            url: https://github.com/apache/airflow/pull/34186
+        - description: 'Misc: Update PostgreSQL subchart to 12.10.0'
+          kind: changed
+          links:
+          - name: '#33747'
+            url: https://github.com/apache/airflow/pull/33747
+        - description: 'Misc: Update git-sync to 3.6.9'
+          kind: changed
+          links:
+          - name: '#33748'
+            url: https://github.com/apache/airflow/pull/33748
+        - description: 'Misc: Remove unnecessary loops to load env from helm values'
+          kind: changed
+          links:
+          - name: '#33506'
+            url: https://github.com/apache/airflow/pull/33506
+        - description: 'Misc: Replace ``common.tplvalues.render`` with ``tpl`` in ingress
+            template files'
+          kind: changed
+          links:
+          - name: '#33384'
+            url: https://github.com/apache/airflow/pull/33384
+        - description: 'Misc: Remove K8S 1.23 support'
+          kind: changed
+          links:
+          - name: '#32899'
+            url: https://github.com/apache/airflow/pull/32899
+        - description: 'Misc: Fix chart named template comments'
+          kind: changed
+          links:
+          - name: '#32681'
+            url: https://github.com/apache/airflow/pull/32681
+        - description: 'Misc: Remove outdated comment from chart values in the workers KEDA
+            conf section'
+          kind: changed
+          links:
+          - name: '#32300'
+            url: https://github.com/apache/airflow/pull/32300
+        - description: 'Misc: Remove unnecessary ``or`` function in template files'
+          kind: changed
+          links:
+          - name: '#34415'
+            url: https://github.com/apache/airflow/pull/34415
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://airflow.apache.org/docs/helm-chart/1.12.0/
+      artifacthub.io/screenshots: |
+        - title: DAGs View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/dags.png
+        - title: Datasets View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/datasets.png
+        - title: Grid View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/grid.png
+        - title: Graph View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/graph.png
+        - title: Calendar View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/calendar.png
+        - title: Variable View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/variable_hidden.png
+        - title: Gantt Chart
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/gantt.png
+        - title: Task Duration
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/duration.png
+        - title: Code View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/code.png
+    apiVersion: v2
+    appVersion: 2.8.1
+    created: "2024-02-29T14:10:40.773507712Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    description: The official Helm chart to deploy Apache Airflow, a platform to programmatically
+      author, schedule, and monitor workflows. Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 775fce4a31ab5ec01d992cc57a2f9ab5bed75d329c066499d24dbdadb691001a
+    home: https://airflow.apache.org/
+    icon: https://airflow.apache.org/images/airflow_dark_bg.png
+    keywords:
+    - apache
+    - airflow
+    - workflow
+    - scheduler
+    maintainers:
+    - email: dev@airflow.apache.org
+      name: Apache Airflow PMC
+    name: airflow
+    sources:
+    - https://github.com/apache/airflow
+    type: application
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/airflow-1.12.0-dev/airflow-1.12.0-dev.tgz
+    version: 1.12.0-dev
+  - annotations:
+      artifacthub.io/changes: |
+        - description: Add support for scheduler name to PODs templates
+          kind: added
+          links:
+          - name: '#33843'
+            url: https://github.com/apache/airflow/pull/33843
+        - description: Support KEDA scaling for triggerer
+          kind: added
+          links:
+          - name: '#32302'
+            url: https://github.com/apache/airflow/pull/32302
+        - description: Add support for container lifecycle hooks
+          kind: added
+          links:
+          - name: '#32349'
+            url: https://github.com/apache/airflow/pull/32349
+        - description: Support naming customization on helm chart resources
+          kind: added
+          links:
+          - name: '#31066'
+            url: https://github.com/apache/airflow/pull/31066
+        - description: Adding ``startupProbe`` to scheduler and webserver
+          kind: added
+          links:
+          - name: '#33107'
+            url: https://github.com/apache/airflow/pull/33107
+        - description: Allow disabling token mounts using ``automountServiceAccountToken``
+          kind: added
+          links:
+          - name: '#32808'
+            url: https://github.com/apache/airflow/pull/32808
+        - description: Add support for defining custom priority classes
+          kind: added
+          links:
+          - name: '#31615'
+            url: https://github.com/apache/airflow/pull/31615
+        - description: Add support for ``runtimeClassName``
+          kind: added
+          links:
+          - name: '#31868'
+            url: https://github.com/apache/airflow/pull/31868
+        - description: Add support for custom query in workers KEDA trigger
+          kind: added
+          links:
+          - name: '#32308'
+            url: https://github.com/apache/airflow/pull/32308
+        - description: Add ``containerSecurityContext`` for cleanup job
+          kind: changed
+          links:
+          - name: '#34351'
+            url: https://github.com/apache/airflow/pull/34351
+        - description: Add existing secret support for PGBouncer metrics exporter
+          kind: changed
+          links:
+          - name: '#32724'
+            url: https://github.com/apache/airflow/pull/32724
+        - description: Allow templating in webserver ingress hostnames
+          kind: changed
+          links:
+          - name: '#33142'
+            url: https://github.com/apache/airflow/pull/33142
+        - description: Allow templating in flower ingress hostnames
+          kind: changed
+          links:
+          - name: '#33363'
+            url: https://github.com/apache/airflow/pull/33363
+        - description: Add configmap annotations to StatsD and webserver
+          kind: changed
+          links:
+          - name: '#33340'
+            url: https://github.com/apache/airflow/pull/33340
+        - description: Add pod security context to PgBouncer
+          kind: changed
+          links:
+          - name: '#32662'
+            url: https://github.com/apache/airflow/pull/32662
+        - description: Add an option to use a direct DB connection in KEDA when PgBouncer
+            is enabled
+          kind: changed
+          links:
+          - name: '#32608'
+            url: https://github.com/apache/airflow/pull/32608
+        - description: Allow templating in cleanup.schedule
+          kind: changed
+          links:
+          - name: '#32570'
+            url: https://github.com/apache/airflow/pull/32570
+        - description: Template dag processor ``waitformigration`` containers ``extraVolumeMounts``
+          kind: changed
+          links:
+          - name: '#32100'
+            url: https://github.com/apache/airflow/pull/32100
+        - description: Ability to inject extra containers into PgBouncer
+          kind: changed
+          links:
+          - name: '#33686'
+            url: https://github.com/apache/airflow/pull/33686
+        - description: Allowing ability to add custom env into PgBouncer container
+          kind: changed
+          links:
+          - name: '#33438'
+            url: https://github.com/apache/airflow/pull/33438
+        - description: Add support for env variables in the StatsD container
+          kind: changed
+          links:
+          - name: '#33175'
+            url: https://github.com/apache/airflow/pull/33175
+        - description: Add ``airflow db migrate`` command to database migration job
+          kind: fixed
+          links:
+          - name: '#34178'
+            url: https://github.com/apache/airflow/pull/34178
+        - description: Pass ``workers.terminationGracePeriodSeconds`` into KubeExecutor pod
+            template
+          kind: fixed
+          links:
+          - name: '#33514'
+            url: https://github.com/apache/airflow/pull/33514
+        - description: CeleryExecutor namespace depends on Airflow version
+          kind: fixed
+          links:
+          - name: '#32753'
+            url: https://github.com/apache/airflow/pull/32753
+        - description: Fix dag processor not including webserver config volume
+          kind: fixed
+          links:
+          - name: '#32644'
+            url: https://github.com/apache/airflow/pull/32644
+        - description: Dag processor liveness probe include ``--local`` and ``--job-type``
+            args
+          kind: fixed
+          links:
+          - name: '#32426'
+            url: https://github.com/apache/airflow/pull/32426
+        - description: Revising flower_url_prefix considering default value
+          kind: fixed
+          links:
+          - name: '#33134'
+            url: https://github.com/apache/airflow/pull/33134
+        - description: 'Docs: Add more explicit "embedded postgres" exclusion for production'
+          kind: changed
+          links:
+          - name: '#33034'
+            url: https://github.com/apache/airflow/pull/33034
+        - description: 'Docs: Update git-sync description'
+          kind: changed
+          links:
+          - name: '#32181'
+            url: https://github.com/apache/airflow/pull/32181
+        - description: 'Misc: Default Airflow version to 2.7.1'
+          kind: changed
+          links:
+          - name: '#34186'
+            url: https://github.com/apache/airflow/pull/34186
+        - description: 'Misc: Update PostgreSQL subchart to 12.10.0'
+          kind: changed
+          links:
+          - name: '#33747'
+            url: https://github.com/apache/airflow/pull/33747
+        - description: 'Misc: Update git-sync to 3.6.9'
+          kind: changed
+          links:
+          - name: '#33748'
+            url: https://github.com/apache/airflow/pull/33748
+        - description: 'Misc: Remove unnecessary loops to load env from helm values'
+          kind: changed
+          links:
+          - name: '#33506'
+            url: https://github.com/apache/airflow/pull/33506
+        - description: 'Misc: Replace ``common.tplvalues.render`` with ``tpl`` in ingress
+            template files'
+          kind: changed
+          links:
+          - name: '#33384'
+            url: https://github.com/apache/airflow/pull/33384
+        - description: 'Misc: Remove K8S 1.23 support'
+          kind: changed
+          links:
+          - name: '#32899'
+            url: https://github.com/apache/airflow/pull/32899
+        - description: 'Misc: Fix chart named template comments'
+          kind: changed
+          links:
+          - name: '#32681'
+            url: https://github.com/apache/airflow/pull/32681
+        - description: 'Misc: Remove outdated comment from chart values in the workers KEDA
+            conf section'
+          kind: changed
+          links:
+          - name: '#32300'
+            url: https://github.com/apache/airflow/pull/32300
+        - description: 'Misc: Remove unnecessary ``or`` function in template files'
+          kind: changed
+          links:
+          - name: '#34415'
+            url: https://github.com/apache/airflow/pull/34415
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://airflow.apache.org/docs/helm-chart/1.12.0/
+      artifacthub.io/screenshots: |
+        - title: DAGs View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/dags.png
+        - title: Datasets View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/datasets.png
+        - title: Grid View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/grid.png
+        - title: Graph View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/graph.png
+        - title: Calendar View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/calendar.png
+        - title: Variable View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/variable_hidden.png
+        - title: Gantt Chart
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/gantt.png
+        - title: Task Duration
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/duration.png
+        - title: Code View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/code.png
+    apiVersion: v2
+    appVersion: 2.8.1
+    created: "2024-03-01T12:04:37.592743102Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    description: The official Helm chart to deploy Apache Airflow, a platform to programmatically
+      author, schedule, and monitor workflows. Link to the repo https://github.com/CSCfi/helm-charts
+    digest: b72a22f1fa8661c96059142cea5e4771a4adf6234bedf315bf9de08b7102ea0a
+    home: https://airflow.apache.org/
+    icon: https://airflow.apache.org/images/airflow_dark_bg.png
+    keywords:
+    - apache
+    - airflow
+    - workflow
+    - scheduler
+    maintainers:
+    - email: dev@airflow.apache.org
+      name: Apache Airflow PMC
+    name: airflow
+    sources:
+    - https://github.com/apache/airflow
+    type: application
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/airflow-1.12.0-dev/airflow-1.12.0-dev.tgz
+    version: 1.12.0-dev
+  - annotations:
+      artifacthub.io/changes: |
+        - description: Add support for scheduler name to PODs templates
+          kind: added
+          links:
+          - name: '#33843'
+            url: https://github.com/apache/airflow/pull/33843
+        - description: Support KEDA scaling for triggerer
+          kind: added
+          links:
+          - name: '#32302'
+            url: https://github.com/apache/airflow/pull/32302
+        - description: Add support for container lifecycle hooks
+          kind: added
+          links:
+          - name: '#32349'
+            url: https://github.com/apache/airflow/pull/32349
+        - description: Support naming customization on helm chart resources
+          kind: added
+          links:
+          - name: '#31066'
+            url: https://github.com/apache/airflow/pull/31066
+        - description: Adding ``startupProbe`` to scheduler and webserver
+          kind: added
+          links:
+          - name: '#33107'
+            url: https://github.com/apache/airflow/pull/33107
+        - description: Allow disabling token mounts using ``automountServiceAccountToken``
+          kind: added
+          links:
+          - name: '#32808'
+            url: https://github.com/apache/airflow/pull/32808
+        - description: Add support for defining custom priority classes
+          kind: added
+          links:
+          - name: '#31615'
+            url: https://github.com/apache/airflow/pull/31615
+        - description: Add support for ``runtimeClassName``
+          kind: added
+          links:
+          - name: '#31868'
+            url: https://github.com/apache/airflow/pull/31868
+        - description: Add support for custom query in workers KEDA trigger
+          kind: added
+          links:
+          - name: '#32308'
+            url: https://github.com/apache/airflow/pull/32308
+        - description: Add ``containerSecurityContext`` for cleanup job
+          kind: changed
+          links:
+          - name: '#34351'
+            url: https://github.com/apache/airflow/pull/34351
+        - description: Add existing secret support for PGBouncer metrics exporter
+          kind: changed
+          links:
+          - name: '#32724'
+            url: https://github.com/apache/airflow/pull/32724
+        - description: Allow templating in webserver ingress hostnames
+          kind: changed
+          links:
+          - name: '#33142'
+            url: https://github.com/apache/airflow/pull/33142
+        - description: Allow templating in flower ingress hostnames
+          kind: changed
+          links:
+          - name: '#33363'
+            url: https://github.com/apache/airflow/pull/33363
+        - description: Add configmap annotations to StatsD and webserver
+          kind: changed
+          links:
+          - name: '#33340'
+            url: https://github.com/apache/airflow/pull/33340
+        - description: Add pod security context to PgBouncer
+          kind: changed
+          links:
+          - name: '#32662'
+            url: https://github.com/apache/airflow/pull/32662
+        - description: Add an option to use a direct DB connection in KEDA when PgBouncer
+            is enabled
+          kind: changed
+          links:
+          - name: '#32608'
+            url: https://github.com/apache/airflow/pull/32608
+        - description: Allow templating in cleanup.schedule
+          kind: changed
+          links:
+          - name: '#32570'
+            url: https://github.com/apache/airflow/pull/32570
+        - description: Template dag processor ``waitformigration`` containers ``extraVolumeMounts``
+          kind: changed
+          links:
+          - name: '#32100'
+            url: https://github.com/apache/airflow/pull/32100
+        - description: Ability to inject extra containers into PgBouncer
+          kind: changed
+          links:
+          - name: '#33686'
+            url: https://github.com/apache/airflow/pull/33686
+        - description: Allowing ability to add custom env into PgBouncer container
+          kind: changed
+          links:
+          - name: '#33438'
+            url: https://github.com/apache/airflow/pull/33438
+        - description: Add support for env variables in the StatsD container
+          kind: changed
+          links:
+          - name: '#33175'
+            url: https://github.com/apache/airflow/pull/33175
+        - description: Add ``airflow db migrate`` command to database migration job
+          kind: fixed
+          links:
+          - name: '#34178'
+            url: https://github.com/apache/airflow/pull/34178
+        - description: Pass ``workers.terminationGracePeriodSeconds`` into KubeExecutor pod
+            template
+          kind: fixed
+          links:
+          - name: '#33514'
+            url: https://github.com/apache/airflow/pull/33514
+        - description: CeleryExecutor namespace depends on Airflow version
+          kind: fixed
+          links:
+          - name: '#32753'
+            url: https://github.com/apache/airflow/pull/32753
+        - description: Fix dag processor not including webserver config volume
+          kind: fixed
+          links:
+          - name: '#32644'
+            url: https://github.com/apache/airflow/pull/32644
+        - description: Dag processor liveness probe include ``--local`` and ``--job-type``
+            args
+          kind: fixed
+          links:
+          - name: '#32426'
+            url: https://github.com/apache/airflow/pull/32426
+        - description: Revising flower_url_prefix considering default value
+          kind: fixed
+          links:
+          - name: '#33134'
+            url: https://github.com/apache/airflow/pull/33134
+        - description: 'Docs: Add more explicit "embedded postgres" exclusion for production'
+          kind: changed
+          links:
+          - name: '#33034'
+            url: https://github.com/apache/airflow/pull/33034
+        - description: 'Docs: Update git-sync description'
+          kind: changed
+          links:
+          - name: '#32181'
+            url: https://github.com/apache/airflow/pull/32181
+        - description: 'Misc: Default Airflow version to 2.7.1'
+          kind: changed
+          links:
+          - name: '#34186'
+            url: https://github.com/apache/airflow/pull/34186
+        - description: 'Misc: Update PostgreSQL subchart to 12.10.0'
+          kind: changed
+          links:
+          - name: '#33747'
+            url: https://github.com/apache/airflow/pull/33747
+        - description: 'Misc: Update git-sync to 3.6.9'
+          kind: changed
+          links:
+          - name: '#33748'
+            url: https://github.com/apache/airflow/pull/33748
+        - description: 'Misc: Remove unnecessary loops to load env from helm values'
+          kind: changed
+          links:
+          - name: '#33506'
+            url: https://github.com/apache/airflow/pull/33506
+        - description: 'Misc: Replace ``common.tplvalues.render`` with ``tpl`` in ingress
+            template files'
+          kind: changed
+          links:
+          - name: '#33384'
+            url: https://github.com/apache/airflow/pull/33384
+        - description: 'Misc: Remove K8S 1.23 support'
+          kind: changed
+          links:
+          - name: '#32899'
+            url: https://github.com/apache/airflow/pull/32899
+        - description: 'Misc: Fix chart named template comments'
+          kind: changed
+          links:
+          - name: '#32681'
+            url: https://github.com/apache/airflow/pull/32681
+        - description: 'Misc: Remove outdated comment from chart values in the workers KEDA
+            conf section'
+          kind: changed
+          links:
+          - name: '#32300'
+            url: https://github.com/apache/airflow/pull/32300
+        - description: 'Misc: Remove unnecessary ``or`` function in template files'
+          kind: changed
+          links:
+          - name: '#34415'
+            url: https://github.com/apache/airflow/pull/34415
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://airflow.apache.org/docs/helm-chart/1.12.0/
+      artifacthub.io/screenshots: |
+        - title: DAGs View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/dags.png
+        - title: Datasets View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/datasets.png
+        - title: Grid View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/grid.png
+        - title: Graph View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/graph.png
+        - title: Calendar View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/calendar.png
+        - title: Variable View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/variable_hidden.png
+        - title: Gantt Chart
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/gantt.png
+        - title: Task Duration
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/duration.png
+        - title: Code View
+          url: https://airflow.apache.org/docs/apache-airflow/2.8.1/_images/code.png
+    apiVersion: v2
+    appVersion: 2.8.1
+    created: "2024-03-11T10:46:59.721970299Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    description: The official Helm chart to deploy Apache Airflow, a platform to programmatically
+      author, schedule, and monitor workflows. Link to the repo https://github.com/CSCfi/helm-charts
+    digest: c1a1caf72628305365910fd187e777f0a338985cdcb30f79c0187047d1facb9f
+    home: https://airflow.apache.org/
+    icon: https://airflow.apache.org/images/airflow_dark_bg.png
+    keywords:
+    - apache
+    - airflow
+    - workflow
+    - scheduler
+    maintainers:
+    - email: dev@airflow.apache.org
+      name: Apache Airflow PMC
+    name: airflow
+    sources:
+    - https://github.com/apache/airflow
+    type: application
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/airflow-1.12.0-dev/airflow-1.12.0-dev.tgz
+    version: 1.12.0-dev
+  hedgedoc:
+  - apiVersion: v2
+    created: "2024-07-22T12:08:19.378616053Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 15.x.x
+    description: Hedgedoc Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 1256f4b0d1bc41762a647bed49efa4fa5c48a2cfdc80d2e4d1997c60c0ea24fa
+    icon: https://raw.githubusercontent.com/hedgedoc/hedgedoc/develop/frontend/src/app/icon.png
+    name: hedgedoc
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-1.2.1/hedgedoc-1.2.1.tgz
+    version: 1.2.1
+  - apiVersion: v2
+    created: "2024-05-31T08:07:39.694028147Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 15.x.x
+    description: Hedgedoc Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: f1057adc86db37f1ca1f2c04bb3aec86b53db8504a2f0771c440d246bc7e23be
+    icon: https://raw.githubusercontent.com/hedgedoc/hedgedoc/develop/frontend/src/app/icon.png
+    name: hedgedoc
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-1.2.0/hedgedoc-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
+    created: "2024-03-25T12:17:26.781243807Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    description: Hedgedoc Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 21eb5ff447506f95693aaa2adc09c8d36e6c1155a45e8cc123c365b2d7ac5745
+    icon: https://raw.githubusercontent.com/hedgedoc/hedgedoc/develop/frontend/src/app/icon.png
+    name: hedgedoc
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-1.1.2/hedgedoc-1.1.2.tgz
+    version: 1.1.2
+  jupyterhub:
+  - apiVersion: v2
+    appVersion: 4.1.5
+    created: "2024-04-11T10:05:13.706510854Z"
+    description: Multi-user Jupyter installation Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 3b4d564b81311b3ba93e8b8fb96ae08a53265225df4f9946da2da784bbff2f33
+    home: https://z2jh.jupyter.org
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    keywords:
+    - jupyter
+    - jupyterhub
+    - z2jh
+    kubeVersion: '>=1.23.0-0'
+    name: jupyterhub
+    sources:
+    - https://github.com/jupyterhub/zero-to-jupyterhub-k8s
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-1.1.5/jupyterhub-1.1.5.tgz
+    version: 1.1.5
+  - apiVersion: v2
+    appVersion: 4.0.2
+    created: "2024-03-15T09:18:47.039032601Z"
+    description: Multi-user Jupyter installation Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 3b8d672810ce433e091bdfe5a27fd719b0a9e633c3aa816c04c18cc61117c1b2
+    home: https://z2jh.jupyter.org
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    keywords:
+    - jupyter
+    - jupyterhub
+    - z2jh
+    kubeVersion: '>=1.23.0-0'
+    name: jupyterhub
+    sources:
+    - https://github.com/jupyterhub/zero-to-jupyterhub-k8s
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-1.1.1/jupyterhub-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
+    appVersion: 4.0.2
+    created: "2023-12-08T12:31:25.132977083Z"
+    description: Multi-user Jupyter installation
+    digest: 4e5faac6cdd99772c32c4a0a0244b849df26e30e1baaf6d6e0bb8901df38ae65
+    home: https://z2jh.jupyter.org
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    keywords:
+    - jupyter
+    - jupyterhub
+    - z2jh
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - email: erik@sundellopensource.se
+      name: Erik Sundell
+    - name: Simon Li
+      url: https://github.com/manics/
+    name: jupyterhub
+    sources:
+    - https://github.com/jupyterhub/zero-to-jupyterhub-k8s
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
+    version: 0.0.1-set.by.chartpress
+  - apiVersion: v2
+    appVersion: 4.0.2
+    created: "2024-02-02T11:28:42.510803384Z"
+    description: Multi-user Jupyter installation
+    digest: 29e1b21e4f2100cf77bf5630d03eba8b8c3b8940e6fd87a4b5c54e0c3dbb53b5
+    home: https://z2jh.jupyter.org
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    keywords:
+    - jupyter
+    - jupyterhub
+    - z2jh
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - email: erik@sundellopensource.se
+      name: Erik Sundell
+    - name: Simon Li
+      url: https://github.com/manics/
+    name: jupyterhub
+    sources:
+    - https://github.com/jupyterhub/zero-to-jupyterhub-k8s
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
+    version: 0.0.1-set.by.chartpress
+  - apiVersion: v2
+    appVersion: 4.0.2
+    created: "2024-02-29T09:50:20.150313561Z"
+    description: Multi-user Jupyter installation
+    digest: c61e41f24e9bfae768dea09b7f8650cbf476dcaf9b02484d2a2e5c1aceac43d3
+    home: https://z2jh.jupyter.org
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    keywords:
+    - jupyter
+    - jupyterhub
+    - z2jh
+    kubeVersion: '>=1.23.0-0'
+    maintainers:
+    - email: erik@sundellopensource.se
+      name: Erik Sundell
+    - name: Simon Li
+      url: https://github.com/manics/
+    name: jupyterhub
+    sources:
+    - https://github.com/jupyterhub/zero-to-jupyterhub-k8s
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
+    version: 0.0.1-set.by.chartpress
+  - apiVersion: v2
+    appVersion: 4.0.2
+    created: "2024-02-29T14:10:41.023419804Z"
+    description: Multi-user Jupyter installation Link to the repo https://github.com/CSCfi/helm-charts
+    digest: f8411833ded800356d2f8757a82c4baf625d079bd06fb63115df308123e0e269
+    home: https://z2jh.jupyter.org
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    keywords:
+    - jupyter
+    - jupyterhub
+    - z2jh
+    kubeVersion: '>=1.23.0-0'
+    name: jupyterhub
+    sources:
+    - https://github.com/jupyterhub/zero-to-jupyterhub-k8s
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
+    version: 0.0.1-set.by.chartpress
+  - apiVersion: v2
+    appVersion: 4.0.2
+    created: "2024-03-01T12:04:37.7926953Z"
+    description: Multi-user Jupyter installation Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 3a1f49fece6d91f391f97127463558c8fc067a51f0aed0999286adc8310f1ef7
+    home: https://z2jh.jupyter.org
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    keywords:
+    - jupyter
+    - jupyterhub
+    - z2jh
+    kubeVersion: '>=1.23.0-0'
+    name: jupyterhub
+    sources:
+    - https://github.com/jupyterhub/zero-to-jupyterhub-k8s
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
+    version: 0.0.1-set.by.chartpress
+  - apiVersion: v2
+    appVersion: 4.0.2
+    created: "2024-03-11T10:46:59.977766323Z"
+    description: Multi-user Jupyter installation Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 366d6874b9fd559a05bfc7e3a8fec2078d128406874e6deccbe0c40ca3c86a28
+    home: https://z2jh.jupyter.org
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    keywords:
+    - jupyter
+    - jupyterhub
+    - z2jh
+    kubeVersion: '>=1.23.0-0'
+    name: jupyterhub
+    sources:
+    - https://github.com/jupyterhub/zero-to-jupyterhub-k8s
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
+    version: 0.0.1-set.by.chartpress
+  matomo:
+  - apiVersion: v2
+    created: "2024-04-11T09:50:13.78464224Z"
+    description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 0c3b72c62ed6eb5d6df084064c4c6bdc9d98aca2c58d101d10e784be1d3db6e8
+    icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4
+    name: matomo
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/matomo-1.2.1/matomo-1.2.1.tgz
+    version: 1.2.1
+  minio:
+  - apiVersion: v2
+    created: "2024-04-11T09:50:13.887825657Z"
+    description: Minio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 4afeeaa4c06c8ccfb6e1773ee34defd2be99393117b1d5a8cd07bc5c6cb70164
+    icon: https://min.io/resources/img/logo.svg
+    name: minio
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/minio-1.2.1/minio-1.2.1.tgz
+    version: 1.2.1
+  mlflow:
+  - annotations:
+      category: MachineLearning
+      images: |
+        - name: git
+          image: docker.io/bitnami/git:2.43.0-debian-11-r1
+        - name: mlflow
+          image: docker.io/bitnami/mlflow:2.9.2-debian-11-r0
+        - name: os-shell
+          image: docker.io/bitnami/os-shell:11-debian-11-r92
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 2.9.2
+    created: "2024-01-11T12:39:15.530673568Z"
+    dependencies:
+    - condition: minio.enabled
+      name: minio
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 12.x.x
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: MLflow is an open-source platform designed to manage the end-to-end
+      machine learning lifecycle. It allows you to track experiments, package code
+      into reproducible runs, and share and deploy models.
+    digest: b050605f7bede38ea07c96c60e9de459f43705da786aed58102ffeda8396f38a
+    home: https://bitnami.com
+    icon: https://bitnami.com/assets/stacks/mlflow/img/mlflow-stack-220x234.png
+    keywords:
+    - mlflow
+    - models
+    - python
+    - machine
+    - learning
+    maintainers:
+    - name: VMware, Inc.
+      url: https://github.com/bitnami/charts
+    name: mlflow
+    sources:
+    - https://github.com/bitnami/containers/tree/main/bitnami/mlflow
+    - https://github.com/mlflow/mlflow
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/mlflow-0.4.0/mlflow-0.4.0.tgz
+    version: 0.4.0
+  prometheus-grafana-helm:
+  - apiVersion: v2
+    created: "2024-03-15T09:18:47.555037358Z"
+    description: Prometheus and Grafana Helm Chart for Rahti platform Link to the
+      repo https://github.com/CSCfi/helm-charts
+    digest: f78ffcf33591d7b6e86c6d85dbdbd77d1cd0104342d92202898f63ea7ba9d9e8
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Grafana_icon.svg/351px-Grafana_icon.svg.png
+    name: prometheus-grafana-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/prometheus-grafana-helm-1.1.1/prometheus-grafana-helm-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
+    created: "2024-03-11T10:47:00.527070147Z"
+    description: Prometheus and Grafana Helm Chart for Rahti platform Link to the
+      repo https://github.com/CSCfi/helm-charts
+    digest: 6effe42ae2be4fc4472e56fb15409ebae82f0dc839d794110c13c6470d28df30
+    name: prometheus-grafana-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/prometheus-grafana-helm-1.1.0/prometheus-grafana-helm-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
+    created: "2024-02-29T09:50:20.854691737Z"
+    description: Prometheus and Grafana Helm Chart for Rahti platform
+    digest: 0fee66b5d0ba5b38b7c8179e06a3553bbf01f1f927336f3d886530961512f57f
+    name: prometheus-grafana-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/prometheus-grafana-helm-1.0.0/prometheus-grafana-helm-1.0.0.tgz
+    version: 1.0.0
+  rocketchat:
+  - apiVersion: v2
+    appVersion: 6.4.4
+    created: "2024-02-29T09:50:21.071745397Z"
+    dependencies:
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    - condition: microservices.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts
+      version: 0.15.x
+    description: Prepare to take off with the ultimate chat platform, experience the
+      next level of team communications
+    digest: 58c420f2a3842f509bbdcef456e29b4179715b1d89b88f17bcb965c561879d1c
+    home: https://rocket.chat/
+    icon: https://raw.githubusercontent.com/RocketChat/Rocket.Chat.Artwork/master/Logos/icon.svg
+    keywords:
+    - chat
+    - communication
+    - http
+    - web
+    - application
+    - nodejs
+    - javascript
+    - meteor
+    maintainers:
+    - email: cloud@rocket.chat
+      name: RocketChat
+    name: rocketchat
+    sources:
+    - https://github.com/RocketChat/Docker.Official.Image/
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/rocketchat-6.4.4/rocketchat-6.4.4.tgz
+    version: 6.4.4
+  rstudio:
+  - apiVersion: v2
+    created: "2024-04-26T11:26:45.066794618Z"
+    description: RStudio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 1db31cd7a9acb6fd6353d2e3198db0d0c9538ff3f5033b48eaf4bca31bf6f6d5
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/0e/Eo_circle_light-blue_white_letter-r.svg
+    name: rstudio
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/rstudio-1.2.2/rstudio-1.2.2.tgz
+    version: 1.2.2
+  - apiVersion: v2
+    created: "2024-04-11T09:50:14.004703892Z"
+    description: RStudio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: bd6e7dcd8f4c32eb970684ceb29bee2dce2bb48c2ed8b8f0b3131d9254c24253
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/0e/Eo_circle_light-blue_white_letter-r.svg
+    name: rstudio
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/rstudio-1.2.1/rstudio-1.2.1.tgz
+    version: 1.2.1
+  spark:
+  - annotations:
+      category: Infrastructure
+      images: |
+        - name: spark
+          image: docker.io/bitnami/spark:3.5.0-debian-11-r16
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 3.5.0
+    created: "2024-01-10T09:52:55.758275254Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Apache Spark is a high-performance engine for large-scale computing
+      tasks, such as data processing, machine learning and real-time data streaming.
+      It includes APIs for Java, Python, Scala and R.
+    digest: 494353dbf1bdb1935b76e2cc4db51db722b63d7a10760519682b2a9df5b71fe4
+    home: https://bitnami.com
+    icon: https://bitnami.com/assets/stacks/spark/img/spark-stack-220x234.png
+    keywords:
+    - apache
+    - spark
+    maintainers:
+    - name: VMware, Inc.
+      url: https://github.com/bitnami/charts
+    name: spark
+    sources:
+    - https://github.com/bitnami/charts/tree/main/bitnami/spark
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
+    version: 8.1.6
+generated: "2024-07-22T12:08:19.378677629Z"
