@@ -989,6 +989,28 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/airflow-1.12.0-dev/airflow-1.12.0-dev.tgz
     version: 1.12.0-dev
+  gitlab-runner:
+  - apiVersion: v1
+    appVersion: bleeding
+    created: "2024-09-13T08:31:46.503880432Z"
+    description: GitLab Runner
+    digest: 9cfa0afa49e8103c98bf7e849e152be6b547ec8d801dda6995b84d8b5eac0058
+    icon: https://gitlab.com/uploads/-/system/project/avatar/250833/runner_logo.png
+    keywords:
+    - git
+    - ci
+    - deploy
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab-runner
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab-runner
+    - https://gitlab.com/gitlab-org/gitlab-runner
+    - https://docs.gitlab.com/runner/
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-0.69.0-beta/gitlab-runner-0.69.0-beta.tgz
+    version: 0.69.0-beta
   hedgedoc:
   - apiVersion: v2
     created: "2024-07-22T12:08:19.378616053Z"
@@ -1405,4 +1427,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2024-07-22T12:08:19.378677629Z"
+generated: "2024-09-13T08:31:46.5039436Z"
