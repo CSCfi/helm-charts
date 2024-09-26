@@ -12,11 +12,11 @@ The chart has been deployed in diagnostic mode. All probes have been disabled an
 
 Get the list of pods by executing:
 
-  kubectl get pods --namespace {{ include "common.names.namespace" . | quote }} -l app.kubernetes.io/instance={{ .Release.Name }}
+  oc get pods --namespace {{ include "common.names.namespace" . | quote }} -l app.kubernetes.io/instance={{ .Release.Name }}
 
 Access the pod you want to debug by executing
 
-  kubectl exec --namespace {{ include "common.names.namespace" . | quote }} -ti <NAME OF THE POD> -- bash
+  oc exec --namespace {{ include "common.names.namespace" . | quote }} -ti <NAME OF THE POD> -- bash
 
 {{- else }}
 
@@ -27,19 +27,19 @@ The following command will be executed:
   {{- include "common.tplvalues.render" (dict "value" .Values.run.source.launchCommand "context" $) | nindent 2 }}
 
 You can see the logs of each running node with:
-    kubectl logs [POD_NAME]
+    oc logs [POD_NAME]
 
 and the list of pods:
-    kubectl get pods --namespace {{ include "common.names.namespace" . }} -l "app.kubernetes.io/name={{ include "common.names.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
+    oc get pods --namespace {{ include "common.names.namespace" . }} -l "app.kubernetes.io/name={{ include "common.names.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
 {{- else }}
 You didn't specify any entrypoint to your code.
 To run it, you can either deploy again using the `source.launchCommand` option to specify your entrypoint, or execute it manually by jumping into the pods:
 
 1. Get the running pods
-    kubectl get pods --namespace {{ include "common.names.namespace" . }} -l "app.kubernetes.io/name={{ include "common.names.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
+    oc get pods --namespace {{ include "common.names.namespace" . }} -l "app.kubernetes.io/name={{ include "common.names.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
 
 2. Get into a pod
-    kubectl exec -ti [POD_NAME] bash
+    oc exec -ti [POD_NAME] bash
 
 3. Execute your script as you would normally do.
 {{- end }}
@@ -57,7 +57,7 @@ To access your MLflow site from outside the cluster follow the steps below:
 
 1. Get the MLflow URL and associate MLflow hostname to your cluster external IP:
 
-   export CLUSTER_IP=$(minikube ip) # On Minikube. Use: `kubectl cluster-info` on others K8s clusters
+   export CLUSTER_IP=$(minikube ip) # On Minikube. Use: `oc cluster-info` on others K8s clusters
    echo "MLflow URL: http{{ if .Values.tracking.ingress.tls }}s{{ end }}://{{ .Values.tracking.ingress.hostname }}/"
    echo "$CLUSTER_IP  {{ .Values.tracking.ingress.hostname }}" | sudo tee -a /etc/hosts
 
@@ -68,21 +68,21 @@ To access your MLflow site from outside the cluster follow the steps below:
 
 {{- if contains "NodePort" .Values.tracking.service.type }}
 
-   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "mlflow.v0.tracking.fullname" . }})
-   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+   export NODE_PORT=$(oc get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "mlflow.v0.tracking.fullname" . }})
+   export NODE_IP=$(oc get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
    echo "MLflow URL: {{ include "mlflow.v0.tracking.protocol" . }}://$NODE_IP:$NODE_PORT/"
 
 {{- else if contains "LoadBalancer" .Values.tracking.service.type }}
 
   NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-        Watch the status with: 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ include "mlflow.v0.tracking.fullname" . }}'
+        Watch the status with: 'oc get svc --namespace {{ .Release.Namespace }} -w {{ include "mlflow.v0.tracking.fullname" . }}'
 
-   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "mlflow.v0.tracking.fullname" . }} --template "{{ "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}" }}")
+   export SERVICE_IP=$(oc get svc --namespace {{ .Release.Namespace }} {{ include "mlflow.v0.tracking.fullname" . }} --template "{{ "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}" }}")
    echo "MLflow URL: {{ include "mlflow.v0.tracking.protocol" . }}://$SERVICE_IP{{- if ne $port "80" }}:{{ include "mlflow.v0.tracking.port" . }}{{ end }}/"
 
 {{- else if contains "ClusterIP"  .Values.tracking.service.type }}
 
-   kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ include "mlflow.v0.tracking.fullname" . }} {{ include "mlflow.v0.tracking.port" . }}:{{ include "mlflow.v0.tracking.port" . }} &
+   oc port-forward --namespace {{ .Release.Namespace }} svc/{{ include "mlflow.v0.tracking.fullname" . }} {{ include "mlflow.v0.tracking.port" . }}:{{ include "mlflow.v0.tracking.port" . }} &
    echo "MLflow URL: {{ include "mlflow.v0.tracking.protocol" . }}://127.0.0.1{{- if ne $port "80" }}:{{ include "mlflow.v0.tracking.port" . }}{{ end }}//"
    
    
@@ -100,8 +100,8 @@ To access your MLflow site from outside the cluster follow the steps below:
 {{- if .Values.tracking.enabled }}
 3. Login with the following credentials below to see your blog:
 
-  echo Username: $(kubectl get secret --namespace {{ .Release.Namespace }} {{ include "mlflow.v0.tracking.fullname" . }} -o jsonpath="{ .data.{{ include "mlflow.v0.tracking.userKey" . }} }" | base64 -d)
-  echo Password: $(kubectl get secret --namespace {{ .Release.Namespace }} {{ include "mlflow.v0.tracking.fullname" . }} -o jsonpath="{.data.{{ include "mlflow.v0.tracking.passwordKey" . }} }" | base64 -d)
+  echo Username: $(oc get secret --namespace {{ .Release.Namespace }} {{ include "mlflow.v0.tracking.fullname" . }} -o jsonpath="{ .data.{{ include "mlflow.v0.tracking.userKey" . }} }" | base64 -d)
+  echo Password: $(oc get secret --namespace {{ .Release.Namespace }} {{ include "mlflow.v0.tracking.fullname" . }} -o jsonpath="{ .data.{{ include "mlflow.v0.tracking.passwordKey" . }} }" | base64 -d)
 {{- end }}
 {{- end }}
 {{- end }}

@@ -1,4 +1,4 @@
-# Copyright VMware, Inc.
+# Copyright Broadcom, Inc. All Rights Reserved.
 # SPDX-License-Identifier: APACHE-2.0
 
 ## @section Global parameters
@@ -9,7 +9,8 @@
 
 ## @param global.imageRegistry Global Docker image registry
 ## @param global.imagePullSecrets Global Docker registry secret names as an array
-## @param global.storageClass Global StorageClass for Persistent Volume(s)
+## @param global.defaultStorageClass Global default StorageClass for Persistent Volume(s)
+## @param global.storageClass DEPRECATED: use global.defaultStorageClass instead
 ##
 global:
   imageRegistry: ""
@@ -18,8 +19,17 @@ global:
   ##   - myRegistryKeySecretName
   ##
   imagePullSecrets: []
+  defaultStorageClass: ""
   storageClass: ""
-
+  ## Compatibility adaptations for Kubernetes platforms
+  ##
+  compatibility:
+    ## Compatibility adaptations for Openshift
+    ##
+    openshift:
+      ## @param global.compatibility.openshift.adaptSecurityContext Adapt the securityContext sections of the deployment to make them compatible with Openshift restricted-v2 SCC: remove runAsUser, runAsGroup and fsGroup and let the platform use their allowed default IDs. Possible values: auto (apply if the detected running cluster is Openshift), force (perform the adaptation always), disabled (do not perform adaptation)
+      ##
+      adaptSecurityContext: auto
 ## @section Common parameters
 ##
 
@@ -43,11 +53,10 @@ commonLabels: {}
 commonAnnotations: {}
 ## @param clusterDomain Kubernetes cluster domain name
 ##
-clusterDomain: "2.rahtiapp.fi"
+clusterDomain: 2.rahtiapp.fi
 ## @param extraDeploy Array of extra objects to deploy with the release
 ##
 extraDeploy: []
-
 ## Enable diagnostic mode in the deployment
 ##
 diagnosticMode:
@@ -62,7 +71,6 @@ diagnosticMode:
   ##
   args:
     - infinity
-
 ## @section MLflow common Parameters
 ##
 
@@ -79,11 +87,11 @@ diagnosticMode:
 image:
   registry: docker.io
   repository: bitnami/mlflow
-  tag: 2.9.2-debian-11-r0
+  tag: 2.16.2-debian-12-r3
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ## ref: https://kubernetes.io/docs/concepts/containers/images/#pre-pulled-images
   ##
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -97,7 +105,6 @@ image:
   ## Enable debug mode
   ##
   debug: false
-
 ## Bitnami git image version
 ## ref: https://hub.docker.com/r/bitnami/git/tags/
 ## @param gitImage.registry [default: REGISTRY_NAME] Git image registry
@@ -110,7 +117,7 @@ image:
 gitImage:
   registry: docker.io
   repository: bitnami/git
-  tag: 2.43.0-debian-11-r1
+  tag: 2.46.1-debian-12-r1
   digest: ""
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -121,7 +128,6 @@ gitImage:
   ##   - myRegistryKeySecretName
   ##
   pullSecrets: []
-
 ## @section MLflow Tracking parameters
 ##
 tracking:
@@ -189,24 +195,40 @@ tracking:
   ##
   customStartupProbe: {}
   ## mlflow resource requests and limits
-  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-  ## @param tracking.resources.limits The resources limits for the mlflow containers
-  ## @param tracking.resources.requests The requested resources for the mlflow containers
+  ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  ## @param tracking.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if tracking.resources is set (tracking.resources is recommended for production).
+  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
   ##
-  resources:
-    limits: {}
-    requests: {}
+  resourcesPreset: "medium"
+  ## @param tracking.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
+  ##
+  resources: {}
   ## Configure Pods Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   ## @param tracking.podSecurityContext.enabled Enabled mlflow pods' Security Context
+  ## @param tracking.podSecurityContext.fsGroupChangePolicy Set filesystem group change policy
+  ## @param tracking.podSecurityContext.sysctls Set kernel settings using the sysctl interface
+  ## @param tracking.podSecurityContext.supplementalGroups Set filesystem extra groups
   ## @param tracking.podSecurityContext.fsGroup Set mlflow pod's Security Context fsGroup
   ##
   podSecurityContext:
-    enabled: false
+    enabled: true
+    fsGroupChangePolicy: Always
+    sysctls: []
+    supplementalGroups: []
     fsGroup: 1001
   ## Configure Container Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   ## @param tracking.containerSecurityContext.enabled Enabled containers' Security Context
+  ## @param tracking.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in container
   ## @param tracking.containerSecurityContext.runAsUser Set containers' Security Context runAsUser
   ## @param tracking.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup
   ## @param tracking.containerSecurityContext.privileged Set containers' Security Context privileged
@@ -217,7 +239,8 @@ tracking:
   ## @param tracking.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
   ##
   containerSecurityContext:
-    enabled: false
+    enabled: true
+    seLinuxOptions: {}
     runAsUser: 1001
     runAsGroup: 1001
     runAsNonRoot: true
@@ -228,7 +251,6 @@ tracking:
       drop: ["ALL"]
     seccompProfile:
       type: "RuntimeDefault"
-
   ## Basic authentication
   ## @param tracking.auth.enabled Enable basic authentication
   ## @param tracking.auth.username Admin username
@@ -282,6 +304,9 @@ tracking:
   ## @param tracking.runUpgradeDB Add an init container to run mlflow db upgrade
   ##
   runUpgradeDB: false
+  ## @param tracking.automountServiceAccountToken Mount Service Account token in pod
+  ##
+  automountServiceAccountToken: false
   ## @param tracking.hostAliases mlflow pods host aliases
   ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
   ##
@@ -306,12 +331,11 @@ tracking:
   ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb
   ## @param tracking.pdb.create Enable/disable a Pod Disruption Budget creation
   ## @param tracking.pdb.minAvailable Minimum number/percentage of pods that should remain scheduled
-
   ## @param tracking.pdb.maxUnavailable Maximum number/percentage of pods that may be made unavailable
   ##
   pdb:
-    create: false
-    minAvailable: 1
+    create: true
+    minAvailable: ""
     maxUnavailable: ""
   ## Autoscaling configuration
   ## ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
@@ -379,7 +403,7 @@ tracking:
   ##
   affinity: {}
   ## @param tracking.nodeSelector Node labels for mlflow pods assignment
-  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/
   ##
   nodeSelector: {}
   ## @param tracking.tolerations Tolerations for mlflow pods assignment
@@ -394,7 +418,6 @@ tracking:
     ## Can be set to RollingUpdate or OnDelete
     ##
     type: RollingUpdate
-
   ## @param tracking.priorityClassName mlflow pods' priorityClassName
   ##
   priorityClassName: ""
@@ -456,7 +479,6 @@ tracking:
   ##    command: ['sh', '-c', 'echo "hello world"']
   ##
   initContainers: []
-
   ## @section MLflow Tracking Traffic Exposure Parameters
   ##
 
@@ -511,7 +533,7 @@ tracking:
     extraPorts: []
     ## @param tracking.service.sessionAffinity Control where client requests go, to the same pod or round-robin
     ## Values: ClientIP or None
-    ## ref: https://kubernetes.io/docs/user-guide/services/
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/
     ##
     sessionAffinity: None
     ## @param tracking.service.sessionAffinityConfig Additional settings for the sessionAffinity
@@ -521,7 +543,7 @@ tracking:
     ##
     sessionAffinityConfig: {}
   ## mlflow ingress parameters
-  ## ref: http://kubernetes.io/docs/user-guide/ingress/
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
   ##
   ingress:
     ## @param tracking.ingress.enabled Enable ingress record generation for mlflow
@@ -621,19 +643,21 @@ tracking:
     ##             name: http
     ##
     extraRules: []
-
   ## Network Policy configuration
   ## ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
   ##
   networkPolicy:
     ## @param tracking.networkPolicy.enabled Enable creation of NetworkPolicy resources
     ##
-    enabled: false
+    enabled: true
     ## @param tracking.networkPolicy.allowExternal The Policy model to apply
-    ## When set to false, only pods with the correct client label will have network access to the ports Keycloak is
-    ## listening on. When true, Keycloak will accept connections from any source (with the correct destination port).
+    ## When set to false, only pods with the correct client label will have network access to the ports MLFlow is
+    ## listening on. When true, MLFlow will accept connections from any source (with the correct destination port).
     ##
     allowExternal: true
+    ## @param tracking.networkPolicy.allowExternalEgress Allow the pod to access any range of port and all destinations.
+    ##
+    allowExternalEgress: true
     ## @param tracking.networkPolicy.extraIngress [array] Add extra ingress rules to the NetworkPolicy
     ## e.g:
     ## extraIngress:
@@ -673,12 +697,11 @@ tracking:
     ##
     ingressNSMatchLabels: {}
     ingressNSPodMatchLabels: {}
-
   ## @section MLflow Tracking Persistence Parameters
   ##
 
   ## Enable persistence using Persistent Volume Claims
-  ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+  ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
   ##
   persistence:
     ## @param tracking.persistence.enabled Enable persistence using Persistent Volume Claims
@@ -714,7 +737,7 @@ tracking:
     ## @param tracking.persistence.existingClaim The name of an existing PVC to use for persistence
     ##
     existingClaim: ""
-    ## @param tracking.persistence.selector Selector to match an existing Persistent Volume for WordPress data PVC
+    ## @param tracking.persistence.selector Selector to match an existing Persistent Volume for MLflow data PVC
     ## If set, the PVC can't have a PV dynamically provisioned for it
     ## E.g.
     ## selector:
@@ -725,7 +748,6 @@ tracking:
     ## @param tracking.persistence.dataSource Custom PVC data source
     ##
     dataSource: {}
-
   ## @section MLflow Tracking Other Parameters
   ##
   serviceAccount:
@@ -742,7 +764,6 @@ tracking:
     ## @param tracking.serviceAccount.automountServiceAccountToken Automount service account token for the server service account
     ##
     automountServiceAccountToken: false
-
   ## @section MLflow Tracking Metrics Parameters
   ##
   metrics:
@@ -798,7 +819,6 @@ tracking:
       ##   prometheus: my-prometheus
       ##
       selector: {}
-
 ## @section MLflow Run Parameters
 ##
 run:
@@ -839,50 +859,6 @@ run:
   ## @param run.terminationGracePeriodSeconds Run termination grace period (in seconds)
   ##
   terminationGracePeriodSeconds: ""
-  ## Configure extra options for Run containers' liveness, readiness and startup probes
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
-  ## @param run.livenessProbe.enabled Enable livenessProbe on Run nodes
-  ## @param run.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
-  ## @param run.livenessProbe.periodSeconds Period seconds for livenessProbe
-  ## @param run.livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
-  ## @param run.livenessProbe.failureThreshold Failure threshold for livenessProbe
-  ## @param run.livenessProbe.successThreshold Success threshold for livenessProbe
-  ##
-  livenessProbe:
-    enabled: true
-    initialDelaySeconds: 5
-    periodSeconds: 30
-    timeoutSeconds: 20
-    failureThreshold: 5
-    successThreshold: 1
-  ## @param run.readinessProbe.enabled Enable readinessProbe on Run nodes
-  ## @param run.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
-  ## @param run.readinessProbe.periodSeconds Period seconds for readinessProbe
-  ## @param run.readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
-  ## @param run.readinessProbe.failureThreshold Failure threshold for readinessProbe
-  ## @param run.readinessProbe.successThreshold Success threshold for readinessProbe
-  ##
-  readinessProbe:
-    enabled: true
-    initialDelaySeconds: 5
-    periodSeconds: 30
-    timeoutSeconds: 20
-    failureThreshold: 5
-    successThreshold: 1
-  ## @param run.startupProbe.enabled Enable startupProbe on Run containers
-  ## @param run.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
-  ## @param run.startupProbe.periodSeconds Period seconds for startupProbe
-  ## @param run.startupProbe.timeoutSeconds Timeout seconds for startupProbe
-  ## @param run.startupProbe.failureThreshold Failure threshold for startupProbe
-  ## @param run.startupProbe.successThreshold Success threshold for startupProbe
-  ##
-  startupProbe:
-    enabled: false
-    initialDelaySeconds: 5
-    periodSeconds: 30
-    timeoutSeconds: 5
-    failureThreshold: 5
-    successThreshold: 1
   ## @param run.customLivenessProbe Custom livenessProbe that overrides the default one
   ##
   customLivenessProbe: {}
@@ -893,24 +869,40 @@ run:
   ##
   customStartupProbe: {}
   ## run resource requests and limits
-  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
-  ## @param run.resources.limits The resources limits for the run containers
-  ## @param run.resources.requests The requested resources for the run containers
+  ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  ## @param run.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if run.resources is set (run.resources is recommended for production).
+  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
   ##
-  resources:
-    limits: {}
-    requests: {}
+  resourcesPreset: "small"
+  ## @param run.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
+  ##
+  resources: {}
   ## Configure Pods Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   ## @param run.podSecurityContext.enabled Enabled Run pods' Security Context
+  ## @param run.podSecurityContext.fsGroupChangePolicy Set filesystem group change policy
+  ## @param run.podSecurityContext.sysctls Set kernel settings using the sysctl interface
+  ## @param run.podSecurityContext.supplementalGroups Set filesystem extra groups
   ## @param run.podSecurityContext.fsGroup Set Run pod's Security Context fsGroup
   ##
   podSecurityContext:
-    enabled: false
+    enabled: true
+    fsGroupChangePolicy: Always
+    sysctls: []
+    supplementalGroups: []
     fsGroup: 1001
   ## Configure Container Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   ## @param run.containerSecurityContext.enabled Enabled Run containers' Security Context
+  ## @param run.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in container
   ## @param run.containerSecurityContext.runAsUser Set Run containers' Security Context runAsUser
   ## @param run.containerSecurityContext.runAsGroup Set Run containers' Security Context runAsGroup
   ## @param run.containerSecurityContext.runAsNonRoot Set Run containers' Security Context runAsNonRoot
@@ -921,7 +913,8 @@ run:
   ## @param run.containerSecurityContext.seccompProfile.type Set Run container's Security Context seccomp profile
   ##
   containerSecurityContext:
-    enabled: false
+    enabled: true
+    seLinuxOptions: {}
     runAsUser: 1001
     runAsGroup: 1001
     runAsNonRoot: true
@@ -939,6 +932,9 @@ run:
   ## ref: https://kubernetes.io/docs/concepts/containers/runtime-class/
   ##https://github.com/microsoft/MlflowExamples
   runtimeClassName: ""
+  ## @param run.automountServiceAccountToken Mount Service Account token in pod
+  ##
+  automountServiceAccountToken: false
   ## @param run.hostAliases run pods host aliases
   ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
   ##
@@ -986,7 +982,7 @@ run:
   ##
   affinity: {}
   ## @param run.nodeSelector Node labels for Run pods assignment
-  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/
   ##
   nodeSelector: {}
   ## @param run.tolerations Tolerations for Run pods assignment
@@ -1041,6 +1037,60 @@ run:
   ##    command: ['sh', '-c', 'echo "hello world"']
   ##
   initContainers: []
+  ## Network Policy configuration
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
+  ##
+  networkPolicy:
+    ## @param run.networkPolicy.enabled Enable creation of NetworkPolicy resources
+    ##
+    enabled: true
+    ## @param run.networkPolicy.allowExternal The Policy model to apply
+    ## When set to false, only pods with the correct client label will have network access to the ports MLFlow is
+    ## listening on. When true, MLFlow will accept connections from any source (with the correct destination port).
+    ##
+    allowExternal: true
+    ## @param run.networkPolicy.allowExternalEgress Allow the pod to access any range of port and all destinations.
+    ##
+    allowExternalEgress: true
+    ## @param run.networkPolicy.extraIngress [array] Add extra ingress rules to the NetworkPolicy
+    ## e.g:
+    ## extraIngress:
+    ##   - ports:
+    ##       - port: 1234
+    ##     from:
+    ##       - podSelector:
+    ##           - matchLabels:
+    ##               - role: frontend
+    ##       - podSelector:
+    ##           - matchExpressions:
+    ##               - key: role
+    ##                 operator: In
+    ##                 values:
+    ##                   - frontend
+    ##
+    extraIngress: []
+    ## @param run.networkPolicy.extraEgress [array] Add extra ingress rules to the NetworkPolicy
+    ## e.g:
+    ## extraEgress:
+    ##   - ports:
+    ##       - port: 1234
+    ##     to:
+    ##       - podSelector:
+    ##           - matchLabels:
+    ##               - role: frontend
+    ##       - podSelector:
+    ##           - matchExpressions:
+    ##               - key: role
+    ##                 operator: In
+    ##                 values:
+    ##                   - frontend
+    ##
+    extraEgress: []
+    ## @param run.networkPolicy.ingressNSMatchLabels [object] Labels to match to allow traffic from other namespaces
+    ## @param run.networkPolicy.ingressNSPodMatchLabels [object] Pod labels to match to allow traffic from other namespaces
+    ##
+    ingressNSMatchLabels: {}
+    ingressNSPodMatchLabels: {}
   ## Source code parameters
   ##
   source:
@@ -1071,14 +1121,13 @@ run:
       ##     mountPath: /.ssh/
       ##
       extraVolumeMounts: []
-
   ## Service account for Run to use
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
   ##
   serviceAccount:
     ## @param run.serviceAccount.create Enable creation of ServiceAccount for Run pods
     ##
-    create: false
+    create: true
     ## @param run.serviceAccount.name The name of the ServiceAccount to use
     ## If not set and create is true, a name is generated using the common.names.fullname template
     ##
@@ -1092,7 +1141,7 @@ run:
     annotations: {}
   ## @section Mlflow Run persistence paramaters
   ## Enable persistence using Persistent Volume Claims
-  ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+  ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
   ##
   persistence:
     ## @param run.persistence.enabled Use a PVC to persist data
@@ -1139,7 +1188,6 @@ run:
     ## @param run.persistence.annotations Persistent Volume annotations
     ##
     annotations: {}
-
 ## @section Init Container Parameters
 ##
 
@@ -1162,7 +1210,7 @@ volumePermissions:
   image:
     registry: docker.io
     repository: bitnami/os-shell
-    tag: 11-debian-11-r92
+    tag: 12-debian-12-r30
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -1173,25 +1221,35 @@ volumePermissions:
     ##
     pullSecrets: []
   ## Init container's resource requests and limits
-  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-  ## @param volumePermissions.resources.limits The resources limits for the init container
-  ## @param volumePermissions.resources.requests The requested resources for the init container
+  ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  ## @param volumePermissions.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if volumePermissions.resources is set (volumePermissions.resources is recommended for production).
+  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
   ##
-  resources:
-    limits: {}
-    requests: {}
+  resourcesPreset: "nano"
+  ## @param volumePermissions.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
+  ##
+  resources: {}
   ## Init container Container Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   ## @param volumePermissions.containerSecurityContext.enabled Set container security context settings
+  ## @param volumePermissions.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in container
   ## @param volumePermissions.containerSecurityContext.runAsUser Set init container's Security Context runAsUser
   ## NOTE: when runAsUser is set to special value "auto", init container will try to chown the
   ##   data folder to auto-determined user&group, using commands: `id -u`:`id -G | cut -d" " -f2`
   ##   "auto" is especially useful for OpenShift which has scc with dynamic user ids (and 0 is not allowed)
   ##
   containerSecurityContext:
-    enabled: false
+    enabled: true
+    seLinuxOptions: {}
     runAsUser: 0
-
 waitContainer:
   ## @param waitContainer.image.registry [default: REGISTRY_NAME] Init container wait-container image registry
   ## @param waitContainer.image.repository [default: REPOSITORY_NAME/os-shell] Init container wait-container image name
@@ -1201,7 +1259,7 @@ waitContainer:
   image:
     registry: docker.io
     repository: bitnami/os-shell
-    tag: 11-debian-11-r92
+    tag: 12-debian-12-r30
     digest: ""
     ## @param waitContainer.image.pullPolicy Init container wait-container image pull policy
     ##
@@ -1215,11 +1273,12 @@ waitContainer:
     ##   - myRegistryKeySecretName
     ##
     pullSecrets: []
-
   ## Configure Container Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   ## @param waitContainer.containerSecurityContext.enabled Enabled containers' Security Context
+  ## @param waitContainer.containerSecurityContext.seLinuxOptions [object,nullable] Set SELinux options in container
   ## @param waitContainer.containerSecurityContext.runAsUser Set containers' Security Context runAsUser
+  ## @param waitContainer.containerSecurityContext.runAsGroup Set containers' Security Context runAsGroup
   ## @param waitContainer.containerSecurityContext.runAsNonRoot Set containers' Security Context runAsNonRoot
   ## @param waitContainer.containerSecurityContext.privileged Set containers' Security Context privileged
   ## @param waitContainer.containerSecurityContext.readOnlyRootFilesystem Set containers' Security Context runAsNonRoot
@@ -1228,8 +1287,10 @@ waitContainer:
   ## @param waitContainer.containerSecurityContext.seccompProfile.type Set container's Security Context seccomp profile
   ##
   containerSecurityContext:
-    enabled: false
+    enabled: true
+    seLinuxOptions: {}
     runAsUser: 1001
+    runAsGroup: 1001
     runAsNonRoot: true
     privileged: false
     readOnlyRootFilesystem: true
@@ -1238,7 +1299,6 @@ waitContainer:
       drop: ["ALL"]
     seccompProfile:
       type: "RuntimeDefault"
-
 ## @section PostgreSQL chart configuration
 ## ref: https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
 ## @param postgresql.enabled Switch to enable or disable the PostgreSQL helm chart
@@ -1250,7 +1310,16 @@ waitContainer:
 ## @param postgresql.primary.service.ports.postgresql PostgreSQL service port
 ##
 postgresql:
-  enabled: true
+  enabled: false
+  ## Compatibility adaptations for Kubernetes platforms
+  ##
+  compatibility:
+    ## Compatibility adaptations for Openshift
+    ##
+    openshift:
+      ## @param global.compatibility.openshift.adaptSecurityContext Adapt the securityContext sections of the deployment to make them compatible with Openshift restricted-v2 SCC: remove runAsUser, runAsGroup and fsGroup and let the platform use their allowed default IDs. Possible values: auto (apply if the detected running cluster is Openshift), force (perform the adaptation always), disabled (do not perform adaptation)
+      ##
+      adaptSecurityContext: auto
   auth:
     username: mlflow
     password: ""
@@ -1258,17 +1327,6 @@ postgresql:
     existingSecret: ""
   architecture: standalone
   primary:
-    podSecurityContext:
-      enabled: false
-    containerSecurityContext:
-      enabled: false
-      runAsNonRoot: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-      seccompProfile:
-        type: RuntimeDefault
     service:
       ports:
         postgresql: 5432
@@ -1281,47 +1339,32 @@ postgresql:
           PGPASSWORD=$POSTGRES_POSTGRES_PASSWORD psql -U postgres <<< "CREATE DATABASE {{ include "mlflow.v0.database-auth.name" . }}"
           PGPASSWORD=$POSTGRES_POSTGRES_PASSWORD psql -U postgres <<< "GRANT ALL PRIVILEGES ON DATABASE {{ include "mlflow.v0.database-auth.name" . }} to {{ .Values.auth.username }}"
           PGPASSWORD=$POSTGRES_POSTGRES_PASSWORD psql -U postgres <<< "ALTER DATABASE {{ include "mlflow.v0.database-auth.name" . }} OWNER TO {{ .Values.auth.username }}"
+    ## PostgreSQL Primary resource requests and limits
+    ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+    ## @param primary.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if primary.resources is set (primary.resources is recommended for production).
+    ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
+    ##
+    resourcesPreset: none
+    ## @param resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+    ## Example:
+    ## resources:
+    ##   requests:
+    ##     cpu: 2
+    ##     memory: 512Mi
+    ##   limits:
+    ##     cpu: 3
+    ##     memory: 1024Mi
+    ##
+    resources: {}
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  ##  
+  persistence:
+    size: 8Gi
 
-  readReplicas:
-    podSecurityContext:
-      enabled: false
-    containerSecurityContext:
-      enabled: false
-      runAsNonRoot: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-      seccompProfile:
-        type: RuntimeDefault
-          
-  backup:
-    cronjob:
-      podSecurityContext:
-        enabled: false
-      containerSecurityContext:
-        enabled: false
-        runAsNonRoot: true
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop:
-          - ALL
-        seccompProfile:
-          type: RuntimeDefault
-
-  metrics:
-    containerSecurityContext:
-      enabled: false
-      runAsNonRoot: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-        - ALL
-      seccompProfile:
-        type: RuntimeDefault
-        
 ## @section External PostgreSQL configuration
 ## All of these values are only used when postgresql.enabled is set to false
+## @param externalDatabase.dialectDriver Database Dialect(+Driver)
 ## @param externalDatabase.host Database host
 ## @param externalDatabase.port Database port number
 ## @param externalDatabase.user Non-root username
@@ -1332,15 +1375,16 @@ postgresql:
 ## @param externalDatabase.existingSecretPasswordKey Name of an existing secret key containing the database credentials
 ##
 externalDatabase:
-  host: postgresql-svc
+  dialectDriver: "postgresql"
+  host: ""
   port: 5432
   user: mlflow
-  database: mlflow_db
+  database: mlflow
   authDatabase: mlflow_auth
   password: ""
-  existingSecret: mlflow-externaldb
+  existingSecret: ""
   existingSecretPasswordKey: "db-password"
-
+  
 ## @section MinIO&reg; chart parameters
 ## @extra minio For full list of MinIO&reg; values configurations please refere [here](https://github.com/bitnami/charts/tree/main/bitnami/minio)
 ##
@@ -1349,6 +1393,15 @@ minio:
   ## to be used as an objstore for Mlflow
   ##
   enabled: false
+  ## Compatibility adaptations for Kubernetes platforms
+  ##
+  compatibility:
+    ## Compatibility adaptations for Openshift
+    ##
+    openshift:
+      ## @param global.compatibility.openshift.adaptSecurityContext Adapt the securityContext sections of the deployment to make them compatible with Openshift restricted-v2 SCC: remove runAsUser, runAsGroup and fsGroup and let the platform use their allowed default IDs. Possible values: auto (apply if the detected running cluster is Openshift), force (perform the adaptation always), disabled (do not perform adaptation)
+      ##
+      adaptSecurityContext: auto
   ## MinIO&reg; authentication parameters
   ##
   auth:
@@ -1364,7 +1417,6 @@ minio:
   ## @param minio.defaultBuckets Comma, semi-colon or space separated list of MinIO&reg; buckets to create
   ##
   defaultBuckets: "mlflow"
-
   ## @param minio.provisioning.enabled Enable/disable MinIO&reg; provisioning job
   ## @param minio.provisioning.extraCommands Extra commands to run on MinIO&reg; provisioning job
   ##
@@ -1372,7 +1424,27 @@ minio:
     enabled: true
     # We need to allow downloads in order for the UI to work
     extraCommands: ["mc anonymous set download provisioning/mlflow"]
-
+    ## MinIO&reg; containers' resource requests and limits
+    ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+    ## We usually recommend not to specify default resources and to leave this as a conscious
+    ## choice for the user. This also increases chances charts run on environments with little
+    ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+    ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    ## @param resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if resources is set (resources is recommended for production).
+    ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
+    ##
+    resourcesPreset: "none"
+    ## @param resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+    ## Example:
+    ## resources:
+    ##   requests:
+    ##     cpu: 2
+    ##     memory: 512Mi
+    ##   limits:
+    ##     cpu: 3
+    ##     memory: 1024Mi
+    ##
+    resources: {}
   ## @param minio.tls.enabled Enable/disable MinIO&reg; TLS support
   ##
   tls:
@@ -1386,11 +1458,40 @@ minio:
     loadBalancerIP: ""
     ports:
       api: 80
-
+  ## MinIO&reg; containers' resource requests and limits
+  ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  ## @param resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if resources is set (resources is recommended for production).
+  ## More information: https://github.com/bitnami/charts/blob/main/bitnami/common/templates/_resources.tpl#L15
+  ##
+  resourcesPreset: "none"
+  ## @param resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
+  ##
+  resources: {}
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  ##
+  persistence:
+    ## @param persistence.size PVC Storage Request for MinIO&reg; data volume
+    ##
+    size: 8Gi
+    
 ## @section External S3 parameters
 ## All of these values are only used when minio.enabled is set to false
-## @param externalS3.host External S3 host
+## @param externalS3.host External S3 host. When using AWS S3, include appropriate [regional code](https://docs.aws.amazon.com/general/latest/gr/s3.html#s3_region), e.g. "eu-central-1.amazonaws.com
 ## @param externalS3.port External S3 port number
+## @param externalS3.useCredentialsInSecret Whether to use a secret to store the S3 credentials
 ## @param externalS3.accessKeyID External S3 access key ID
 ## @param externalS3.accessKeySecret External S3 access key secret
 ## @param externalS3.existingSecret Name of an existing secret resource containing the S3 credentials
@@ -1403,13 +1504,31 @@ minio:
 externalS3:
   host: "a3s.fi"
   port: 443
+  useCredentialsInSecret: true
   accessKeyID: ""
   accessKeySecret: ""
   existingSecret: ""
   existingSecretAccessKeyIDKey: "root-user"
   existingSecretKeySecretKey: "root-password"
-  protocol: "s3"
-  bucket: "mlflow"
+  protocol: "https"
+  bucket: ""
+  serveArtifacts: true
+
+## @section External Google Cloud Storage parameters
+## All of these values are only used when minio.enabled is set to false and externalS3 is not configured (host is empty)
+## @param externalGCS.bucket GCS bucket name. Activate gcs artifact storage if set
+## @param externalGCS.googleCloudProject Google Cloud Project to use (optional, needed when using "default application credentials")
+## @param externalGCS.useCredentialsInSecret Whether to read the GCS application credentials from a secret
+## @param externalGCS.existingSecret Name of an existing secret key containing the application credentials file (required when useCredentialsInSecret is true)
+## @param externalGCS.existingSecretKey Key in the existing secret containing the application credentials (required when useCredentialsInSecret is true)
+## @param externalGCS.serveArtifacts Whether artifact serving is enabled
+##
+externalGCS:
+  bucket: ""
+  googleCloudProject: ""
+  useCredentialsInSecret: false
+  existingSecret: ""
+  existingSecretKey: ""
   serveArtifacts: true
 
 route:
