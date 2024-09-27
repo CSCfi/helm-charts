@@ -29,7 +29,13 @@ During the process of creation of database, it will ask you the `Allowed CIDRs`.
 3. Deploy MLflow:
 
      ```sh
-     helm install mlflow . --set externalS3.accessKeyID={ACCESS_KEY} --set externalS3.accessKeySecret={SECRET_KEY} --set externalS3.bucket={BUCKET_NAME} --set externalDatabase.host={DB_PUBLIC_IP} --set externalDatabase.user={DB_USER} --set externalDatabase.password={DB_PASSWORD} --set externalDatabase.database={DB_NAME}
+     helm install mlflow . --set externalS3.accessKeyID={ACCESS_KEY} \
+     --set externalS3.accessKeySecret={SECRET_KEY} \
+     --set externalS3.bucket={BUCKET_NAME} \
+     --set externalDatabase.host={DB_PUBLIC_IP} \
+     --set externalDatabase.user={DB_USER} \
+     --set externalDatabase.password={DB_PASSWORD} \
+     --set externalDatabase.database={DB_NAME}
      ```
 
    _Replace {ACCESS_KEY} by the access key previously created_  
