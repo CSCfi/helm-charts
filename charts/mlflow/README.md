@@ -5,7 +5,10 @@
 ## Introduction
 This Helm chart deploys MLflow on Rahti2.
 
-It is highly recommended to use the Helm CLI instead of the WebUI of Rahti2. If so, you can clone the GitHub repository from [here](https://github.com/CSCfi/helm-charts)
+It is highly recommended to use the Helm CLI instead of the WebUI of Rahti2. If so, you can clone the GitHub repository from [here](https://github.com/CSCfi/helm-charts).  
+Helm CLI allows you:
+- to download the necessary dependencies in order to run the chart, if you decide to run PostgreSQL and MinIO in Rahti2.
+- to set the necessary values (see command below), if you decide to run a PostgreSQL instance externally and to use an external S3 service.
 
 ## Test and Deploy
 Different steps are necessary to deploy this Helm Chart to Rahti2:  
@@ -84,6 +87,9 @@ minio:
 ```
 
 **It is highly recommended to use our other services (Pukki and Allas) in a production environment.**
+
+If, for some reasons, the Rahti2 node crashes while you have PostgreSQL and MinIO running, it can cause disruptions and corruption in your database.  
+Pukki also has automatic backups for your databases.
 
 ## Project status
 
