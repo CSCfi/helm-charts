@@ -95,3 +95,21 @@ Define a function that lookup the secret on upgrade. If install, it requires the
     {{- end -}}
   {{- end -}}
 {{- end -}}
+
+{{/*
+Return PostgreSQL auth database name
+NOTE: This macro is run in both the parent chart and the PostgreSQL
+subchart (as it is used in the init scripts), so we need to control the
+scope
+*/}}
+{{- define "hedgedoc.v0.database-auth.name" -}}
+{{- if .Values.postgresql -}}
+    {{/* Inside parent chart */}}
+    {{- if .Values.postgresql.enabled -}}
+    {{- printf "%s_auth" .Values.postgresql.auth.database -}}
+    {{- end -}}
+{{- else -}}
+    {{/* Inside postgresql sub-chart, therefore postgresql.enabled=true */}}
+    {{- printf "%s_auth" .Values.auth.database -}}
+{{- end -}}
+{{- end -}}
