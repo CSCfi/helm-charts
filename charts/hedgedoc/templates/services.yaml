@@ -13,5 +13,5 @@ spec:
     targetPort: 3000
   selector:
     app: hedgedoc
-  type: {{ .Values.hedgedoc.service.type }}
+  type: ClusterIP
 ---

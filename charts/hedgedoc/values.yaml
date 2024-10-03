@@ -12,7 +12,7 @@ route:
 hedgedoc:
   appname: my-hedgedoc
   domain: 2.rahtiapp.fi
-  image: quay.io/hedgedoc/hedgedoc:1.9.9
+  image: quay.io/hedgedoc/hedgedoc:1.10.0
   podSecurityContext: {}
   containerSecurityContext:
     allowPrivilegeEscalation: false
@@ -26,20 +26,27 @@ hedgedoc:
       type: RuntimeDefault
   pvc:
     storageSpace: 5Gi
-  service:
-    type: ClusterIP
   random_pw_secret_key: database-password # Used by random_pw_reusable function in _helpers.tpl
+  # HANDLE WITH CARE!!!
+  # These values are not meant to be changed.
+  # If you want to change them, please refer to the comment next to each.
   secret:
-    database-name: postgres
-    database-user: postgres
-    database-password: '{{- include "random_pw_reusable" . -}}'
+    # Needed if postgresql.enabled=true
+    databaseName: '{{ tpl .Values.postgresql.auth.database . }}' # Linked to postgresql.auth.database. EDIT postgresql.auth.database instead of this value!
+    databaseUser: '{{ tpl .Values.postgresql.auth.username . }}' # Linked to postgresql.auth.username. EDIT postgresql.auth.username instead of this value!
+    databasePassword: '' # Empty by default because the password is generated randomly and stored in a Secret. Replace this value if you want to add your custom password.
+    password: '' # Empty by default because the password is generated randomly and stored in a Secret. Replace this value if you want to add your custom password.
+    postgresPassword: '' # Empty by default because the password is generated randomly and stored in a Secret. Replace this value if you want to add your custom password.
 
-# Parameters related to the deployment of PostgreSQL in Rahti
+# Parameters related to the deployment of PostgreSQL in Rahti.
+# The parameters come from bitnami/postgresql dependency (https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
 postgresql:
-  enabled: true
+  enabled: false
 
   auth:
-    enablePostgresUser: false
+    username: hedgedoc
+    database: hedgedoc
+    enablePostgresUser: true
     existingSecret: postgres
 
   tls:
@@ -49,9 +56,21 @@ postgresql:
   compatibility:
     openshift:
       adaptSecurityContext: force
+    ## @param postgresql.primary.initdb.scripts [object] Map with init scripts for the PostgreSQL database
+    initdb:
+      scripts:
+        # For authentication
+        create_auth_db.sh: |
+          #!/bin/bash
+          PGPASSWORD=$POSTGRES_POSTGRES_PASSWORD psql -U postgres <<< "CREATE DATABASE {{ include "hedgedoc.v0.database-auth.name" . }}"
+          PGPASSWORD=$POSTGRES_POSTGRES_PASSWORD psql -U postgres <<< "GRANT ALL PRIVILEGES ON DATABASE {{ include "hedgedoc.v0.database-auth.name" . }} to {{ .Values.auth.username }}"
+          PGPASSWORD=$POSTGRES_POSTGRES_PASSWORD psql -U postgres <<< "ALTER DATABASE {{ include "hedgedoc.v0.database-auth.name" . }} OWNER TO {{ .Values.auth.username }}"
 
 # Parameters related to the deployment of an external PostgreSQL (like Pukki)
 postgresqlExternal:
-  enabled: false
-  # If using an external database, enter the DNS name or public IP
-  externalDatabase:
+  enabled: true
+  externalDatabase: '0.0.0.0' # If using an external database, enter the DNS name or public IP
+  secret:
+    database-name: 'hedgedoc'
+    database-user: 'hedgedoc'
+    database-password: 'hedgedoc'

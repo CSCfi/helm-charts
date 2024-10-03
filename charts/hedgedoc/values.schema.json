@@ -65,21 +65,19 @@
                 },
                 "secret": {
                     "properties": {
-                        "database-name": {
+                        "databaseName": {
                             "type": "string"
                         },
-                        "database-password": {
+                        "databasePassword": {
                             "type": "string"
                         },
-                        "database-user": {
+                        "databaseUser": {
                             "type": "string"
-                        }
-                    },
-                    "type": "object"
-                },
-                "service": {
-                    "properties": {
-                        "type": {
+                        },
+                        "password": {
+                            "type": "string"
+                        },
+                        "postgresPassword": {
                             "type": "string"
                         }
                     },
@@ -138,6 +136,22 @@
             "properties": {
                 "enabled": {
                     "type": "boolean"
+                },
+                "externalDatabase": {
+                    "type": "string"
+                },
+                "secret": {
+                    "properties": {
+                        "database-name": {
+                            "type": "string"
+                        },
+                        "database-user": {
+                            "type": "string"
+                        },
+                        "database-password": {
+                            "type": "string"
+                        }
+                    }
                 }
             }
         },
