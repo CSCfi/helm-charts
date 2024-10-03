@@ -1013,6 +1013,27 @@ entries:
     version: 0.69.0-beta
   hedgedoc:
   - apiVersion: v2
+    created: "2024-10-03T06:59:36.727245628Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 15.x.x
+    description: Hedgedoc Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: eaa9a9c93f01f9725962bf8bf9029a51856657e7a5fc6f4b45df81706d40f413
+    icon: https://raw.githubusercontent.com/hedgedoc/hedgedoc/develop/frontend/src/app/icon.png
+    name: hedgedoc
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-1.2.2/hedgedoc-1.2.2.tgz
+    version: 1.2.2
+  - apiVersion: v2
     created: "2024-07-22T12:08:19.378616053Z"
     dependencies:
     - name: common
@@ -1477,4 +1498,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2024-09-27T08:25:26.534198744Z"
+generated: "2024-10-03T06:59:36.727287406Z"
