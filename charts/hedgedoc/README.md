@@ -52,7 +52,7 @@ By default, this Helm Chart won't deploy a postgreSQL database along Hedgedoc. I
 
 Since we are using the `bitnami/postgresql` Helm Chart as a dependency, you can take a look to the [PostgreSQL ArtifactHub](https://artifacthub.io/packages/helm/bitnami/postgresql/15.5.0) to check the different values.
 
-This parameters is disabled by default. If you want to use a postgresql database among, enable it with `postgresql.enabled`
+This parameter is disabled by default. If you want to use a postgresql database among Hedgedoc deployment on Rahti, enable it with `postgresql.enabled`
 
 
 ### HedgeDoc parameters
