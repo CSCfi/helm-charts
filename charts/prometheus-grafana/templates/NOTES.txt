@@ -1,23 +1,33 @@
-=======================================
+========================================
   CSC Prometheus-Grafana Helm deployed
-=======================================
+========================================
+
+Wait a few seconds. Time for the application to be fully deployed.
+
+To access your Grafana, you need to create the route. Run this command:
+
+  oc --namespace {{ .Release.Namespace }} create route edge grafana --service={{ .Release.Name }}-grafana --insecure-policy='Redirect' --port=3000
 
 Get the Grafana application URL by running these commands:
 
-  export GRAFANA=$(oc get route --namespace={{ .Release.Namespace }} -o yaml | yq '.items[] | select(.metadata.name == "{{ .Values.grafana.appName }}-route") .spec.host' -r)
+  export GRAFANA=$(oc get route --namespace={{ .Release.Namespace }} -o yaml | yq '.items[] | select(.metadata.name == "grafana") .spec.host' -r)
   echo "GRAFANA server URL: http://$GRAFANA"
 
 The password for the access is generated randomly.
 To retrieve the information, run these commands:
 
-  echo Username: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.grafana.appName }} -o jsonpath="{.data.admin-username}" | base64 -d)
-  echo Password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Values.grafana.appName }} -o jsonpath="{.data.admin-password}" | base64 -d)
+  echo Username: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Release.Name }}-grafana -o jsonpath="{.data.admin-user}" | base64 -d)
+  echo Password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Release.Name }}-grafana -o jsonpath="{.data.admin-password}" | base64 -d)
 
+
+============
+  OPTIONAL
+============
 The Route to Prometheus is not deployed by default. If you want to access Prometheus, you can type this command:
 
-  oc create route edge prometheus-route --service={{ .Values.prometheus.appName }}-service --insecure-policy='Redirect' --port=9090
+  oc --namespace {{ .Release.Namespace }} create route edge prometheus --service={{ .Release.Name }}-prometheus-server --insecure-policy='Redirect' --port=9090
 
 And then, you can retrieve the Prometheus URL by running these commands:
 
-  export PROMETHEUS=$(oc get route --namespace={{ .Release.Namespace }} -o yaml | yq '.items[] | select(.metadata.name == "{{ .Values.prometheus.appName }}-route") .spec.host' -r)
+  export PROMETHEUS=$(oc get route --namespace={{ .Release.Namespace }} -o yaml | yq '.items[] | select(.metadata.name == "prometheus") .spec.host' -r)
   echo "PROMETHEUS server URL: http://$PROMETHEUS"
