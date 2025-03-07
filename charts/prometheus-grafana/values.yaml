@@ -1,3 +1,13 @@
+## OpenShift Routes
+# Enable OpenShift Routes for grafana and/or prometheus
+route:
+  grafana:
+    enabled: true
+  prometheus:
+    enabled: false
+  insecureEdgeTerminationPolicy: Redirect
+  termination: edge 
+
 #####################
 # Prometheus values #
 #####################
@@ -43,7 +53,7 @@ prometheus:
           - role: endpoints
             namespaces:
               names:
-              -  # Enter the name of your namespace/project here
+              - graf # Enter the name of your namespace/project here
         relabel_configs:
           - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape_slow]
             action: keep
@@ -93,7 +103,7 @@ prometheus:
           - role: pod
             namespaces:
               names:
-              -  # Enter the name of your namespace/project here
+              - graf # Enter the name of your namespace/project here
         relabel_configs:
           - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
             action: keep
