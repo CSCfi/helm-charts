@@ -1,9 +1,0 @@
-apiVersion: authorization.openshift.io/v1
-kind: RoleBinding
-metadata:
-  name: {{ .Values.prometheus.appName }}-role
-roleRef:
-  name: view
-subjects:
-- kind: ServiceAccount
-  name: {{ .Values.prometheus.appName }}-sa
