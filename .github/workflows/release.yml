@@ -30,9 +30,10 @@ jobs:
         with:
           version: v3.12.1
 
-      - name: Add NATS Helm repo
+      - name: Add Helm repo
         run: |
           helm repo add nats https://nats-io.github.io/k8s/helm/charts/ &&
+          helm repo add bitnami https://charts.bitnami.com/bitnami &&
           helm repo update
 
       - name: Helm Dependency
