@@ -1373,6 +1373,25 @@ entries:
     version: 0.4.0
   prometheus-grafana-helm:
   - apiVersion: v2
+    created: "2025-03-10T08:32:40.570542485Z"
+    dependencies:
+    - name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 27.5.x
+    - name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 8.10.x
+    description: Prometheus and Grafana Helm Chart for Rahti platform Link to the
+      repo https://github.com/CSCfi/helm-charts
+    digest: 9ed2ec08c8003714e532a071bfbc935eb1d07005a1b745a10637c0159220acbe
+    icon: https://miro.medium.com/v2/resize:fit:640/format:webp/0*4G5AVIBCAKMU1Ctl.png
+    name: prometheus-grafana-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/prometheus-grafana-helm-2.0.0/prometheus-grafana-helm-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
     created: "2024-03-15T09:18:47.555037358Z"
     description: Prometheus and Grafana Helm Chart for Rahti platform Link to the
       repo https://github.com/CSCfi/helm-charts
@@ -1509,4 +1528,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2025-03-06T08:09:41.689172036Z"
+generated: "2025-03-10T08:32:40.570618708Z"
