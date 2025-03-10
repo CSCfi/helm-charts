@@ -53,20 +53,6 @@
                     },
                     "type": "object"
                 },
-                "securityContext": {
-                    "properties": {
-                        "fsGroup": {
-                            "type": "null"
-                        },
-                        "runAsGroup": {
-                            "type": "null"
-                        },
-                        "runAsUser": {
-                            "type": "null"
-                        }
-                    },
-                    "type": "object"
-                },
                 "serviceAccount": {
                     "properties": {
                         "create": {
@@ -146,20 +132,6 @@
                                 "type": "string"
                             },
                             "type": "array"
-                        },
-                        "securityContext": {
-                            "properties": {
-                                "fsGroup": {
-                                    "type": "null"
-                                },
-                                "runAsGroup": {
-                                    "type": "null"
-                                },
-                                "runAsUser": {
-                                    "type": "null"
-                                }
-                            },
-                            "type": "object"
                         },
                         "useExistingClusterRoleName": {
                             "type": "string"
