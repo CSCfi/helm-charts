@@ -34,6 +34,8 @@ jobs:
         run: |
           helm repo add nats https://nats-io.github.io/k8s/helm/charts/ &&
           helm repo add bitnami https://charts.bitnami.com/bitnami &&
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts &&
+          helm repo add grafana https://grafana.github.io/helm-charts &&
           helm repo update
 
       - name: Helm Dependency
