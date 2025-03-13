@@ -1,8 +1,17 @@
 apiVersion: v2
 name: matomo
+dependencies:
+  - name: common
+    repository: oci://registry-1.docker.io/bitnamicharts
+    tags:
+    - bitnami-common
+    version: 2.x.x
+  - name: matomo
+    version: 9.2.x
+    repository: oci://registry-1.docker.io/bitnamicharts
 description: Matomo Helm Chart for Rahti platform
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 1.2.1
+version: 2.0.0
 sources:
 - https://github.com/CSCfi/helm-charts
 icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4

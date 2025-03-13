@@ -1,69 +1,122 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "properties": {
-        "mariadb": {
+        "matomo": {
             "properties": {
+                "allowEmptyPassword": {
+                    "type": "boolean"
+                },
+                "externalDatabase": {
+                    "properties": {
+                        "database": {
+                            "type": "string"
+                        },
+                        "existingSecret": {
+                            "type": "string"
+                        },
+                        "host": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        },
+                        "port": {
+                            "type": "integer"
+                        },
+                        "user": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
                 "image": {
-                    "type": "string"
-                },
-                "imageStream": {
                     "properties": {
-                        "name": {
-                            "type": "string"
-                        },
-                        "namespace": {
-                            "type": "string"
-                        },
-                        "tag": {
-                            "type": "string"
+                        "debug": {
+                            "type": "boolean"
                         }
                     },
                     "type": "object"
                 },
-                "livenessProbe": {
+                "mariadb": {
                     "properties": {
                         "enabled": {
                             "type": "boolean"
                         },
-                        "initialDelaySeconds": {
-                            "type": "integer"
-                        },
-                        "timeoutSeconds": {
-                            "type": "integer"
+                        "primary": {
+                            "properties": {
+                                "resources": {
+                                    "properties": {
+                                        "limits": {
+                                            "properties": {
+                                                "cpu": {
+                                                    "type": "string"
+                                                },
+                                                "memory": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "requests": {
+                                            "properties": {
+                                                "cpu": {
+                                                    "type": "string"
+                                                },
+                                                "memory": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
                         }
                     },
                     "type": "object"
                 },
-                "name": {
+                "matomoEmail": {
                     "type": "string"
                 },
-                "pvc": {
-                    "properties": {
-                        "storageClassName": {
-                            "type": "string"
-                        },
-                        "storageSize": {
-                            "type": "string"
-                        }
-                    },
-                    "type": "object"
-                },
-                "random_pw_secret_key": {
+                "matomoPassword": {
                     "type": "string"
                 },
-                "random_root_pw_secret_key": {
+                "matomoUsername": {
                     "type": "string"
                 },
-                "readinessProbe": {
+                "metrics": {
                     "properties": {
                         "enabled": {
                             "type": "boolean"
                         },
-                        "initialDelaySeconds": {
-                            "type": "integer"
-                        },
-                        "timeoutSeconds": {
-                            "type": "integer"
+                        "resources": {
+                            "properties": {
+                                "limits": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string"
+                                        },
+                                        "memory": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "requests": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string"
+                                        },
+                                        "memory": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
                         }
                     },
                     "type": "object"
@@ -72,28 +125,25 @@
                     "properties": {
                         "limits": {
                             "properties": {
+                                "cpu": {
+                                    "type": "string"
+                                },
                                 "memory": {
                                     "type": "string"
                                 }
                             },
                             "type": "object"
-                        }
-                    },
-                    "type": "object"
-                },
-                "secret": {
-                    "properties": {
-                        "database-name": {
-                            "type": "string"
                         },
-                        "database-password": {
-                            "type": "string"
-                        },
-                        "database-root-password": {
-                            "type": "string"
-                        },
-                        "database-user": {
-                            "type": "string"
+                        "requests": {
+                            "properties": {
+                                "cpu": {
+                                    "type": "string"
+                                },
+                                "memory": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
                         }
                     },
                     "type": "object"
@@ -109,51 +159,13 @@
             },
             "type": "object"
         },
-        "matomo": {
+        "route": {
             "properties": {
-                "image": {
+                "insecureEdgeTerminationPolicy": {
                     "type": "string"
                 },
-                "name": {
+                "termination": {
                     "type": "string"
-                },
-                "random_pw_secret_key": {
-                    "type": "string"
-                },
-                "route": {
-                    "properties": {
-                        "tls": {
-                            "properties": {
-                                "insecureEdgeTerminationPolicy": {
-                                    "type": "string"
-                                },
-                                "termination": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    },
-                    "type": "object"
-                },
-                "secret": {
-                    "properties": {
-                        "matomo-password": {
-                            "type": "string"
-                        },
-                        "matomo-username": {
-                            "type": "string"
-                        }
-                    },
-                    "type": "object"
-                },
-                "service": {
-                    "properties": {
-                        "type": {
-                            "type": "string"
-                        }
-                    },
-                    "type": "object"
                 }
             },
             "type": "object"
