@@ -32,6 +32,10 @@ Some mandatory values:
 
 - `clickhouse.auth.username` and `clickhouse.auth.password`: Define your username and password for the clickhouse database.
 
+### IP whitelisting
+
+You can whitelist IP where only a few ranges are allowed to get through the route. More information here: https://docs.csc.fi/cloud/rahti/concepts/#ip-white-listing
+
 ## Cleanup
 To delete all the resources, simply uninstall the Helm Chart:
 ```sh
