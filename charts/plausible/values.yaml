@@ -27,12 +27,11 @@ plausible:
   ingress:
     enabled: true
     hosts:
-      - "" # The hosting url of the server
+      - "" # The hosting url of the server. MUST NOT INCLUDE 'https://'
     annotations:
       route.openshift.io/termination: edge
       ### The IP whitelist for the haproxy router. More information can be found here -> https://docs.csc.fi/cloud/rahti/concepts/#ip-white-listing
-      haproxy.router.openshift.io/ip_whitelist: >-
-        192.168.1.0/24
+      haproxy.router.openshift.io/ip_whitelist: # 192.168.1.0/24
 
 ### BITNAMI/CLICKHOUSE
 clickhouse:

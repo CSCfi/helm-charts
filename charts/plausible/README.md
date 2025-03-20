@@ -8,7 +8,8 @@ helm upgrade --install plausible .
 This Helm Chart helps you to deploy Plausible on CSC Rahti (Openshift 4).  
 If you want to use it with different values, you can edit `values.yaml` file and then run:  
 ```sh
-helm upgrade --install matomo . -f {custom_values.yaml}
+cd charts/plausible
+helm upgrade --install plausible . -f {custom_values.yaml}
 ```
 
 ## Parameters
@@ -18,7 +19,14 @@ We created a default `values.yaml` file that is compatible with our platform Rah
 - [imio/plausible-analytics](https://github.com/IMIO/helm-plausible-analytics/tree/main)
 
 By default, the deployment of PostgreSQL alongside Plausible analitycs is disable.
-We strongly recommend to create a database in our DBaaS service called [Pukki](https://pukki.dbaas.csc.fi/)
+
+We strongly recommend to create a database in our DBaaS service called [Pukki](https://pukki.dbaas.csc.fi/). Be sure to allow Rahti egress IP `86.50.229.150/32` to allow your pod to connect to Pukki.
+
+One more thing. You need to grant creation privilege. Once the Pukki database is created, connect using the [root credentials](https://docs.csc.fi/cloud/dbaas/operations/#enable-root) and run this command:
+
+```sh
+GRANT CREATE ON DATABASE your_database_name TO your_database_username;
+```
 
 If you decide to deploy PostgreSQL on Rahti, please change the value `postgresql.enabled` from `false` to `true`
 
