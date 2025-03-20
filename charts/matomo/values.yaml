@@ -1,44 +1,62 @@
-mariadb:
-  image: image-registry.apps.2.rahti.csc.fi/openshift/mariadb:10.3-el8
-  imageStream:
-    name: mariadb
-    tag: 10.3-el8
-    namespace: openshift
-  name: mariadb
-  service:
-    type: ClusterIP
-  pvc:
-    storageSize: 5Gi
-    storageClassName: standard-csi
-  random_pw_secret_key: database-password
-  random_root_pw_secret_key: database-root-password
-  secret:
-    database-name: matomodb
-    database-user: matomouser
-    database-password: '{{- include "random_mariadb_pw_reusable" . -}}'
-    database-root-password: '{{- include "random_mariadb_root_pw_reusable" . -}}'
-  livenessProbe:
-    enabled: true
-    initialDelaySeconds: 30
-    timeoutSeconds: 1
-  readinessProbe:
-    enabled: true
-    initialDelaySeconds: 5
-    timeoutSeconds: 1
-  resources:
-    limits:
-      memory: 512Mi
+route:
+  insecureEdgeTerminationPolicy: Redirect
+  termination: edge 
 
 matomo:
-  image: bitnami/matomo:latest
-  name: matomo
+  ## @param matomoUsername User of the application
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/matomo#configuration
+  ##
+  matomoUsername: user
+  ## @param matomoPassword Application password
+  ## Defaults to a random 10-character alphanumeric string if not set
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/matomo#configuration
+  ##
+  matomoPassword: ""
+  ## @param matomoEmail Admin email
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/matomo#configuration
+  ##
+  matomoEmail: user@example.com
+  ## @param matomoWebsiteName Matomo application name
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/matomo#configuration
+  ##
+  ## @param allowEmptyPassword Allow DB blank passwords
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/matomo#environment-variables
+  ##
+  image:
+    debug: false
+  allowEmptyPassword: false
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 512Mi
+      cpu: 500m
   service:
     type: ClusterIP
-  route:
-    tls:
-      insecureEdgeTerminationPolicy: Redirect
-      termination: edge
-  random_pw_secret_key: matomo-password
-  secret:
-    matomo-username: matomouser
-    matomo-password: '{{- include "random_matomo_pw_reusable" . -}}'
+  mariadb:
+    enabled: true
+    primary:
+      resources:
+        requests:
+          memory: 256Mi
+          cpu: 250m
+        limits:
+          memory: 512Mi
+          cpu: 500m
+  externalDatabase:
+    host: ""
+    port: 3306
+    user: bn_matomo
+    password: ""
+    database: bitnami_matomo
+    existingSecret: ""
+  metrics:
+    enabled: false
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 250m
+      limits:
+        memory: 512Mi
+        cpu: 500m
