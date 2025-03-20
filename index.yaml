@@ -1371,6 +1371,33 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/mlflow-0.4.0/mlflow-0.4.0.tgz
     version: 0.4.0
+  plausible:
+  - apiVersion: v2
+    created: "2025-03-20T12:39:17.503164622Z"
+    dependencies:
+    - alias: plausible
+      name: plausible-analytics
+      repository: https://imio.github.io/helm-charts
+      version: 0.3.x
+    - alias: clickhouse
+      condition: clickhouse.enabled
+      name: clickhouse
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 8.0.x
+    - alias: postgresql
+      condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 16.5.x
+    description: Plausible Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 929312677b579163221783b88576e7912dbfc598ff08de3a69f2d568264384e5
+    icon: https://plausible.io/uploads/plausible-community-edition.png
+    name: plausible
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/plausible-1.0.0/plausible-1.0.0.tgz
+    version: 1.0.0
   prometheus-grafana-helm:
   - apiVersion: v2
     created: "2025-03-10T11:54:00.892460766Z"
@@ -1547,4 +1574,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2025-03-10T11:54:00.892530245Z"
+generated: "2025-03-20T12:39:17.503248448Z"
