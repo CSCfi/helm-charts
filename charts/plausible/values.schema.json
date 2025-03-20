@@ -1,0 +1,206 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "clickhouse": {
+            "properties": {
+                "auth": {
+                    "properties": {
+                        "password": {
+                            "type": "string"
+                        },
+                        "username": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "containerSecurityContext": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "initdbScripts": {
+                    "properties": {
+                        "db-init.sql": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "keeper": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "persistence": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "size": {
+                            "type": "string"
+                        },
+                        "storageClass": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "podSecurityContext": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "replicaCount": {
+                    "type": "integer"
+                },
+                "resources": {
+                    "properties": {
+                        "limits": {
+                            "properties": {
+                                "cpu": {
+                                    "type": "string"
+                                },
+                                "memory": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "requests": {
+                            "properties": {
+                                "cpu": {
+                                    "type": "string"
+                                },
+                                "memory": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "serviceAccount": {
+                    "properties": {
+                        "create": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "shards": {
+                    "type": "integer"
+                },
+                "zookeeper": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "plausible": {
+            "properties": {
+                "baseURL": {
+                    "type": "string"
+                },
+                "clickhouse": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "clickhouseDatabaseURL": {
+                    "type": "string"
+                },
+                "databaseURL": {
+                    "type": "string"
+                },
+                "disableRegistration": {
+                    "type": "boolean"
+                },
+                "ingress": {
+                    "properties": {
+                        "annotations": {
+                            "properties": {
+                                "haproxy.router.openshift.io/ip_whitelist": {
+                                    "type": "string"
+                                },
+                                "route.openshift.io/termination": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "hosts": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        }
+                    },
+                    "type": "object"
+                },
+                "logFailedLoginAttempts": {
+                    "type": "boolean"
+                },
+                "postgresql": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "postgresql": {
+            "properties": {
+                "auth": {
+                    "properties": {
+                        "database": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        },
+                        "postgresPassword": {
+                            "type": "string"
+                        },
+                        "username": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "enabled": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}

@@ -1,0 +1,86 @@
+plausible:
+  # The hosting url of the server
+  baseURL: ""
+  
+  disableRegistration: true
+  
+  logFailedLoginAttempts: true
+  
+  ### The URL to the Postgres Database Connection String see -> https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING
+  ### Format: postgres://<username>:<password>@<hostname_or_public_IP>:<port>/<database>
+  databaseURL: ""
+
+  ### The URL Connection String to clickhouse DB see -> https://clickhouse.tech/docs/en/interfaces/http/
+  ### Format: http://<username>:<password>@plausible-clickhouse.<your_csc_project_name>.svc.cluster.local:8123/plausible_events_db
+  clickhouseDatabaseURL: ""
+  
+  ### The version of the postgresql used in the IMIO Helm Chart is too old.
+  ### Better to use the latest version of the Bitnami Helm Chart
+  postgresql:
+    enabled: false
+
+  ### The version of the clickhouse used in the IMIO Helm Chart is too old.
+  ### Better to use the latest version of the Bitnami Helm Chart
+  clickhouse:
+    enabled: false
+  
+  ingress:
+    enabled: true
+    hosts:
+      - "" # The hosting url of the server. MUST NOT INCLUDE 'https://'
+    annotations:
+      route.openshift.io/termination: edge
+      ### The IP whitelist for the haproxy router. More information can be found here -> https://docs.csc.fi/cloud/rahti/concepts/#ip-white-listing
+      haproxy.router.openshift.io/ip_whitelist: # 192.168.1.0/24
+
+### BITNAMI/CLICKHOUSE
+clickhouse:
+  enabled: true
+
+  auth:
+    username: clickhouse
+    password: ""
+
+  shards: 1
+  replicaCount: 1
+
+  zookeeper:
+    enabled: false
+  keeper:
+    enabled: false
+
+  persistence:
+    enabled: true
+    storageClass: "standard-csi"
+    size: 10Gi
+
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
+
+  serviceAccount:
+    create: true
+
+  initdbScripts:
+    db-init.sql: |
+      CREATE DATABASE IF NOT EXISTS plausible_events_db;
+
+  resources:
+    requests:
+      memory: 1Gi  
+      cpu: "500m"  
+    limits:
+      memory: 2Gi  
+      cpu: "1000m"    
+
+### BITNAMI/POSTGRESQL
+### Turn this off if you want to use Pukki database (Recommended for production environment)
+postgresql:
+  enabled: false
+
+  auth:
+    postgresPassword: ""
+    username: ""
+    password: ""
+    database: plausible_db

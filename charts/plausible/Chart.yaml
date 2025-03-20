@@ -1,0 +1,23 @@
+apiVersion: v2
+name: plausible
+dependencies:
+  - name: plausible-analytics
+    alias: plausible
+    repository: https://imio.github.io/helm-charts
+    version: 0.3.x
+  - name: clickhouse
+    alias: clickhouse
+    repository: oci://registry-1.docker.io/bitnamicharts
+    version: 8.0.x
+    condition: clickhouse.enabled
+  - name: postgresql
+    alias: postgresql
+    repository: oci://registry-1.docker.io/bitnamicharts
+    version: 16.5.x
+    condition: postgresql.enabled
+description: Plausible Helm Chart for Rahti platform
+  Link to the repo https://github.com/CSCfi/helm-charts
+version: 1.0.0
+sources:
+- https://github.com/CSCfi/helm-charts
+icon: https://plausible.io/uploads/plausible-community-edition.png

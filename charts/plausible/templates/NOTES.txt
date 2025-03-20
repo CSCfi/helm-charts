@@ -1,0 +1,9 @@
+========================================
+  CSC Plausible Helm deployed
+========================================
+
+Wait a few seconds. Time for the application to be fully deployed.
+
+Here is your Plausible URL:
+
+  echo "PLAUSIBLE server URL: {{ .Values.plausible.baseURL }}"
