@@ -11,4 +11,4 @@ Get the Matomo application URL by running these commands:
 
 The default username is `user`. The password is generated randomly.
 
-  echo Password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Release.Name }}-matomo -o jsonpath="{.data.matomo-password}" | base64 -d)
+  echo Password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Release.Name }} -o jsonpath="{.data.matomo-password}" | base64 -d)

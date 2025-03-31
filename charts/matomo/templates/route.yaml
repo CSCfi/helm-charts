@@ -13,6 +13,6 @@ spec:
     termination: {{ .Values.route.termination }}
   to:
     kind: Service
-    name: {{ .Release.Name }}-matomo
+    name: {{ .Release.Name }}
     weight: 100
   wildcardPolicy: None
