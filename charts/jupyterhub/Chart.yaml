@@ -1,12 +1,15 @@
-# Chart.yaml v2 reference: https://helm.sh/docs/topics/charts/#the-chartyaml-file
 apiVersion: v2
 name: jupyterhub
-version: 1.1.5
-appVersion: "4.1.5"
+dependencies:
+  - name: common
+    repository: oci://registry-1.docker.io/bitnamicharts
+    tags:
+    - bitnami-common
+    version: 2.x.x
+  - name: jupyterhub
+    repository: oci://registry-1.docker.io/bitnamicharts
+    version: 8.1.x
+version: 2.0.0
 description: Multi-user Jupyter installation
   Link to the repo https://github.com/CSCfi/helm-charts
-keywords: [jupyter, jupyterhub, z2jh]
-home: https://z2jh.jupyter.org
-sources: [https://github.com/jupyterhub/zero-to-jupyterhub-k8s]
 icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
-kubeVersion: ">=1.23.0-0"
