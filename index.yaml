@@ -1253,6 +1253,26 @@ entries:
     version: 0.0.1-set.by.chartpress
   matomo:
   - apiVersion: v2
+    created: "2025-03-31T13:04:57.001404828Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: matomo
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 9.2.x
+    description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: b74424353200b7398e3d11c195c45a34d82367e8c9c6da3e14baecad933ef7b4
+    icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4
+    name: matomo
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/matomo-2.0.0/matomo-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
     created: "2024-04-11T09:50:13.78464224Z"
     description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
     digest: 0c3b72c62ed6eb5d6df084064c4c6bdc9d98aca2c58d101d10e784be1d3db6e8
@@ -1574,4 +1594,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2025-03-20T12:39:17.503248448Z"
+generated: "2025-03-31T13:04:57.001481753Z"
