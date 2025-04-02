@@ -77,7 +77,7 @@ jupyterhub:
       ...
 ```
 
-Any user can sign up but the admin must authorize them to log in. Use this url: `http://<you-notebook>.rahtiapp.fi/hub/authorize`
+Any user can sign up but the admin must authorize them to log in. Use this url: `http://<your-notebook>.rahtiapp.fi/hub/authorize`
 
 You can implement different `authenticator_class`. Have a look:
 - [Identity provider specific setup](https://oauthenticator.readthedocs.io/en/latest/tutorials/provider-specific-setup/index.html)
