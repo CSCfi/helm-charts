@@ -11,8 +11,23 @@ route:
 # JupyterHub #
 ##############
 jupyterhub:
+  global:
+    ## Security parameters
+    ##
+    security:
+      ## @param global.security.allowInsecureImages Allows skipping image verification
+      allowInsecureImages: true
   ## @section Proxy deployment parameters
   proxy:
+    ## @param proxy.image.registry [default: REGISTRY_NAME] Proxy image registry
+    ## @param proxy.image.repository [default: REPOSITORY_NAME/configurable-http-proxy] Proxy image repository
+    ## @skip proxy.image.tag Proxy image tag (immutable tags are recommended)
+    ## @param proxy.image.debug Activate verbose output
+    image:
+      registry: docker.io
+      repository: bitnami/configurable-http-proxy
+      tag: 4.6.3-debian-12-r5
+      debug: false
     ## Configure the ingress resource that allows you to access to your JupyterHub instance
     ##
     ingress:
@@ -66,11 +81,11 @@ jupyterhub:
     ##
     resources:
       requests:
+        cpu: 60m
+        memory: 64Mi
+      limits:
         cpu: 125m
         memory: 128Mi
-      limits:
-        cpu: 250m
-        memory: 256Mi
     service:
       public:
         ## @param proxy.service.public.type Public service type
@@ -91,14 +106,21 @@ jupyterhub:
     ##
     resources:
       requests:
+        cpu: 60m
+        memory: 64Mi
+      limits:
         cpu: 125m
         memory: 128Mi
-      limits:
-        cpu: 250m
-        memory: 256Mi
 
   ## @section Singluser deployment parameters      
   singleuser:
+    ## @param singluser.image.registry [default: REGISTRY_NAME] Proxy image registry
+    ## @param singluser.image.repository [default: REPOSITORY_NAME/configurable-http-proxy] Proxy image repository
+    ## @skip singleuser.image.tag Proxy image tag (immutable tags are recommended)
+    image:
+      registry: docker.io
+      repository: bitnami/jupyter-base-notebook
+      tag: 4.1.6-debian-12-r27
     persistence:
       ## @param singleuser.persistence.enabled Enable persistent volume creation on Single User instances
       ## If true, use a Persistent Volume Claim, If false, use emptyDir
@@ -131,14 +153,21 @@ jupyterhub:
       ##
     resources:
       requests:
-        cpu: 125m
-        memory: 128Mi
-      limits:
         cpu: 250m
         memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
 
   ## @section Hub deployment parameters      
   hub:
+    ## @param hub.image.registry [default: REGISTRY_NAME] Hub image registry
+    ## @param hub.image.repository [default: REPOSITORY_NAME/jupyterhub] Hub image repository
+    ## @skip hub.image.tag Hub image tag (immutable tags are recommended)
+    image:
+      registry: docker.io
+      repository: bitnami/jupyterhub
+      tag: 4.1.6-debian-12-r15
     ## @param hub.baseUrl Hub base URL
     ##
     baseUrl: /
@@ -356,10 +385,10 @@ jupyterhub:
   ## @param externalDatabase.existingSecretPasswordKey Name of an existing secret key containing the database credentials
   ##
   externalDatabase:
-    host: ""
+    host: "195.148.23.206"
     port: 5432
-    user: ""
-    database: ""
-    password: ""
+    user: "jupyterhub"
+    database: "jupyterhub"
+    password: "jupyterhub"
     existingSecret: ""
     existingSecretPasswordKey: ""
