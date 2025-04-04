@@ -171,10 +171,16 @@ jupyterhub:
     ## @param hub.baseUrl Hub base URL
     ##
     baseUrl: /
+    ## @param hub.authenticatorClass Hub authenticator class
+    ## ref: https://jupyterhub.readthedocs.io/en/stable/reference/authenticators.html
+    ##
+    authenticatorClass: native
     ## @param hub.adminUser Hub Dummy authenticator admin user
     ##
-    adminUser: admin
-    password: "superman"
+    adminUser: user
+    ## @param hub.password Hub Dummy authenticator password
+    ##
+    password: ""
     ## @param hub.services JupyterHub services interacting with the JupyterHub API
     ## ref: https://z2jh.jupyter.org/en/latest/administrator/services.html
     ## e.g:
@@ -201,11 +207,16 @@ jupyterhub:
         config:
           JupyterHub:
             admin_access: true
-            authenticator_class: native
+            authenticator_class: {{ .Values.hub.authenticatorClass }}
             Authenticator:
               admin_users:
                 - {{ .Values.hub.adminUser }}
-              password: {{ .Values.hub.password }}
+            DummyAuthenticator:
+            {{- if .Values.hub.password }}
+              password: {{ .Values.hub.password | quote }}
+            {{- else }}
+              password: {{ randAlphaNum 10 | quote }}
+            {{- end }}
         cookieSecret:
         concurrentSpawnLimit: 64
         consecutiveFailureLimit: 5
