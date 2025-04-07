@@ -56,8 +56,7 @@ route:
   host: my-jupyterhub.rahtiapp.fi # <-- Edit this value
 ```
 
-Same with `jupyterhub.proxy.hostname` if you decide to enabled the Ingress.
-
+Same with `jupyterhub.proxy.hostname` if you decide to enable the Ingress.
 This Helm Chart will deploy the [Native Authenticator](https://github.com/jupyterhub/nativeauthenticator) by default. You can set the admin user in `jupyterhub.hub.adminUser`.
 You must sign up to set the password for the admin user.
 
