@@ -73,10 +73,10 @@ spark:
     resources:
       requests:
         memory: 1G
-        cpu: 1
+        cpu: "1"
       limits:
         memory: 2G
-        cpu: 2
+        cpu: "2"
     ## Autoscaling parameters
     ## @param worker.autoscaling.enabled Enable replica autoscaling depending on CPU
     ## @param worker.autoscaling.minReplicas Minimum number of worker replicas
