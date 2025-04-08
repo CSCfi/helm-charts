@@ -1594,4 +1594,25 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
     version: 8.1.6
-generated: "2025-03-31T13:04:57.001481753Z"
+  - apiVersion: v2
+    created: "2025-04-08T08:55:10.197233169Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - alias: spark
+      name: spark
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 9.3.x
+    description: Apache Spark Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 0b0ac8354c670eee109ae6f0dafc6dd9430b73424fb8dc4dff5a0e1ece363a2c
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/spark/img/spark-stack-220x234.png
+    name: spark
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
+    version: 2.0.0
+generated: "2025-04-08T08:55:10.197315574Z"
