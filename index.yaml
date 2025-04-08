@@ -1561,39 +1561,6 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/rstudio-1.2.1/rstudio-1.2.1.tgz
     version: 1.2.1
   spark:
-  - annotations:
-      category: Infrastructure
-      images: |
-        - name: spark
-          image: docker.io/bitnami/spark:3.5.0-debian-11-r16
-      licenses: Apache-2.0
-    apiVersion: v2
-    appVersion: 3.5.0
-    created: "2024-01-10T09:52:55.758275254Z"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    description: Apache Spark is a high-performance engine for large-scale computing
-      tasks, such as data processing, machine learning and real-time data streaming.
-      It includes APIs for Java, Python, Scala and R.
-    digest: 494353dbf1bdb1935b76e2cc4db51db722b63d7a10760519682b2a9df5b71fe4
-    home: https://bitnami.com
-    icon: https://bitnami.com/assets/stacks/spark/img/spark-stack-220x234.png
-    keywords:
-    - apache
-    - spark
-    maintainers:
-    - name: VMware, Inc.
-      url: https://github.com/bitnami/charts
-    name: spark
-    sources:
-    - https://github.com/bitnami/charts/tree/main/bitnami/spark
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/spark-8.1.6/spark-8.1.6.tgz
-    version: 8.1.6
   - apiVersion: v2
     created: "2025-04-08T08:55:10.197233169Z"
     dependencies:
