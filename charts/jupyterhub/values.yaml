@@ -1,682 +1,407 @@
-# fullnameOverride and nameOverride distinguishes blank strings, null values,
-# and non-blank strings. For more details, see the configuration reference.
-fullnameOverride: ""
-nameOverride:
+## @param route Configuration for the Route resource in OpenShift
+##
+route:
+  enabled: true
+  host: "" # Edit this value
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
 
-# enabled is ignored by the jupyterhub chart itself, but a chart depending on
-# the jupyterhub chart conditionally can make use this config option as the
-# condition.
-enabled:
-
-# custom can contain anything you want to pass to the hub pod, as all passed
-# Helm template values will be made available there.
-custom: {}
-
-# If deploy on OKD 4
-openshift:
-  route:
-    enabled: true
-
-# imagePullSecret is configuration to create a k8s Secret that Helm chart's pods
-# can get credentials from to pull their images.
-imagePullSecret:
-  create: false
-  automaticReferenceInjection: true
-  registry:
-  username:
-  password:
-  email:
-# imagePullSecrets is configuration to reference the k8s Secret resources the
-# Helm chart's pods can get credentials from to pull their images.
-imagePullSecrets: []
-
-# hub relates to the hub pod, responsible for running JupyterHub, its configured
-# Authenticator class KubeSpawner, and its configured Proxy class
-# ConfigurableHTTPProxy. KubeSpawner creates the user pods, and
-# ConfigurableHTTPProxy speaks with the actual ConfigurableHTTPProxy server in
-# the proxy pod.
-hub:
-  revisionHistoryLimit:
-  config:
-    JupyterHub:
-      admin_access: true
-      authenticator_class: nativeauthenticator.NativeAuthenticator
-      Authenticator:
-        admin_users:
-          - admin
-  service:
-    type: ClusterIP
-    annotations: {}
-    ports:
-      nodePort:
-    extraPorts: []
-    loadBalancerIP:
-  baseUrl: /
-  cookieSecret:
-  initContainers: []
-  nodeSelector: {}
-  tolerations: []
-  concurrentSpawnLimit: 64
-  consecutiveFailureLimit: 5
-  activeServerLimit:
-  deploymentStrategy:
-    ## type: Recreate
-    ## - sqlite-pvc backed hubs require the Recreate deployment strategy as a
-    ##   typical PVC storage can only be bound to one pod at the time.
-    ## - JupyterHub isn't designed to support being run in parallell. More work
-    ##   needs to be done in JupyterHub itself for a fully highly available (HA)
-    ##   deployment of JupyterHub on k8s is to be possible.
-    type: Recreate
-  db:
-    type: sqlite-pvc
-    upgrade:
-    pvc:
+##############
+# JupyterHub #
+##############
+jupyterhub:
+  global:
+    ## Security parameters
+    ##
+    security:
+      ## @param global.security.allowInsecureImages Allows skipping image verification
+      allowInsecureImages: true
+  ## @section Proxy deployment parameters
+  proxy:
+    ## @param proxy.image.registry [default: REGISTRY_NAME] Proxy image registry
+    ## @param proxy.image.repository [default: REPOSITORY_NAME/configurable-http-proxy] Proxy image repository
+    ## @skip proxy.image.tag Proxy image tag (immutable tags are recommended)
+    ## @param proxy.image.debug Activate verbose output
+    image:
+      registry: docker.io
+      repository: bitnami/configurable-http-proxy
+      tag: 4.6.3-debian-12-r5
+      debug: false
+    ## Configure the ingress resource that allows you to access to your JupyterHub instance
+    ##
+    ingress:
+      ## @param proxy.ingress.enabled Set to true to enable ingress record generation
+      ##
+      enabled: false
+      ## @param proxy.ingress.apiVersion Force Ingress API version (automatically detected if not set)
+      ##
+      apiVersion: ""
+      ## @param proxy.ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+      ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster.
+      ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+      ##
+      ingressClassName: ""
+      ## @param proxy.ingress.pathType Ingress path type
+      ##
+      pathType: ImplementationSpecific
+      ## @param proxy.ingress.hostname Set ingress rule hostname
+      ##
+      hostname: ""
+      ## @param proxy.ingress.path Path to the Proxy pod
+      ## NOTE: You may need to set this to '/*' in order to use this with ALB ingress controllers
+      ##
+      path: /
+      ## @param proxy.ingress.annotations [object] Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+      ## Use this parameter to set the required annotations for cert-manager, see
+      ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
+      ## e.g:
+      ## annotations:
+      ##   kubernetes.io/ingress.class: nginx
+      ##   cert-manager.io/cluster-issuer: cluster-issuer-name
+      ##
       annotations: {}
-      selector: {}
+      ## @param proxy.ingress.tls Enable TLS configuration for the host defined at `ingress.hostname` parameter
+      ## TLS certificates will be retrieved from a TLS secret with name: `{{- printf "%s-tls" .Values.ingress.hostname }}`
+      ## You can:
+      ##   - Use the `ingress.secrets` parameter to create this TLS secret
+      ##   - Rely on cert-manager to create it by setting the corresponding annotations
+      ##   - Rely on Helm to create self-signed certificates by setting `ingress.selfSigned=true`
+      ##
+      tls: false
+    ## @param proxy.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+    ## Example:
+    ## resources:
+    ##   requests:
+    ##     cpu: 2
+    ##     memory: 512Mi
+    ##   limits:
+    ##     cpu: 3
+    ##     memory: 1024Mi
+    ##
+    resources:
+      requests:
+        cpu: 60m
+        memory: 64Mi
+      limits:
+        cpu: 125m
+        memory: 128Mi
+    service:
+      public:
+        ## @param proxy.service.public.type Public service type
+        ##
+        type: ClusterIP
+
+  ## @section imagePuller deployment parameters
+  imagePuller:
+    ## @param imagePuller.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+    ## Example:
+    ## resources:
+    ##   requests:
+    ##     cpu: 2
+    ##     memory: 512Mi
+    ##   limits:
+    ##     cpu: 3
+    ##     memory: 1024Mi
+    ##
+    resources:
+      requests:
+        cpu: 60m
+        memory: 64Mi
+      limits:
+        cpu: 125m
+        memory: 128Mi
+
+  ## @section Singluser deployment parameters      
+  singleuser:
+    ## @param singluser.image.registry [default: REGISTRY_NAME] Proxy image registry
+    ## @param singluser.image.repository [default: REPOSITORY_NAME/configurable-http-proxy] Proxy image repository
+    ## @skip singleuser.image.tag Proxy image tag (immutable tags are recommended)
+    image:
+      registry: docker.io
+      repository: bitnami/jupyter-base-notebook
+      tag: 4.1.6-debian-12-r27
+    persistence:
+      ## @param singleuser.persistence.enabled Enable persistent volume creation on Single User instances
+      ## If true, use a Persistent Volume Claim, If false, use emptyDir
+      ##
+      enabled: true
+      ## @param singleuser.persistence.storageClass Persistent Volumes storage class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      storageClass: ""
+      ## @param singleuser.persistence.accessModes Persistent Volumes access modes
+      ##
       accessModes:
         - ReadWriteOnce
-      storage: 1Gi
-      subPath:
-      storageClassName:
-    url:
-    password:
-  labels: {}
-  annotations: {}
-  command: []
-  args: []
-  extraConfig: {}
-  extraFiles: {}
-  extraEnv: {}
-  extraContainers: []
-  extraVolumes: []
-  extraVolumeMounts: []
-  image:
-    name: quay.io/jupyterhub/k8s-hub
-    tag: "3.3.6"
-    pullPolicy:
-    pullSecrets: []
-  resources: {}
-  podSecurityContext:
-    fsGroup:
-  containerSecurityContext:
-    runAsUser:
-    runAsGroup:
-    allowPrivilegeEscalation: false
-  lifecycle: {}
-  loadRoles: {}
-  services: {}
-  pdb:
-    enabled: false
-    maxUnavailable:
-    minAvailable: 1
-  networkPolicy:
-    enabled: true
-    ingress: []
-    egress: []
-    egressAllowRules:
-      cloudMetadataServer: true
-      dnsPortsCloudMetadataServer: true
-      dnsPortsKubeSystemNamespace: true
-      dnsPortsPrivateIPs: true
-      nonPrivateIPs: true
-      privateIPs: true
-    interNamespaceAccessLabels: ignore
-    allowedIngressPorts: []
-  allowNamedServers: false
-  namedServerLimitPerUser:
-  authenticatePrometheus:
-  redirectToServer:
-  shutdownOnLogout:
-  templatePaths: []
-  templateVars: {}
-  livenessProbe:
-    # The livenessProbe's aim to give JupyterHub sufficient time to startup but
-    # be able to restart if it becomes unresponsive for ~5 min.
-    enabled: true
-    initialDelaySeconds: 300
-    periodSeconds: 10
-    failureThreshold: 30
-    timeoutSeconds: 3
-  readinessProbe:
-    # The readinessProbe's aim is to provide a successful startup indication,
-    # but following that never become unready before its livenessProbe fail and
-    # restarts it if needed. To become unready following startup serves no
-    # purpose as there are no other pod to fallback to in our non-HA deployment.
-    enabled: true
-    initialDelaySeconds: 0
-    periodSeconds: 2
-    failureThreshold: 1000
-    timeoutSeconds: 1
-  existingSecret:
-  serviceAccount:
-    create: true
-    name:
-    annotations: {}
-  extraPodSpec: {}
+      ## @param singleuser.persistence.size Persistent Volumes size
+      ##
+      size: 10Gi
+      ## @param singleuser.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+      ## Example:
+      ## resources:
+      ##   requests:
+      ##     cpu: 2
+      ##     memory: 512Mi
+      ##   limits:
+      ##     cpu: 3
+      ##     memory: 1024Mi
+      ##
+    resources:
+      requests:
+        cpu: 250m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
 
-rbac:
-  create: true
-
-# proxy relates to the proxy pod, the proxy-public service, and the autohttps
-# pod and proxy-http service.
-proxy:
-  secretToken:
-  annotations: {}
-  deploymentStrategy:
-    ## type: Recreate
-    ## - JupyterHub's interaction with the CHP proxy becomes a lot more robust
-    ##   with this configuration. To understand this, consider that JupyterHub
-    ##   during startup will interact a lot with the k8s service to reach a
-    ##   ready proxy pod. If the hub pod during a helm upgrade is restarting
-    ##   directly while the proxy pod is making a rolling upgrade, the hub pod
-    ##   could end up running a sequence of interactions with the old proxy pod
-    ##   and finishing up the sequence of interactions with the new proxy pod.
-    ##   As CHP proxy pods carry individual state this is very error prone. One
-    ##   outcome when not using Recreate as a strategy has been that user pods
-    ##   have been deleted by the hub pod because it considered them unreachable
-    ##   as it only configured the old proxy pod but not the new before trying
-    ##   to reach them.
-    type: Recreate
-    ## rollingUpdate:
-    ## - WARNING:
-    ##   This is required to be set explicitly blank! Without it being
-    ##   explicitly blank, k8s will let eventual old values under rollingUpdate
-    ##   remain and then the Deployment becomes invalid and a helm upgrade would
-    ##   fail with an error like this:
+  ## @section Hub deployment parameters      
+  hub:
+    ## @param hub.image.registry [default: REGISTRY_NAME] Hub image registry
+    ## @param hub.image.repository [default: REPOSITORY_NAME/jupyterhub] Hub image repository
+    ## @skip hub.image.tag Hub image tag (immutable tags are recommended)
+    image:
+      registry: docker.io
+      repository: bitnami/jupyterhub
+      tag: 4.1.6-debian-12-r15
+    ## @param hub.baseUrl Hub base URL
     ##
-    ##     UPGRADE FAILED
-    ##     Error: Deployment.apps "proxy" is invalid: spec.strategy.rollingUpdate: Forbidden: may not be specified when strategy `type` is 'Recreate'
-    ##     Error: UPGRADE FAILED: Deployment.apps "proxy" is invalid: spec.strategy.rollingUpdate: Forbidden: may not be specified when strategy `type` is 'Recreate'
-    rollingUpdate:
-  # service relates to the proxy-public service
+    baseUrl: /
+    ## @param hub.authenticatorClass Hub authenticator class
+    ## ref: https://jupyterhub.readthedocs.io/en/stable/reference/authenticators.html
+    ##
+    authenticatorClass: native
+    ## @param hub.adminUser Hub Dummy authenticator admin user
+    ##
+    adminUser: user
+    ## @param hub.password Hub Dummy authenticator password
+    ##
+    password: ""
+    ## @param hub.services JupyterHub services interacting with the JupyterHub API
+    ## ref: https://z2jh.jupyter.org/en/latest/administrator/services.html
+    ## e.g:
+    ## services:
+    ##   service-admin:
+    ##     apiToken: XXXXXXXXXXXXXXXXXXX
+    ##     admin: true
+    services: {}
+    ## Configuration file passed to the hub. This will be used by the jupyterhub_config.py file
+    ## This configuration uses the values for the `singleuser` section. In the upstream chart the
+    ## values.yaml file is mounted in the hub container. This is chart, we tried to separate both
+    ## configuration so we could follow the Bitnami value standards
+    ## @param hub.configuration [string] Hub configuration file (to be used by jupyterhub_config.py)
+    ##
+    configuration: |
+      Chart:
+        Name: {{ .Chart.Name }}
+        Version: {{ .Chart.Version }}
+      Release:
+        Name: {{ .Release.Name }}
+        Namespace: {{ .Release.Namespace }}
+        Service: {{ .Release.Service }}
+      hub:
+        config:
+          JupyterHub:
+            admin_access: true
+            authenticator_class: {{ .Values.hub.authenticatorClass }}
+            Authenticator:
+              admin_users:
+                - {{ .Values.hub.adminUser }}
+            DummyAuthenticator:
+            {{- if .Values.hub.password }}
+              password: {{ .Values.hub.password | quote }}
+            {{- else }}
+              password: {{ randAlphaNum 10 | quote }}
+            {{- end }}
+        cookieSecret:
+        concurrentSpawnLimit: 64
+        consecutiveFailureLimit: 5
+        activeServerLimit:
+        db:
+          type: postgres
+          url: postgresql://{{ ternary .Values.postgresql.auth.username .Values.externalDatabase.user .Values.postgresql.enabled }}@{{ ternary (include "jupyterhub.postgresql.fullname" .) .Values.externalDatabase.host .Values.postgresql.enabled }}:{{ ternary "5432" .Values.externalDatabase.port .Values.postgresql.enabled }}/{{ ternary .Values.postgresql.auth.database .Values.externalDatabase.database .Values.postgresql.enabled }}
+        services: {{- include "common.tplvalues.render" ( dict "value" .Values.hub.services "context" $ ) | nindent 8 }}
+        allowNamedServers: false
+        namedServerLimitPerUser:
+        {{- if .Values.hub.metrics.serviceMonitor.enabled }}
+        authenticatePrometheus: {{ .Values.hub.metrics.authenticatePrometheus }}
+        {{- end }}
+        redirectToServer:
+        shutdownOnLogout:
+      singleuser:
+        podNameTemplate: {{ include "common.names.fullname" . }}-jupyter-{username}
+        {{- if .Values.singleuser.tolerations }}
+        extraTolerations: {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.tolerations "context" $) | nindent 4 }}
+        {{- end }}
+        {{- if .Values.singleuser.nodeSelector }}
+        nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.nodeSelector "context" $) | nindent 4 }}
+        {{- end }}
+        networkTools:
+          image:
+            name: {{ include "jupyterhub.hubconfiguration.imageEntry" ( dict "imageRoot" .Values.auxiliaryImage "global" .Values.global) }}
+            tag: {{ .Values.auxiliaryImage.tag }}
+            digest: {{ .Values.auxiliaryImage.digest }}
+            pullPolicy: {{ .Values.auxiliaryImage.pullPolicy }}
+            pullSecrets: {{- include "jupyterhub.imagePullSecrets.list" . | nindent 8 }}
+        cloudMetadata:
+          blockWithIptables: false
+        events: true
+        extraAnnotations:
+          {{- if .Values.commonAnnotations }}
+          {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+          {{- end }}
+          {{- if .Values.singleuser.podAnnotations }}
+          {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.podAnnotations "context" $ ) | nindent 4 }}
+          {{- end }}
+        extraLabels:
+          hub.jupyter.org/network-access-hub: "true"
+          app.kubernetes.io/component: singleuser
+          {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+          {{- if .Values.singleuser.podLabels }}
+          {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.podLabels "context" $ ) | nindent 4 }}
+          {{- end }}
+        {{- if .Values.singleuser.extraEnvVars }}
+        extraEnv: {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.extraEnvVars "context" $ ) | nindent 4 }}
+        {{- end }}
+        {{- if .Values.singleuser.lifecycleHooks }}
+        lifecycleHooks: {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.lifecycleHooks "context" $ ) | nindent 4 }}
+        {{- end }}
+        {{- if .Values.singleuser.initContainers }}
+        initContainers: {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.initContainers "context" $ ) | nindent 4 }}
+        {{- end }}
+        {{- if .Values.singleuser.sidecars }}
+        extraContainers: {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.sidecars "context" $ ) | nindent 4 }}
+        {{- end }}
+        {{- if not (or (eq .Values.global.compatibility.openshift.adaptSecurityContext "force") (and (eq .Values.global.compatibility.openshift.adaptSecurityContext "auto") (include "common.compatibility.isOpenshift" .))) }}
+        {{- if .Values.singleuser.containerSecurityContext.enabled }}
+        uid: {{ .Values.singleuser.containerSecurityContext.runAsUser }}
+        {{- end }}
+        {{- if .Values.singleuser.podSecurityContext.enabled }}
+        fsGid: {{ .Values.singleuser.podSecurityContext.fsGroup }}
+        {{- end }}
+        {{- end }}
+        {{- if .Values.singleuser.containerSecurityContext.enabled }}
+        containerSecurityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.singleuser.containerSecurityContext "context" $) | nindent 4 }}
+        {{- end }}
+        {{- if .Values.singleuser.podSecurityContext.enabled }}
+        podSecurityContext: {{- include "common.compatibility.renderSecurityContext" (dict "secContext" .Values.singleuser.podSecurityContext "context" $) | nindent 4 }}
+        {{- end }}
+        serviceAccountName: {{ template "jupyterhub.singleuserServiceAccountName" . }}
+        automountServiceAccountToken: {{ .Values.singleuser.automountServiceAccountToken }}
+        storage:
+          {{- if .Values.singleuser.persistence.enabled }}
+          type: dynamic
+          {{- else }}
+          type: none
+          {{- end }}
+          extraLabels:
+            app.kubernetes.io/component: singleuser
+            {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 6 }}
+          extraVolumes:
+            - name: empty-dir
+              emptyDir: {}
+            {{- if .Values.singleuser.extraVolumes }}
+            {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.extraVolumes "context" $ ) | nindent 6 }}
+            {{- end }}
+          extraVolumeMounts:
+            - name: empty-dir
+              mountPath: /tmp
+              subPath: tmp-dir
+            {{- if .Values.singleuser.extraVolumeMounts }}
+            {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.extraVolumeMounts "context" $ ) | nindent 6 }}
+            {{- end }}
+          capacity: {{ .Values.singleuser.persistence.size }}
+          homeMountPath: {{ .Values.singleuser.notebookDir }}
+          dynamic:
+            {{ include "jupyterhub.storage.class" (dict "persistence" .Values.singleuser.persistence "global" .Values.global) }}
+            pvcNameTemplate: {{ include "common.names.fullname" . }}-claim-{username}{servername}
+            volumeNameTemplate: {{ include "common.names.fullname" . }}-volume-{username}{servername}
+            storageAccessModes: {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.persistence.accessModes "context" $ ) | nindent 8 }}
+        image:
+          name: {{ include "jupyterhub.hubconfiguration.imageEntry" ( dict "imageRoot" .Values.singleuser.image "global" .Values.global) }}
+          tag: {{ .Values.singleuser.image.tag }}
+          digest: {{ .Values.singleuser.image.digest }}
+          pullPolicy: {{ .Values.singleuser.image.pullPolicy }}
+          pullSecrets: {{- include "jupyterhub.imagePullSecrets.list" . | nindent 4 }}
+        startTimeout: 300
+        {{- include "jupyterhub.singleuser.resources" . | nindent 2 }}
+        {{- if .Values.singleuser.command }}
+        cmd: {{- include "common.tplvalues.render" (dict "value" .Values.singleuser.command "context" $) | nindent 4 }}
+        {{- else }}
+        cmd: jupyterhub-singleuser
+        {{- end }}
+        defaultUrl:
+        {{- if .Values.singleuser.profileList }}
+        profileList: {{- include "common.tplvalues.render" ( dict "value" .Values.singleuser.profileList "context" $) | nindent 4 }}
+        {{- end }}
+      cull:
+        enabled: true
+        users: false
+        removeNamedServers: false
+        timeout: 3600
+        every: 600
+        concurrency: 10
+        maxAge: 0
+    ## @param hub.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
+    ## Example:
+    ## resources:
+    ##   requests:
+    ##     cpu: 2
+    ##     memory: 512Mi
+    ##   limits:
+    ##     cpu: 3
+    ##     memory: 1024Mi
+    ##
+    resources:
+      requests:
+        cpu: 125m
+        memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 256Mi
+
+  ## @section JupyterHub database parameters
+  
+  ## PostgreSQL chart configuration
+  ## ref: https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
+  ## @param postgresql.enabled Switch to enable or disable the PostgreSQL helm chart
+  ## @param postgresql.auth.username Name for a custom user to create
+  ## @param postgresql.auth.password Password for the custom user to create
+  ## @param postgresql.auth.database Name for a custom database to create
+  ## @param postgresql.auth.existingSecret Name of existing secret to use for PostgreSQL credentials
+  ## @param postgresql.architecture PostgreSQL architecture (`standalone` or `replication`)
+  ## @param postgresql.service.ports.postgresql PostgreSQL service port
+  ##
+  postgresql:
+    enabled: false
+    auth:
+      username: bn_jupyterhub
+      password: ""
+      database: bitnami_jupyterhub
+      existingSecret: ""
+  architecture: standalone
   service:
-    type: ClusterIP
-    labels: {}
-    annotations: {}
-    nodePorts:
-      http:
-      https:
-    disableHttpPort: false
-    extraPorts: []
-    loadBalancerIP:
-    loadBalancerSourceRanges: []
-  # chp relates to the proxy pod, which is responsible for routing traffic based
-  # on dynamic configuration sent from JupyterHub to CHP's REST API.
-  chp:
-    revisionHistoryLimit:
-    containerSecurityContext:
-      runAsUser:
-      runAsGroup:
-      allowPrivilegeEscalation: false
-    image:
-      name: quay.io/jupyterhub/configurable-http-proxy
-      # tag is automatically bumped to new patch versions by the
-      # watch-dependencies.yaml workflow.
-      #
-      tag: "4.6.1" # https://github.com/jupyterhub/configurable-http-proxy/tags
-      pullPolicy:
-      pullSecrets: []
-    extraCommandLineFlags: []
-    livenessProbe:
-      enabled: true
-      initialDelaySeconds: 60
-      periodSeconds: 10
-      failureThreshold: 30
-      timeoutSeconds: 3
-    readinessProbe:
-      enabled: true
-      initialDelaySeconds: 0
-      periodSeconds: 2
-      failureThreshold: 1000
-      timeoutSeconds: 1
-    resources: {}
-    defaultTarget:
-    errorTarget:
-    extraEnv: {}
-    nodeSelector: {}
-    tolerations: []
-    networkPolicy:
-      enabled: true
-      ingress: []
-      egress: []
-      egressAllowRules:
-        cloudMetadataServer: true
-        dnsPortsCloudMetadataServer: true
-        dnsPortsKubeSystemNamespace: true
-        dnsPortsPrivateIPs: true
-        nonPrivateIPs: true
-        privateIPs: true
-      interNamespaceAccessLabels: ignore
-      allowedIngressPorts: [http, https]
-    pdb:
-      enabled: false
-      maxUnavailable:
-      minAvailable: 1
-    extraPodSpec: {}
-  # traefik relates to the autohttps pod, which is responsible for TLS
-  # termination when proxy.https.type=letsencrypt.
-  traefik:
-    revisionHistoryLimit:
-    containerSecurityContext:
-      runAsUser:
-      runAsGroup:
-      allowPrivilegeEscalation: false
-    image:
-      name: traefik
-      # tag is automatically bumped to new patch versions by the
-      # watch-dependencies.yaml workflow.
-      #
-      tag: "v3.0" # ref: https://hub.docker.com/_/traefik?tab=tags
-      pullPolicy:
-      pullSecrets: []
-    hsts:
-      includeSubdomains: false
-      preload: false
-      maxAge: 15724800 # About 6 months
-    resources: {}
-    labels: {}
-    extraInitContainers: []
-    extraEnv: {}
-    extraVolumes: []
-    extraVolumeMounts: []
-    extraStaticConfig: {}
-    extraDynamicConfig: {}
-    nodeSelector: {}
-    tolerations: []
-    extraPorts: []
-    networkPolicy:
-      enabled: true
-      ingress: []
-      egress: []
-      egressAllowRules:
-        cloudMetadataServer: true
-        dnsPortsCloudMetadataServer: true
-        dnsPortsKubeSystemNamespace: true
-        dnsPortsPrivateIPs: true
-        nonPrivateIPs: true
-        privateIPs: true
-      interNamespaceAccessLabels: ignore
-      allowedIngressPorts: [http, https]
-    pdb:
-      enabled: false
-      maxUnavailable:
-      minAvailable: 1
-    serviceAccount:
-      create: true
-      name:
-      annotations: {}
-    extraPodSpec: {}
-  secretSync:
-    containerSecurityContext:
-      runAsUser:
-      runAsGroup:
-      allowPrivilegeEscalation: false
-    image:
-      name: quay.io/jupyterhub/k8s-secret-sync
-      tag: "3.3.6"
-      pullPolicy:
-      pullSecrets: []
-    resources: {}
-  labels: {}
-  https:
-    enabled: false
-    type: letsencrypt
-    #type: letsencrypt, manual, offload, secret
-    letsencrypt:
-      contactEmail:
-      # Specify custom server here (https://acme-staging-v02.api.letsencrypt.org/directory) to hit staging LE
-      acmeServer: https://acme-v02.api.letsencrypt.org/directory
-    manual:
-      key:
-      cert:
-    secret:
-      name:
-      key: tls.key
-      crt: tls.crt
-    hosts: []
-
-# singleuser relates to the configuration of KubeSpawner which runs in the hub
-# pod, and its spawning of user pods such as jupyter-myusername.
-singleuser:
-  podNameTemplate:
-  extraTolerations: []
-  nodeSelector: {}
-  extraNodeAffinity:
-    required: []
-    preferred: []
-  extraPodAffinity:
-    required: []
-    preferred: []
-  extraPodAntiAffinity:
-    required: []
-    preferred: []
-  networkTools:
-    image:
-      name: quay.io/jupyterhub/k8s-network-tools
-      tag: "3.3.6"
-      pullPolicy:
-      pullSecrets: []
-    resources: {}
-  cloudMetadata:
-    # block set to true will append a privileged initContainer using the
-    # iptables to block the sensitive metadata server at the provided ip.
-    blockWithIptables: false
-    ip: 169.254.169.254
-  networkPolicy:
-    enabled: false
-    ingress: []
-    egress: []
-    egressAllowRules:
-      cloudMetadataServer: false
-      dnsPortsCloudMetadataServer: true
-      dnsPortsKubeSystemNamespace: true
-      dnsPortsPrivateIPs: true
-      nonPrivateIPs: true
-      privateIPs: false
-    interNamespaceAccessLabels: ignore
-    allowedIngressPorts: []
-  events: true
-  extraAnnotations: {}
-  extraLabels:
-    hub.jupyter.org/network-access-hub: "true"
-  extraFiles: {}
-  extraEnv: {}
-  lifecycleHooks: {}
-  initContainers: []
-  extraContainers: []
-  allowPrivilegeEscalation: false
-  uid:
-  fsGid:
-  serviceAccountName:
-  storage:
-    type: dynamic
-    extraLabels: {}
-    extraVolumes: []
-    extraVolumeMounts: []
-    static:
-      pvcName:
-      subPath: "{username}"
-    capacity: 10Gi
-    homeMountPath: /home/jovyan
-    dynamic:
-      storageClass:
-      pvcNameTemplate: claim-{username}{servername}
-      volumeNameTemplate: volume-{username}{servername}
-      storageAccessModes: [ReadWriteOnce]
-  image:
-    name: quay.io/jupyterhub/k8s-singleuser-sample
-    tag: "3.3.6"
-    pullPolicy:
-    pullSecrets: []
-  startTimeout: 300
-  cpu:
-    limit:
-    guarantee:
-  memory:
-    limit:
-    guarantee: 1G
-  extraResource:
-    limits: {}
-    guarantees: {}
-  cmd: jupyterhub-singleuser
-  defaultUrl:
-  extraPodConfig: {}
-  profileList: []
-
-# scheduling relates to the user-scheduler pods and user-placeholder pods.
-scheduling:
-  userScheduler:
-    enabled: false
-    revisionHistoryLimit:
-    replicas: 2
-    logLevel: 4
-    # plugins are configured on the user-scheduler to make us score how we
-    # schedule user pods in a way to help us schedule on the most busy node. By
-    # doing this, we help scale down more effectively. It isn't obvious how to
-    # enable/disable scoring plugins, and configure them, to accomplish this.
-    #
-    # plugins ref: https://kubernetes.io/docs/reference/scheduling/config/#scheduling-plugins-1
-    # migration ref: https://kubernetes.io/docs/reference/scheduling/config/#scheduler-configuration-migrations
-    #
-    plugins:
-      score:
-        # These scoring plugins are enabled by default according to
-        # https://kubernetes.io/docs/reference/scheduling/config/#scheduling-plugins
-        # 2022-02-22.
-        #
-        # Enabled with high priority:
-        # - NodeAffinity
-        # - InterPodAffinity
-        # - NodeResourcesFit
-        # - ImageLocality
-        # Remains enabled with low default priority:
-        # - TaintToleration
-        # - PodTopologySpread
-        # - VolumeBinding
-        # Disabled for scoring:
-        # - NodeResourcesBalancedAllocation
-        #
-        disabled:
-          # We disable these plugins (with regards to scoring) to not interfere
-          # or complicate our use of NodeResourcesFit.
-          - name: NodeResourcesBalancedAllocation
-          # Disable plugins to be allowed to enable them again with a different
-          # weight and avoid an error.
-          - name: NodeAffinity
-          - name: InterPodAffinity
-          - name: NodeResourcesFit
-          - name: ImageLocality
-        enabled:
-          - name: NodeAffinity
-            weight: 14631
-          - name: InterPodAffinity
-            weight: 1331
-          - name: NodeResourcesFit
-            weight: 121
-          - name: ImageLocality
-            weight: 11
-    pluginConfig:
-      # Here we declare that we should optimize pods to fit based on a
-      # MostAllocated strategy instead of the default LeastAllocated.
-      - name: NodeResourcesFit
-        args:
-          scoringStrategy:
-            resources:
-              - name: cpu
-                weight: 1
-              - name: memory
-                weight: 1
-            type: MostAllocated
-    containerSecurityContext:
-      runAsUser: 65534 # nobody user
-      runAsGroup: 65534 # nobody group
-      allowPrivilegeEscalation: false
-    image:
-      # IMPORTANT: Bumping the minor version of this binary should go hand in
-      #            hand with an inspection of the user-scheduelrs RBAC resources
-      #            that we have forked in
-      #            templates/scheduling/user-scheduler/rbac.yaml.
-      #
-      #            Debugging advice:
-      #
-      #            - Is configuration of kube-scheduler broken in
-      #              templates/scheduling/user-scheduler/configmap.yaml?
-      #
-      #            - Is the kube-scheduler binary's compatibility to work
-      #              against a k8s api-server that is too new or too old?
-      #
-      #            - You can update the GitHub workflow that runs tests to
-      #              include "deploy/user-scheduler" in the k8s namespace report
-      #              and reduce the user-scheduler deployments replicas to 1 in
-      #              dev-config.yaml to get relevant logs from the user-scheduler
-      #              pods. Inspect the "Kubernetes namespace report" action!
-      #
-      #            - Typical failures are that kube-scheduler fails to search for
-      #              resources via its "informers", and won't start trying to
-      #              schedule pods before they succeed which may require
-      #              additional RBAC permissions or that the k8s api-server is
-      #              aware of the resources.
-      #
-      #            - If "successfully acquired lease" can be seen in the logs, it
-      #              is a good sign kube-scheduler is ready to schedule pods.
-      #
-      name: registry.k8s.io/kube-scheduler
-      # tag is automatically bumped to new patch versions by the
-      # watch-dependencies.yaml workflow. The minor version is pinned in the
-      # workflow, and should be updated there if a minor version bump is done
-      # here. We aim to stay around 1 minor version behind the latest k8s
-      # version.
-      #
-      tag: "v1.28.6" # ref: https://github.com/kubernetes/kubernetes/tree/master/CHANGELOG
-      pullPolicy:
-      pullSecrets: []
-    nodeSelector: {}
-    tolerations: []
-    labels: {}
-    annotations: {}
-    pdb:
-      enabled: true
-      maxUnavailable: 1
-      minAvailable:
-    resources: {}
-    serviceAccount:
-      create: true
-      name:
-      annotations: {}
-    extraPodSpec: {}
-  podPriority:
-    enabled: false
-    globalDefault: false
-    defaultPriority: 0
-    imagePullerPriority: -5
-    userPlaceholderPriority: -10
-  userPlaceholder:
-    enabled: false
-    image:
-      name: registry.k8s.io/pause
-      # tag is automatically bumped to new patch versions by the
-      # watch-dependencies.yaml workflow.
-      #
-      # If you update this, also update prePuller.pause.image.tag
-      #
-      tag: "3.9"
-      pullPolicy:
-      pullSecrets: []
-    revisionHistoryLimit:
-    replicas: 0
-    labels: {}
-    annotations: {}
-    containerSecurityContext:
-      runAsUser: 65534 # nobody user
-      runAsGroup: 65534 # nobody group
-      allowPrivilegeEscalation: false
-    resources: {}
-  corePods:
-    tolerations:
-      - key: hub.jupyter.org/dedicated
-        operator: Equal
-        value: core
-        effect: NoSchedule
-      - key: hub.jupyter.org_dedicated
-        operator: Equal
-        value: core
-        effect: NoSchedule
-    nodeAffinity:
-      matchNodePurpose: prefer
-  userPods:
-    tolerations:
-      - key: hub.jupyter.org/dedicated
-        operator: Equal
-        value: user
-        effect: NoSchedule
-      - key: hub.jupyter.org_dedicated
-        operator: Equal
-        value: user
-        effect: NoSchedule
-    nodeAffinity:
-      matchNodePurpose: prefer
-
-# prePuller relates to the hook|continuous-image-puller DaemonsSets
-prePuller:
-  revisionHistoryLimit:
-  labels: {}
-  annotations: {}
-  resources: {}
-  containerSecurityContext:
-    runAsUser:
-    runAsGroup:
-    allowPrivilegeEscalation: false
-  extraTolerations: []
-  # hook relates to the hook-image-awaiter Job and hook-image-puller DaemonSet
-  hook:
-    enabled: false
-    pullOnlyOnChanges: true
-    # image and the configuration below relates to the hook-image-awaiter Job
-    image:
-      name: quay.io/jupyterhub/k8s-image-awaiter
-      tag: "3.3.6"
-      pullPolicy:
-      pullSecrets: []
-    containerSecurityContext:
-      runAsUser:
-      runAsGroup:
-      allowPrivilegeEscalation: false
-    podSchedulingWaitDuration: 10
-    nodeSelector: {}
-    tolerations: []
-    resources: {}
-    serviceAccount:
-      create: true
-      name:
-      annotations: {}
-  continuous:
-    enabled: false
-  pullProfileListImages: true
-  extraImages: {}
-  pause:
-    containerSecurityContext:
-      runAsUser:
-      runAsGroup:
-      allowPrivilegeEscalation: false
-    image:
-      name: registry.k8s.io/pause
-      # tag is automatically bumped to new patch versions by the
-      # watch-dependencies.yaml workflow.
-      #
-      # If you update this, also update scheduling.userPlaceholder.image.tag
-      #
-      tag: "3.9"
-      pullPolicy:
-      pullSecrets: []
-
-ingress:
-  enabled: false
-  annotations: {}
-  ingressClassName:
-  hosts: []
-  pathSuffix:
-  pathType: Prefix
-  tls: []
-
-# cull relates to the jupyterhub-idle-culler service, responsible for evicting
-# inactive singleuser pods.
-#
-# The configuration below, except for enabled, corresponds to command-line flags
-# for jupyterhub-idle-culler as documented here:
-# https://github.com/jupyterhub/jupyterhub-idle-culler#as-a-standalone-script
-#
-cull:
-  enabled: true
-  users: false # --cull-users
-  adminUsers: true # --cull-admin-users
-  removeNamedServers: false # --remove-named-servers
-  timeout: 3600 # --timeout
-  every: 600 # --cull-every
-  concurrency: 10 # --concurrency
-  maxAge: 0 # --max-age
-
-debug:
-  enabled: false
-
-global:
-  safeToShowValues: false
+    ports:
+      postgresql: 5432
+  ## External PostgreSQL configuration
+  ## All of these values are only used when postgresql.enabled is set to false
+  ## @param externalDatabase.host Database host
+  ## @param externalDatabase.port Database port number
+  ## @param externalDatabase.user Non-root username for JupyterHub
+  ## @param externalDatabase.password Password for the non-root username for JupyterHub
+  ## @param externalDatabase.database JupyterHub database name
+  ## @param externalDatabase.existingSecret Name of an existing secret resource containing the database credentials
+  ## @param externalDatabase.existingSecretPasswordKey Name of an existing secret key containing the database credentials
+  ##
+  externalDatabase:
+    host: ""
+    port: 5432
+    user: ""
+    database: ""
+    password: ""
+    existingSecret: ""
+    existingSecretPasswordKey: ""
