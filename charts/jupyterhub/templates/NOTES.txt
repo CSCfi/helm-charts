@@ -53,7 +53,7 @@ Did you know there are enterprise versions of the Bitnami catalog? For enhanced 
 
   echo Admin user: {{ .Values.jupyterhub.hub.adminUser }}
 
-{{- if and .Values.jupyterhub.postgresql.enabled .values.jupyterhub.externalDatabase.host -}}
+{{- if and .Values.jupyterhub.postgresql.enabled .Values.jupyterhub.externalDatabase.host -}}
 jupyterhub: Database
     You can only use one database.
     Please choose installing a PostgreSQL chart (--set jupyterhub.postgresql.enabled=true) or
