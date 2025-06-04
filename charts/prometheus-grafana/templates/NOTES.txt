@@ -14,8 +14,8 @@ Get the Grafana application URL by running these commands:
 The password for the access is generated randomly.
 To retrieve the information, run these commands:
 
-  echo Username: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Release.Name }}-grafana -o jsonpath="{.data.admin-user}" | base64 -d)
-  echo Password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Release.Name }}-grafana -o jsonpath="{.data.admin-password}" | base64 -d)
+  echo Username: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Release.Name }} -o jsonpath="{.data.admin-user}" | base64 -d)
+echo Password: $(oc get secret --namespace={{ .Release.Namespace }} {{ .Release.Name }} -o jsonpath="{.data.admin-password}" | base64 -d)
 
 
 ========================
