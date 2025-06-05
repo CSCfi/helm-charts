@@ -14,7 +14,11 @@ spec:
     termination: {{ .Values.route.termination }}
   to:
     kind: Service
+    {{- if eq .Release.Name "grafana" }}
     name: grafana
+    {{- else }}
+    name: {{ .Release.Name }}-grafana
+    {{- end }}
     weight: 100
   wildcardPolicy: None
 {{- end }}
