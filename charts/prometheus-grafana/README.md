@@ -43,6 +43,15 @@ In order to have your pods monitored by Prometheus, you need to add these annota
 * `prometheus.io/path`: If the metrics path is not `/metrics` override this.
 * `prometheus.io/port`: Scrape the pod on the indicated port instead of the default of `9102`.
 
+You can also deploy [Prometheus statsd exporter](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-statsd-exporter).
+
+By default, the value is set to `false`. Change the value to `true` to deploy it:
+
+```yaml
+statsd-exporter:
+  enabled: true
+```
+
 ## Cleanup
 
 To delete all the resources, simply uninstall the Helm Chart:

@@ -41,7 +41,7 @@ hedgedoc:
 # Parameters related to the deployment of PostgreSQL in Rahti.
 # The parameters come from bitnami/postgresql dependency (https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
 postgresql:
-  enabled: false
+  enabled: true
 
   auth:
     username: hedgedoc
@@ -68,7 +68,7 @@ postgresql:
 
 # Parameters related to the deployment of an external PostgreSQL (like Pukki)
 postgresqlExternal:
-  enabled: true
+  enabled: false
   externalDatabase: '0.0.0.0' # If using an external database, enter the DNS name or public IP
   secret:
     database-name: 'hedgedoc'
