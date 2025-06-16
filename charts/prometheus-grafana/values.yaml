@@ -8,6 +8,62 @@ route:
   insecureEdgeTerminationPolicy: Redirect
   termination: edge 
 
+#####################################
+# Prometheus statsd-exporter values #
+#####################################
+
+statsd-exporter:
+  enabled: false
+
+  statsd:
+    # The UDP port on which to receive statsd metric lines.
+    udpPort: 9125
+
+    # The TCP port on which to receive statsd metric lines.
+    tcpPort: 9125
+
+    # Maximum size of your metric mapping cache.
+    # Relies on least recently used replacement policy if max size is reached.
+    cacheSize: 1000
+
+    # Size of internal queue for processing events.
+    eventQueueSize: 10000
+
+    # Number of events to hold in queue before flushing.
+    eventFlushThreshold: 1000
+
+    # Time interval before flushing events in queue.
+    eventFlushInterval: 200ms
+
+  serviceAccount:
+    # Specifies whether a service account should be created
+    create: true
+    # Annotations to add to the service account
+    annotations: {}
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: ""
+
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9102"
+
+  service:
+    type: ClusterIP
+    # The address on which to expose the web interface and generated Prometheus metrics.
+    port: 9102
+    # Path under which to expose metrics.
+    path: /metrics
+    annotations: {}
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+      
 #####################
 # Prometheus values #
 #####################
