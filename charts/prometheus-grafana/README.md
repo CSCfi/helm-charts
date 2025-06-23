@@ -43,6 +43,25 @@ In order to have your pods monitored by Prometheus, you need to add these annota
 * `prometheus.io/path`: If the metrics path is not `/metrics` override this.
 * `prometheus.io/port`: Scrape the pod on the indicated port instead of the default of `9102`.
 
+### Setup email for alerts
+
+To setup an email address for the alerts, you must turn on the setting in `grafana.ini.smtp.enabled`
+
+```yaml
+grafana:
+  [...]
+  grafana.ini:
+    smtp:
+      enabled: false
+      host: ""
+      user: ""
+      skip_verify: true
+      from_address: ""
+      from_name: ""
+```
+
+### Prometheus STATSD exporter
+
 You can also deploy [Prometheus statsd exporter](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-statsd-exporter).
 
 By default, the value is set to `false`. Change the value to `true` to deploy it:

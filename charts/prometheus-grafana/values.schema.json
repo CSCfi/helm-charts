@@ -39,6 +39,83 @@
                     },
                     "type": "object"
                 },
+                "grafana.ini": {
+                    "properties": {
+                        "analytics": {
+                            "properties": {
+                                "check_for_updates": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "grafana_net": {
+                            "properties": {
+                                "url": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "log": {
+                            "properties": {
+                                "mode": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "paths": {
+                            "properties": {
+                                "data": {
+                                    "type": "string"
+                                },
+                                "logs": {
+                                    "type": "string"
+                                },
+                                "plugins": {
+                                    "type": "string"
+                                },
+                                "provisioning": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "server": {
+                            "properties": {
+                                "domain": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "smtp": {
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "from_address": {
+                                    "type": "string"
+                                },
+                                "from_name": {
+                                    "type": "string"
+                                },
+                                "host": {
+                                    "type": "string"
+                                },
+                                "skip_verify": {
+                                    "type": "boolean"
+                                },
+                                "user": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
                 "rbac": {
                     "properties": {
                         "create": {
@@ -124,11 +201,6 @@
                     "properties": {
                         "namespaces": {
                             "items": {
-                                "properties": {
-                                    "": {
-                                        "type": "null"
-                                    }
-                                },
                                 "type": "string"
                             },
                             "type": "array"
@@ -139,62 +211,128 @@
                     },
                     "type": "object"
                 },
-                "serverFiles": {
+        "route": {
+            "properties": {
+                "grafana": {
                     "properties": {
-                        "prometheus.yml": {
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "insecureEdgeTerminationPolicy": {
+                    "type": "string"
+                },
+                "prometheus": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "termination": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "statsd-exporter": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "podAnnotations": {
+                    "properties": {
+                        "prometheus.io/port": {
+                            "type": "string"
+                        },
+                        "prometheus.io/scrape": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "resources": {
+                    "properties": {
+                        "limits": {
                             "properties": {
-                                "scrape_configs": {
-                                    "items": {
-                                        "properties": {
-                                            "honor_labels": {
-                                                "type": "boolean"
-                                            },
-                                            "job_name": {
-                                                "type": "string"
-                                            },
-                                            "kubernetes_sd_configs": {
-                                                "items": {
-                                                    "properties": {
-                                                        "namespaces": {
-                                                            "properties": {
-                                                                "names": {
-                                                                    "items": {
-                                                                        "type": "string"
-                                                                    },
-                                                                    "type": "array"
-                                                                }
-                                                            },
-                                                            "type": "object"
-                                                        },
-                                                        "role": {
-                                                            "type": "string"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                },
-                                                "type": "array"
-                                            },
-                                            "static_configs": {
-                                                "items": {
-                                                    "properties": {
-                                                        "targets": {
-                                                            "items": {
-                                                                "type": "string"
-                                                            },
-                                                            "type": "array"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                },
-                                                "type": "array"
-                                            }
-                                        },
-                                        "type": "object"
-                                    },
-                                    "type": "array"
+                                "cpu": {
+                                    "type": "string"
+                                },
+                                "memory": {
+                                    "type": "string"
                                 }
                             },
                             "type": "object"
+                        },
+                        "requests": {
+                            "properties": {
+                                "cpu": {
+                                    "type": "string"
+                                },
+                                "memory": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "service": {
+                    "properties": {
+                        "annotations": {
+                            "properties": {},
+                            "type": "object"
+                        },
+                        "path": {
+                            "type": "string"
+                        },
+                        "port": {
+                            "type": "integer"
+                        },
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "serviceAccount": {
+                    "properties": {
+                        "annotations": {
+                            "properties": {},
+                            "type": "object"
+                        },
+                        "create": {
+                            "type": "boolean"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "statsd": {
+                    "properties": {
+                        "cacheSize": {
+                            "type": "integer"
+                        },
+                        "eventFlushInterval": {
+                            "type": "string"
+                        },
+                        "eventFlushThreshold": {
+                            "type": "integer"
+                        },
+                        "eventQueueSize": {
+                            "type": "integer"
+                        },
+                        "tcpPort": {
+                            "type": "integer"
+                        },
+                        "udpPort": {
+                            "type": "integer"
                         }
                     },
                     "type": "object"
@@ -204,4 +342,6 @@
         }
     },
     "type": "object"
+        }
+    }
 }

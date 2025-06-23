@@ -193,6 +193,28 @@ grafana:
     runAsGroup: 
     fsGroup: 
 
+  grafana.ini:
+    paths:
+      data: /var/lib/grafana/
+      logs: /var/log/grafana
+      plugins: /var/lib/grafana/plugins
+      provisioning: /etc/grafana/provisioning
+    analytics:
+      check_for_updates: true
+    log:
+      mode: console
+    grafana_net:
+      url: https://grafana.net
+    server:
+      domain: "{{ if (and .Values.ingress.enabled .Values.ingress.hosts) }}{{ tpl (.Values.ingress.hosts | first) . }}{{ else }}''{{ end }}"
+    smtp:
+      enabled: false
+      host: ""
+      user: ""
+      skip_verify: true
+      from_address: ""
+      from_name: ""
+
   datasources:
     datasources.yaml:
       apiVersion: 1
