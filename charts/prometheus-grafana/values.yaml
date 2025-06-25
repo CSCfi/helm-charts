@@ -3,9 +3,12 @@
 route:
   grafana:
     enabled: true
+
   prometheus:
     enabled: false
+
   insecureEdgeTerminationPolicy: Redirect
+
   termination: edge 
 
 #####################################
@@ -71,8 +74,10 @@ statsd-exporter:
 prometheus:
   rbac:
     create: true
+
   podSecurityPolicy:
     enabled: true
+
   server:
     securityContext:
       runAsUser: 
@@ -81,6 +86,9 @@ prometheus:
     useExistingClusterRoleName: admin
     namespaces:
       - '{{ tpl .Release.Namespace . }}'
+    persistentVolume:
+      size: 8Gi
+
   resources:
     requests:
       cpu: 500m
@@ -88,6 +96,7 @@ prometheus:
     limits:
       cpu: 500m
       memory: 512Mi
+
   serverFiles:
     prometheus.yml:
       scrape_configs:
@@ -178,6 +187,7 @@ grafana:
     requests:
       cpu: 100m
       memory: 128Mi
+
   rbac:
     create: true
     useExistingClusterRole: admin
@@ -193,6 +203,13 @@ grafana:
     runAsGroup: 
     fsGroup: 
 
+  persistence:
+    enabled: true
+    size: 5Gi
+
+  initChownData: 
+    enabled: false
+    
   grafana.ini:
     paths:
       data: /var/lib/grafana/
@@ -206,6 +223,7 @@ grafana:
     grafana_net:
       url: https://grafana.net
     server:
+      root_url: "http://grafana-{{ .Release.Namespace }}.rahtiapp.fi/"
       domain: "{{ if (and .Values.ingress.enabled .Values.ingress.hosts) }}{{ tpl (.Values.ingress.hosts | first) . }}{{ else }}''{{ end }}"
     smtp:
       enabled: false
