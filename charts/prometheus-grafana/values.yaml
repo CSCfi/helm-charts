@@ -3,11 +3,70 @@
 route:
   grafana:
     enabled: true
+
   prometheus:
     enabled: false
+
   insecureEdgeTerminationPolicy: Redirect
+
   termination: edge 
 
+#####################################
+# Prometheus statsd-exporter values #
+#####################################
+
+statsd-exporter:
+  enabled: false
+
+  statsd:
+    # The UDP port on which to receive statsd metric lines.
+    udpPort: 9125
+
+    # The TCP port on which to receive statsd metric lines.
+    tcpPort: 9125
+
+    # Maximum size of your metric mapping cache.
+    # Relies on least recently used replacement policy if max size is reached.
+    cacheSize: 1000
+
+    # Size of internal queue for processing events.
+    eventQueueSize: 10000
+
+    # Number of events to hold in queue before flushing.
+    eventFlushThreshold: 1000
+
+    # Time interval before flushing events in queue.
+    eventFlushInterval: 200ms
+
+  serviceAccount:
+    # Specifies whether a service account should be created
+    create: true
+    # Annotations to add to the service account
+    annotations: {}
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: ""
+
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9102"
+
+  service:
+    type: ClusterIP
+    # The address on which to expose the web interface and generated Prometheus metrics.
+    port: 9102
+    # Path under which to expose metrics.
+    path: /metrics
+    annotations: {}
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+      
 #####################
 # Prometheus values #
 #####################
@@ -15,8 +74,10 @@ route:
 prometheus:
   rbac:
     create: true
+
   podSecurityPolicy:
     enabled: true
+
   server:
     securityContext:
       runAsUser: 
@@ -25,6 +86,9 @@ prometheus:
     useExistingClusterRoleName: admin
     namespaces:
       - '{{ tpl .Release.Namespace . }}'
+    persistentVolume:
+      size: 8Gi
+
   resources:
     requests:
       cpu: 500m
@@ -32,6 +96,7 @@ prometheus:
     limits:
       cpu: 500m
       memory: 512Mi
+
   serverFiles:
     prometheus.yml:
       scrape_configs:
@@ -122,6 +187,7 @@ grafana:
     requests:
       cpu: 100m
       memory: 128Mi
+
   rbac:
     create: true
     useExistingClusterRole: admin
@@ -136,6 +202,36 @@ grafana:
     runAsUser: 
     runAsGroup: 
     fsGroup: 
+
+  persistence:
+    enabled: true
+    size: 5Gi
+
+  initChownData: 
+    enabled: false
+    
+  grafana.ini:
+    paths:
+      data: /var/lib/grafana/
+      logs: /var/log/grafana
+      plugins: /var/lib/grafana/plugins
+      provisioning: /etc/grafana/provisioning
+    analytics:
+      check_for_updates: true
+    log:
+      mode: console
+    grafana_net:
+      url: https://grafana.net
+    server:
+      root_url: "http://grafana-{{ .Release.Namespace }}.rahtiapp.fi/"
+      domain: "{{ if (and .Values.ingress.enabled .Values.ingress.hosts) }}{{ tpl (.Values.ingress.hosts | first) . }}{{ else }}''{{ end }}"
+    smtp:
+      enabled: false
+      host: ""
+      user: ""
+      skip_verify: true
+      from_address: ""
+      from_name: ""
 
   datasources:
     datasources.yaml:
