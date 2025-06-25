@@ -86,6 +86,9 @@
                             "properties": {
                                 "domain": {
                                     "type": "string"
+                                },
+                                "root_url": {
+                                    "type": "string"
                                 }
                             },
                             "type": "object"
@@ -116,6 +119,25 @@
                     },
                     "type": "object"
                 },
+                "initChownData": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "persistence": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "size": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
                 "rbac": {
                     "properties": {
                         "create": {
@@ -126,6 +148,47 @@
                         },
                         "useExistingClusterRole": {
                             "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "resources": {
+                    "properties": {
+                        "limits": {
+                            "properties": {
+                                "cpu": {
+                                    "type": ["integer","string"]
+                                },
+                                "memory": {
+                                    "type": ["integer","string"]
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "requests": {
+                            "properties": {
+                                "cpu": {
+                                    "type": ["integer","string"]
+                                },
+                                "memory": {
+                                    "type": ["integer","string"]
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "securityContext": {
+                    "properties": {
+                        "fsGroup": {
+                            "type": "null"
+                        },
+                        "runAsGroup": {
+                            "type": "null"
+                        },
+                        "runAsUser": {
+                            "type": "null"
                         }
                     },
                     "type": "object"
@@ -197,6 +260,33 @@
                     },
                     "type": "object"
                 },
+                "resources": {
+                    "properties": {
+                        "limits": {
+                            "properties": {
+                                "cpu": {
+                                    "type": ["integer","string"]
+                                },
+                                "memory": {
+                                    "type": ["integer","string"]
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "requests": {
+                            "properties": {
+                                "cpu": {
+                                    "type": ["integer","string"]
+                                },
+                                "memory": {
+                                    "type": ["integer","string"]
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
                 "server": {
                     "properties": {
                         "namespaces": {
@@ -205,12 +295,123 @@
                             },
                             "type": "array"
                         },
+                        "persistentVolume": {
+                            "properties": {
+                                "size": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "securityContext": {
+                            "properties": {
+                                "fsGroup": {
+                                    "type": "null"
+                                },
+                                "runAsGroup": {
+                                    "type": "null"
+                                },
+                                "runAsUser": {
+                                    "type": "null"
+                                }
+                            },
+                            "type": "object"
+                        },
                         "useExistingClusterRoleName": {
                             "type": "string"
                         }
                     },
                     "type": "object"
                 },
+                "serverFiles": {
+                    "properties": {
+                        "prometheus.yml": {
+                            "properties": {
+                                "scrape_configs": {
+                                    "items": {
+                                        "properties": {
+                                            "honor_labels": {
+                                                "type": "boolean"
+                                            },
+                                            "job_name": {
+                                                "type": "string"
+                                            },
+                                            "kubernetes_sd_configs": {
+                                                "items": {
+                                                    "properties": {
+                                                        "namespaces": {
+                                                            "properties": {
+                                                                "names": {
+                                                                    "items": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "type": "array"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "role": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "relabel_configs": {
+                                                "items": {
+                                                    "properties": {
+                                                        "action": {
+                                                            "type": "string"
+                                                        },
+                                                        "regex": {
+                                                            "type": ["string", "boolean"]
+                                                        },
+                                                        "replacement": {
+                                                            "type": "string"
+                                                        },
+                                                        "source_labels": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        },
+                                                        "target_label": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "static_configs": {
+                                                "items": {
+                                                    "properties": {
+                                                        "targets": {
+                                                            "items": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "type": "array"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
         "route": {
             "properties": {
                 "grafana": {
@@ -259,10 +460,10 @@
                         "limits": {
                             "properties": {
                                 "cpu": {
-                                    "type": "string"
+                                    "type": ["integer","string"]
                                 },
                                 "memory": {
-                                    "type": "string"
+                                    "type": ["integer","string"]
                                 }
                             },
                             "type": "object"
@@ -270,10 +471,10 @@
                         "requests": {
                             "properties": {
                                 "cpu": {
-                                    "type": "string"
+                                    "type": ["integer","string"]
                                 },
                                 "memory": {
-                                    "type": "string"
+                                    "type": ["integer","string"]
                                 }
                             },
                             "type": "object"
@@ -342,6 +543,4 @@
         }
     },
     "type": "object"
-        }
-    }
 }
