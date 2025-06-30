@@ -179,20 +179,6 @@
                     },
                     "type": "object"
                 },
-                "securityContext": {
-                    "properties": {
-                        "fsGroup": {
-                            "type": ["integer","null"]
-                        },
-                        "runAsGroup": {
-                            "type": ["integer","null"]
-                        },
-                        "runAsUser": {
-                            "type": ["integer","null"]
-                        }
-                    },
-                    "type": "object"
-                },
                 "serviceAccount": {
                     "properties": {
                         "create": {
@@ -299,20 +285,6 @@
                             "properties": {
                                 "size": {
                                     "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        },
-                        "securityContext": {
-                            "properties": {
-                                "fsGroup": {
-                                    "type": ["integer","null"]
-                                },
-                                "runAsGroup": {
-                                    "type": ["integer","null"]
-                                },
-                                "runAsUser": {
-                                    "type": ["integer","null"]
                                 }
                             },
                             "type": "object"
