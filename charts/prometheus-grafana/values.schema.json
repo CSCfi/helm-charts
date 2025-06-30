@@ -182,13 +182,13 @@
                 "securityContext": {
                     "properties": {
                         "fsGroup": {
-                            "type": "null"
+                            "type": ["integer","null"]
                         },
                         "runAsGroup": {
-                            "type": "null"
+                            "type": ["integer","null"]
                         },
                         "runAsUser": {
-                            "type": "null"
+                            "type": ["integer","null"]
                         }
                     },
                     "type": "object"
@@ -306,13 +306,13 @@
                         "securityContext": {
                             "properties": {
                                 "fsGroup": {
-                                    "type": "null"
+                                    "type": ["integer","null"]
                                 },
                                 "runAsGroup": {
-                                    "type": "null"
+                                    "type": ["integer","null"]
                                 },
                                 "runAsUser": {
-                                    "type": "null"
+                                    "type": ["integer","null"]
                                 }
                             },
                             "type": "object"
