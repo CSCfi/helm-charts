@@ -32,7 +32,7 @@ oc create secret generic kibana-password --from-literal="kibana-password=$(pytho
 
 ### Elasticsearch rest Encryption
 
-When enabling elasticsearch' rest endpoint encryption you will also need to set `kibana.elasticsearch.security.tls.enabled` to the SAME value along with some additional values shown below for an "out of the box experience":
+In `values.yaml`, when enabling elasticsearch' rest endpoint encryption you will also need to set `kibana.elasticsearch.security.tls.enabled` to the SAME value along with some additional values shown below for an "out of the box experience":
 
 ```yaml
 elasticsearch:
@@ -61,13 +61,9 @@ elasticsearch:
           usePemCerts: true
 ```
 
-**BE CAREFUL** in `elasticsearch.kibana.elasticsearch.security.tls` there is a parameter named `existingSecret`. **YOU MUST** change "RELEASENAME" by the name of the chart you will deploy.
+**BE CAREFUL** in `elasticsearch.kibana.elasticsearch.security.tls` there is a parameter named `existingSecret` set to `RELEASENAME-elasticsearch-coordinating-crt`. **YOU MUST** change "RELEASENAME" by the name of the chart you will deploy.
 
-For example, if you run the command `helm install kibana .`, "RELEASENAME" must be replaced by "kibana". On the other hand, if the release name happens to be "elasticsearch", "RELEASENAME" must be deleted. It is also explained as a comment.
-
-## Parameters
-
-
+For example, if you run the command `helm install kibana .`, "RELEASENAME" must be replaced by "kibana", so `kibana-elasticsearch-coordinating-crt`. On the other hand, if the release name happens to be "elasticsearch", "RELEASENAME" must be deleted, so, `elasticsearch-coordinating-crt`.
 
 ## Cleanup
 
