@@ -1054,6 +1054,27 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-0.69.0-beta/gitlab-runner-0.69.0-beta.tgz
     version: 0.69.0-beta
+  - apiVersion: v1
+    appVersion: bleeding
+    created: "2025-07-10T08:27:22.100739153Z"
+    description: GitLab Runner
+    digest: 34fc7af2815c7d6507fe283710aa5e1010f34cbdae2e5ab65aa27cfab0c3e9c1
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab-runner/img/gitlab-runner-stack-220x234.png
+    keywords:
+    - git
+    - ci
+    - deploy
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab-runner
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab-runner
+    - https://gitlab.com/gitlab-org/gitlab-runner
+    - https://docs.gitlab.com/runner/
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-0.69.0-beta/gitlab-runner-0.69.0-beta.tgz
+    version: 0.69.0-beta
   hedgedoc:
   - apiVersion: v2
     created: "2024-10-03T06:59:36.727245628Z"
@@ -1705,4 +1726,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2025-07-10T08:05:22.111042267Z"
+generated: "2025-07-10T08:27:22.320433996Z"
