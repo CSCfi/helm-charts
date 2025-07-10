@@ -1035,27 +1035,6 @@ entries:
   gitlab-runner:
   - apiVersion: v1
     appVersion: bleeding
-    created: "2024-09-13T08:31:46.503880432Z"
-    description: GitLab Runner
-    digest: 9cfa0afa49e8103c98bf7e849e152be6b547ec8d801dda6995b84d8b5eac0058
-    icon: https://gitlab.com/uploads/-/system/project/avatar/250833/runner_logo.png
-    keywords:
-    - git
-    - ci
-    - deploy
-    maintainers:
-    - email: support@gitlab.com
-      name: GitLab Inc.
-    name: gitlab-runner
-    sources:
-    - https://gitlab.com/gitlab-org/charts/gitlab-runner
-    - https://gitlab.com/gitlab-org/gitlab-runner
-    - https://docs.gitlab.com/runner/
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-0.69.0-beta/gitlab-runner-0.69.0-beta.tgz
-    version: 0.69.0-beta
-  - apiVersion: v1
-    appVersion: bleeding
     created: "2025-07-10T08:05:21.913175387Z"
     description: GitLab Runner
     digest: 4c6c4012851467406207ff1855dad3c12e8c68d1c77ef10d9abed78b1972e028
@@ -1410,7 +1389,7 @@ entries:
       into reproducible runs, and share and deploy models.
     digest: c2aa4f041e92ccf6583aa1c5651b0b7d464df75fc09ee45d65f931aa6ef5cf4d
     home: https://bitnami.com
-    icon: https://bitnami.com/assets/stacks/mlflow/img/mlflow-stack-220x234.png
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/mlflow/img/mlflow-stack-220x234.png
     keywords:
     - mlflow
     - models
