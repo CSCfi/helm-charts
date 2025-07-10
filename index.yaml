@@ -991,6 +991,27 @@ entries:
     version: 1.12.0-dev
   elastic-kibana-helm:
   - apiVersion: v2
+    created: "2025-07-10T06:27:13.58279917Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: elasticsearch
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 22.0.x
+    description: Elastic and Kibana Helm Chart for Rahti platform Link to the repo
+      https://github.com/CSCfi/helm-charts
+    digest: 18ea5ccf523734149c7a27cb8a2ab253be7d930fb6e1d26fcf7def54e8c610b2
+    icon: https://logowik.com/content/uploads/images/elastic-search2066.jpg
+    name: elastic-kibana-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/elastic-kibana-helm-1.0.1/elastic-kibana-helm-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     created: "2025-07-10T05:30:40.300448478Z"
     dependencies:
     - name: common
@@ -1684,4 +1705,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2025-07-10T05:30:40.456227992Z"
+generated: "2025-07-10T06:27:13.58287433Z"
