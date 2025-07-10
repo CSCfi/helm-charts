@@ -7,10 +7,10 @@ Wait a few seconds. Time for the application to be fully deployed.
 {{- if .Values.route.kibana.enabled }}
 Get the Kibana application URL by running these commands:
 
-  export KIBANA=$(oc get route/{{ .Release.Name }} --namespace={{ .Release.Namespace }} -o jsonpath='{.spec.host}')
+  export KIBANA=$(oc --namespace={{ .Release.Namespace }} get route/{{ .Release.Name }} -o jsonpath='{.spec.host}')
   echo "KIBANA server URL: http://$KIBANA"
 {{- end }}
 
 Get the password for the default 'elastic' by running this command:
 
-  oc get secret/elasticsearch-password -o jsonpath='{.data.elasticsearch-password}' | base64 -d
+  oc --namespace={{ .Release.Namespace }} get secret/elasticsearch-password -o jsonpath='{.data.elasticsearch-password}' | base64 -d
