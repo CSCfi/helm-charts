@@ -11,7 +11,7 @@ sources:
 - https://gitlab.com/gitlab-org/charts/gitlab-runner
 - https://gitlab.com/gitlab-org/gitlab-runner
 - https://docs.gitlab.com/runner/
-icon: https://gitlab.com/uploads/-/system/project/avatar/250833/runner_logo.png
+icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab-runner/img/gitlab-runner-stack-220x234.png
 maintainers:
 - name: GitLab Inc.
   email: support@gitlab.com
