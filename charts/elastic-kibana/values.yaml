@@ -103,7 +103,7 @@ elasticsearch:
         tls:
           enabled: true
           # You will need to know the name upfront of your release
-          existingSecret: 'RELEASE-elasticsearch-coordinating-crt' # or just 'elasticsearch-coordinating-crt' if the release name happens to be 'elasticsearch'
+          existingSecret: 'RELEASENAME-elasticsearch-coordinating-crt' # or just 'elasticsearch-coordinating-crt' if the release name happens to be 'elasticsearch'
           usePemCerts: true
 
     configuration:
