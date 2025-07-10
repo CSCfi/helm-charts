@@ -1,0 +1,17 @@
+apiVersion: v2
+name: elastic-kibana-helm
+dependencies:
+  - name: common
+    repository: oci://registry-1.docker.io/bitnamicharts
+    tags:
+    - bitnami-common
+    version: 2.x.x
+  - name: elasticsearch
+    repository: oci://registry-1.docker.io/bitnamicharts
+    version: 22.0.x
+description: Elastic and Kibana Helm Chart for Rahti platform
+  Link to the repo https://github.com/CSCfi/helm-charts
+version: 1.0.0
+sources:
+- https://github.com/CSCfi/helm-charts
+icon: https://logowik.com/content/uploads/images/elastic-search2066.jpg

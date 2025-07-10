@@ -1,0 +1,24 @@
+{{- if .Values.route.kibana.enabled }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: kibana
+  name: kibana
+spec:
+  host: kibana-{{ .Release.Namespace }}.rahtiapp.fi
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: {{ .Values.route.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.route.termination }}
+  to:
+    kind: Service
+    {{- if eq .Release.Name "kibana" }}
+    name: kibana
+    {{- else }}
+    name: {{ .Release.Name }}-kibana
+    {{- end }}
+    weight: 100
+  wildcardPolicy: None
+{{- end }}

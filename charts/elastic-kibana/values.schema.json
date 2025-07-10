@@ -1,0 +1,414 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "elasticsearch": {
+            "properties": {
+                "coordinating": {
+                    "properties": {
+                        "replicaCount": {
+                            "type": "integer"
+                        },
+                        "resources": {
+                            "properties": {
+                                "limits": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "requests": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "copyTlsCerts": {
+                    "properties": {
+                        "resources": {
+                            "properties": {
+                                "limits": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "requests": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "data": {
+                    "properties": {
+                        "persistence": {
+                            "properties": {
+                                "accessModes": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array"
+                                },
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "size": {
+                                    "type": ["string","integer"]
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "replicaCount": {
+                            "type": "integer"
+                        },
+                        "resources": {
+                            "properties": {
+                                "limits": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "requests": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "global": {
+                    "properties": {
+                        "kibanaEnabled": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "ingest": {
+                    "properties": {
+                        "replicaCount": {
+                            "type": "integer"
+                        },
+                        "resources": {
+                            "properties": {
+                                "limits": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "requests": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "kibana": {
+                    "properties": {
+                        "configuration": {
+                            "properties": {
+                                "server": {
+                                    "properties": {
+                                        "basePath": {
+                                            "type": "string"
+                                        },
+                                        "host": {
+                                            "type": "string"
+                                        },
+                                        "publicBaseUrl": {
+                                            "type": "string"
+                                        },
+                                        "rewriteBasePath": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "elasticsearch": {
+                            "properties": {
+                                "hosts": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array"
+                                },
+                                "port": {
+                                    "type": ["string","integer"]
+                                },
+                                "security": {
+                                    "properties": {
+                                        "auth": {
+                                            "properties": {
+                                                "createSystemUser": {
+                                                    "type": "boolean"
+                                                },
+                                                "elasticsearchPasswordSecret": {
+                                                    "type": "string"
+                                                },
+                                                "enabled": {
+                                                    "type": "boolean"
+                                                },
+                                                "existingSecret": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "tls": {
+                                            "properties": {
+                                                "enabled": {
+                                                    "type": "boolean"
+                                                },
+                                                "existingSecret": {
+                                                    "type": "string"
+                                                },
+                                                "usePemCerts": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "persistence": {
+                            "properties": {
+                                "accessModes": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array"
+                                },
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "size": {
+                                    "type": ["string","integer"]
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "resources": {
+                            "properties": {
+                                "limits": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "requests": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "master": {
+                    "properties": {
+                        "masterOnly": {
+                            "type": "boolean"
+                        },
+                        "persistence": {
+                            "properties": {
+                                "accessModes": {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array"
+                                },
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "size": {
+                                    "type": ["string","integer"]
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "replicaCount": {
+                            "type": "integer"
+                        },
+                        "resources": {
+                            "properties": {
+                                "limits": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "requests": {
+                                    "properties": {
+                                        "cpu": {
+                                            "type": ["string","integer"]
+                                        },
+                                        "memory": {
+                                            "type": ["string","integer"]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "metrics": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "resources": {
+                            "properties": {},
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "security": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "existingSecret": {
+                            "type": "string"
+                        },
+                        "tls": {
+                            "properties": {
+                                "autoGenerated": {
+                                    "type": "boolean"
+                                },
+                                "restEncryption": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "sysctlImage": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "resources": {
+                            "properties": {},
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "route": {
+            "properties": {
+                "insecureEdgeTerminationPolicy": {
+                    "type": "string"
+                },
+                "kibana": {
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    },
+                    "type": "object"
+                },
+                "termination": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
