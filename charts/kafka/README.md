@@ -8,7 +8,7 @@ helm upgrade --install kafka .
 
 ## Explanations
 
-> [Helm](helm.sh) and `oc` CLI must be installed on your local machine.
+> [Helm](helm.sh) and `oc` (or `kubectl`) CLI must be installed on your local machine.
 
 This Helm Chart helps you to deploy Kafka on CSC Rahti (Openshift 4). Default upstream [values.yaml](https://github.com/bitnami/charts/blob/main/bitnami/kafka/values.yaml) is being used. If you want to use it with different values, you can download the [values.yaml](https://github.com/CSCfi/helm-charts/blob/main/charts/elastic-kibana/values.yaml) file and then run:
 
@@ -23,7 +23,7 @@ You can checkout the upstream [README.md](https://github.com/bitnami/charts/blob
 1. Create a client Pod:
 
     ```sh
-    kubectl run kafka-client --restart='Never' \
+    oc run kafka-client --restart='Never' \
       --image docker.io/bitnami/kafka:4.0.0-debian-12-r8 --command -- \
       sleep infinity
     ```
@@ -43,14 +43,14 @@ You can checkout the upstream [README.md](https://github.com/bitnami/charts/blob
 1. Copy the configuration to the Pod:
 
     ```sh
-    kubectl cp --namespace test-kafka ./client.properties \
+    oc cp --namespace test-kafka ./client.properties \
       kafka-client:/tmp/client.properties
     ```
 
 1. Connect to the Pod, run a producer and send some test message:
-    
+
     ```sh
-    kubectl exec --tty -i my-release-kafka-client --namespace test-kafka -- \
+    oc exec --tty -i my-release-kafka-client --namespace test-kafka -- \
       kafka-console-producer.sh \
                 --producer.config /tmp/client.properties \
                 --bootstrap-server my-release-kafka.test-kafka.svc.cluster.local:9092 \
@@ -61,7 +61,7 @@ You can checkout the upstream [README.md](https://github.com/bitnami/charts/blob
 1. Connect to the same Pod, run a consumer, and see the messages:
 
     ```sh
-    kubectl exec --tty -i my-release-kafka-client --namespace test-kafka -- \
+    oc exec --tty -i my-release-kafka-client --namespace test-kafka -- \
       kafka-console-consumer.sh \
                 --consumer.config /tmp/client.properties \
                 --bootstrap-server my-release-kafka.test-kafka.svc.cluster.local:9092 \
