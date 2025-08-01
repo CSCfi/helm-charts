@@ -13,7 +13,7 @@ helm upgrade --install kafka .
 This Helm Chart helps you to deploy Kafka on CSC Rahti (Openshift 4). Default upstream [values.yaml](https://github.com/bitnami/charts/blob/main/bitnami/kafka/values.yaml) is being used. If you want to use it with different values, you can download the [values.yaml](https://github.com/CSCfi/helm-charts/blob/main/charts/elastic-kibana/values.yaml) file and then run:
 
   ```sh
-  helm upgrade --install elastic-kibana . -f {custom_values.yaml}
+  helm upgrade --install kafka . -f {custom_values.yaml}
   ```
 
 You can checkout the upstream [README.md](https://github.com/bitnami/charts/blob/main/bitnami/kafka/README.md) file for reference on configuration options.
