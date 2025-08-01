@@ -1,0 +1,16 @@
+========================================
+  CSC Kafka Helm deployed
+========================================
+
+Wait a few seconds. Meanwhile, you can create the client configuration by running:
+
+  echo "security.protocol=SASL_PLAINTEXT
+  sasl.mechanism=SCRAM-SHA-256
+  sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
+      username="user1" \
+      password="$(kubectl get secret {{ .Release.Name }}-user-passwords --namespace test-kafka \
+      -o jsonpath='{.data.client-passwords}' | base64 -d | cut -d , -f 1)";
+  " >client.properties
+
+The server is available (internally) at: {{ .Release.Name }}:9092
+
