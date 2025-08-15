@@ -14,16 +14,6 @@ plausible:
   ### Format: http://<username>:<password>@plausible-clickhouse.<your_csc_project_name>.svc.cluster.local:8123/plausible_events_db
   clickhouseDatabaseURL: ""
   
-  ### The version of the postgresql used in the IMIO Helm Chart is too old.
-  ### Better to use the latest version of the Bitnami Helm Chart
-  postgresql:
-    enabled: false
-
-  ### The version of the clickhouse used in the IMIO Helm Chart is too old.
-  ### Better to use the latest version of the Bitnami Helm Chart
-  clickhouse:
-    enabled: false
-  
   ingress:
     enabled: true
     hosts:
@@ -33,54 +23,102 @@ plausible:
       ### The IP whitelist for the haproxy router. More information can be found here -> https://docs.csc.fi/cloud/rahti/concepts/#ip-white-listing
       haproxy.router.openshift.io/ip_whitelist: # 192.168.1.0/24
 
-### BITNAMI/CLICKHOUSE
-clickhouse:
-  enabled: true
-
-  auth:
-    username: clickhouse
-    password: ""
-
-  shards: 1
-  replicaCount: 1
-
-  zookeeper:
-    enabled: false
-  keeper:
-    enabled: false
-
-  persistence:
+  plausibleInitContainers:
     enabled: true
-    storageClass: "standard-csi"
-    size: 10Gi
-
-  podSecurityContext:
-    enabled: false
-  containerSecurityContext:
-    enabled: false
-
-  serviceAccount:
-    create: true
-
-  initdbScripts:
-    db-init.sql: |
-      CREATE DATABASE IF NOT EXISTS plausible_events_db;
+    curl:
+      enabled: false  # use curl method to check if clickhouse is ready. (When port 9000 is not accessible)
+      image:
+        repository: curlimages/curl
+        tag: 8.13.0
+    postgresql:
+      image:
+        repository: postgres
+        tag: 17.4-alpine
+    clickhouse:
+      image:
+        repository: bitnamilegacy/clickhouse
+        tag: 25.7.2-debian-12-r0
 
   resources:
     requests:
-      memory: 1Gi  
-      cpu: "500m"  
+      memory: 512Mi
+      cpu: 100m
     limits:
-      memory: 2Gi  
-      cpu: "1000m"    
+      memory: 512Mi
+      cpu: 200m
 
-### BITNAMI/POSTGRESQL
-### Turn this off if you want to use Pukki database (Recommended for production environment)
-postgresql:
-  enabled: false
 
-  auth:
-    postgresPassword: ""
-    username: ""
-    password: ""
-    database: plausible_db
+  ### PostgreSQL configuration
+  ### Disable by default. Better to use Pukki database
+  postgresql:
+    enabled: false
+
+    global:
+      security:
+        allowInsecureImages: true
+
+    # Since the change in the Bitnami catalog (https://github.com/bitnami/containers/issues/83267), deployment of PostgreSQL alongside Plausible using bitnami catalog is intended for testing/development purposes
+    # This image only uses the 'latest' tag, so it is not recommended in production.
+    # The image can be build from source: https://github.com/bitnami/containers/tree/main/bitnami/postgresql
+    image:
+      repository: bitnamisecure/postgresql
+      tag: latest
+
+    auth:
+      postgresPassword: ""
+      username: ""
+      password: ""
+      database: plausible_db
+
+
+  ### ClickHouse configuration
+  clickhouse:
+    enabled: true
+
+    global:
+      security:
+        allowInsecureImages: true
+
+    # Since the change in the Bitnami catalog (https://github.com/bitnami/containers/issues/83267), deployment of Clickhouse alongside Plausible using bitnami catalog is intended for testing/development purposes
+    # The image can be build from source: https://github.com/bitnami/containers/tree/main/bitnami/clickhouse
+    image:
+      repository: bitnamilegacy/clickhouse
+      tag: 25.7.2-debian-12-r0
+    
+    auth:
+      username: clickhouse
+      password: ""
+      database: plausible_events_db
+    
+    serviceAccount:
+      create: true
+
+    initdbScripts:
+      db-init.sql: |
+        CREATE DATABASE IF NOT EXISTS plausible_events_db
+    
+    initContainers: []
+    # https://github.com/plausible/analytics/discussions/1603 clickhouse cluster is not supported yet.
+    
+    shards: 1
+    
+    replicaCount: 1
+    
+    zookeeper:
+      enabled: false
+    
+    keeper:
+      enabled: false
+
+    persistence:
+      enabled: true
+      size: 10Gi
+    
+    resources:
+      requests:
+        memory: 1Gi  
+        cpu: 500m  
+      limits:
+        memory: 2Gi  
+        cpu: 1000m  
+    

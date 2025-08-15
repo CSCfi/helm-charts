@@ -10,10 +10,10 @@ dependencies:
 - name: spark
   alias: spark
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 9.3.x
+  version: 10.x.x
 description: Apache Spark Helm Chart for Rahti platform
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 2.0.0
+version: 2.5.0
 sources:
 - https://github.com/CSCfi/helm-charts
 icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/spark/img/spark-stack-220x234.png
