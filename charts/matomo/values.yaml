@@ -3,28 +3,21 @@ route:
   termination: edge 
 
 matomo:
-  ## @param matomoUsername User of the application
-  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/matomo#configuration
-  ##
+  global:
+    security:
+      allowInsecureImages: true
+      
   matomoUsername: user
-  ## @param matomoPassword Application password
-  ## Defaults to a random 10-character alphanumeric string if not set
-  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/matomo#configuration
-  ##
   matomoPassword: ""
-  ## @param matomoEmail Admin email
-  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/matomo#configuration
-  ##
   matomoEmail: user@example.com
-  ## @param matomoWebsiteName Matomo application name
-  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/matomo#configuration
-  ##
-  ## @param allowEmptyPassword Allow DB blank passwords
-  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/matomo#environment-variables
-  ##
+
   image:
+    repository: bitnamilegacy/matomo
+    tag: 5.3.2-debian-12-r11
     debug: false
+  
   allowEmptyPassword: false
+  
   resources:
     requests:
       memory: 256Mi
@@ -32,11 +25,28 @@ matomo:
     limits:
       memory: 512Mi
       cpu: 500m
+  
   service:
     type: ClusterIP
+  
+  ### Since the change in the Bitnami catalog (https://github.com/bitnami/containers/issues/83267), deployment of MariaDB alongside Matomo using bitnami catalog is intended for testing/development purposes
+  ### This image only uses the 'latest' tag, so it is not recommended in production.
+  ### The image can be build from source: https://github.com/bitnami/containers/tree/main/bitnami/mariadb
   mariadb:
     enabled: true
+    image:
+      repository: bitnamisecure/mariadb
+      tag: latest
+    architecture: standalone
+    auth:
+      rootPassword: ""
+      database: bitnami_matomo
+      username: bn_matomo
+      password: ""
     primary:
+      persistence:
+        enabled: true
+        size: 8Gi
       resources:
         requests:
           memory: 256Mi
@@ -44,6 +54,7 @@ matomo:
         limits:
           memory: 512Mi
           cpu: 500m
+  
   externalDatabase:
     host: ""
     port: 3306
@@ -51,6 +62,7 @@ matomo:
     password: ""
     database: bitnami_matomo
     existingSecret: ""
+  
   metrics:
     enabled: false
     resources:
@@ -60,3 +72,8 @@ matomo:
       limits:
         memory: 512Mi
         cpu: 500m
+
+  certificates:
+    image:
+      repository: bitnamisecure/os-shell
+      tag: latest

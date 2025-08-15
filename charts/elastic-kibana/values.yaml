@@ -11,6 +11,12 @@ route:
 elasticsearch:
   global:
     kibanaEnabled: true
+    security:
+      allowInsecureImages: true
+
+  image:
+    repository: bitnamilegacy/elasticsearch
+    tag: 9.0.4
 
   security:
     enabled: true
@@ -72,10 +78,16 @@ elasticsearch:
 
   metrics:
     enabled: false
+    image:
+      repository: bitnamilegacy/elasticsearch-exporter
+      tag: 1.9.0-debian-12-r15
     resources: {}
 
   sysctlImage:
     enabled: false
+    image:
+      repository: bitnamisecure/os-shell
+      tag: latest
     resources: {}
 
   copyTlsCerts:
@@ -89,6 +101,10 @@ elasticsearch:
 
   # Kibana configuration
   kibana:
+    # image:
+    #   repository: bitnamilegacy/kibana
+    #   tag: 9.0.4-debian-12-r15
+
     elasticsearch:
       hosts:
         - '{{ include "elasticsearch.service.name" . }}'

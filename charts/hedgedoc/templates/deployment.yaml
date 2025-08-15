@@ -41,7 +41,7 @@ spec:
               name: postgres
         {{- if .Values.postgresql.enabled }}
         - name: CMD_DB_HOST
-          value: {{ include "postgresql.v1.primary.fullname" . }}-postgresql
+          value: {{ .Release.Name }}-postgresql
         {{- else if .Values.postgresqlExternal.enabled }}
         - name: CMD_DB_HOST
           value: {{ .Values.postgresqlExternal.externalDatabase }}

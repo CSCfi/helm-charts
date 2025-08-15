@@ -11,7 +11,7 @@ dependencies:
     version: 22.0.x
 description: Elastic and Kibana Helm Chart for Rahti platform
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 1.0.1
+version: 1.5.0
 sources:
 - https://github.com/CSCfi/helm-charts
 icon: https://logowik.com/content/uploads/images/elastic-search2066.jpg
