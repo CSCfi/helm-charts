@@ -1,0 +1,16 @@
+{{- if .Values.rahti.route.enabled }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ template "mlflow.v0.tracking.fullname" . }}
+spec:
+  port:
+    targetPort: 8081-tcp
+  tls:
+    insecureEdgeTerminationPolicy: {{ .Values.rahti.route.tls.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.rahti.route.tls.termination }}
+  to:
+    kind: Service
+    name: {{ template "mlflow.v0.tracking.fullname" . }}
+    weight: 100
+{{- end }}
