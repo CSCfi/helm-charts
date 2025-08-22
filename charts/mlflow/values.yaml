@@ -8,8 +8,12 @@ rahti:
 
   buildconfig:
     auth:
-      user: "user"
-      password: ""
+      - user: "user"
+        password: ""
+      # - user: "user2"
+      #   password: "password2"
+      # - user: "user3"
+      #   password: "password3"
 
 mlflow:
   global:
@@ -35,8 +39,8 @@ mlflow:
 
     sidecars:
       - name: nginx-sidecar
-        image: image-registry.openshift-image-registry.svc:5000/helm-demo/nginx-sidecar:latest
-        imagePullPolicy: IfNotPresent
+        image: image-registry.openshift-image-registry.svc:5000/{{ tpl .Release.Namespace . }}/nginx-sidecar:latest
+        imagePullPolicy: Always
         ports:
           - containerPort: 8081
             protocol: TCP
@@ -124,7 +128,7 @@ mlflow:
 
   # Disabled by default because we use an external database
   postgresql:
-    enabled: false
+    enabled: true
 
     global:
       security:
@@ -157,7 +161,7 @@ mlflow:
 
   # Disabled by default because we use an external S3 provider
   minio:
-    enabled: false
+    enabled: true
 
     global:
       security:

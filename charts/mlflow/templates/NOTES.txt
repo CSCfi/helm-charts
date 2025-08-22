@@ -1,9 +1,7 @@
 ========================================
   CSC MLflow Helm deployed
 ========================================
-===========
-  GRAFANA
-===========
+
 Wait a few seconds. Time for the application to be fully deployed.
 
 Get the MLflow application URL by running these commands:

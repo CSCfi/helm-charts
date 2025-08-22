@@ -579,7 +579,7 @@
                                     "type": "string"
                                 }
                             },
-                            "type": "object"
+                            "type": "array"
                         }
                     },
                     "type": "object"

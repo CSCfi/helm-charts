@@ -18,7 +18,15 @@ spec:
           sed -i.bak 's/^user/#user/' /etc/nginx/nginx.conf && \
           # Create the htpasswd
           apk add apache2-utils && \
-          htpasswd -cb /etc/nginx/htpasswd {{ .Values.rahti.buildconfig.auth.user }} {{ .Values.rahti.buildconfig.auth.password }}
+          {{- $auths := .Values.rahti.buildconfig.auth }}
+          {{- range $i, $auth := .Values.rahti.buildconfig.auth }}
+          {{- if eq $i 0 }}
+          htpasswd -cb /etc/nginx/htpasswd {{ $auth.user }} {{ $auth.password }}
+          {{- else }}
+          htpasswd -b /etc/nginx/htpasswd {{ $auth.user }} {{ $auth.password }}
+          {{- end }}
+          {{- if lt $i (sub (len $auths) 1) }} && \{{- end }}
+          {{- end }}
 
       WORKDIR /usr/share/nginx/html/
       EXPOSE 8081
