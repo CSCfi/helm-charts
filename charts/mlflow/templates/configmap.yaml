@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-default
+data:
+  default.conf: |-
+    server {
+       listen       8081;
+       server_name  localhost;
+       location / {
+           auth_basic           "Administrator's Area";
+           auth_basic_user_file htpasswd;
+           root   /usr/share/nginx/html;
+           proxy_pass  http://localhost:5000/;
+       }
+       error_page   500 502 503 504  /50x.html;
+       location = /50x.html {
+           root   /usr/share/nginx/html;
+       }
+    }

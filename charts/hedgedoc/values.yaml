@@ -40,8 +40,18 @@ hedgedoc:
 
 # Parameters related to the deployment of PostgreSQL in Rahti.
 # The parameters come from bitnami/postgresql dependency (https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
+# Since the change in the Bitnami catalog (https://github.com/bitnami/containers/issues/83267), deployment of PostgreSQL alongside HedgeDoc is intended for testing/development purposes
+# This image only uses the 'latest' tag, so it is not recommended in production.
 postgresql:
   enabled: false
+
+  global:
+    security:
+      allowInsecureImages: true
+
+  image:
+    repository: bitnamisecure/postgresql
+    tag: latest
 
   auth:
     username: hedgedoc

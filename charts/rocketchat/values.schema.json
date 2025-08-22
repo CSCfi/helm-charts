@@ -488,10 +488,10 @@
                     "type": "boolean"
                 },
                 "fsGroup": {
-                    "type": "integer"
+                    "type": ["integer", "string"]
                 },
                 "runAsUser": {
-                    "type": "integer"
+                    "type": ["integer", "string"]
                 }
             },
             "type": "object"
