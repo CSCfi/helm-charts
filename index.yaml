@@ -1075,6 +1075,48 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-0.69.0-beta/gitlab-runner-0.69.0-beta.tgz
     version: 0.69.0-beta
+  - apiVersion: v1
+    appVersion: bleeding
+    created: "2025-07-10T11:42:58.603511814Z"
+    description: GitLab Runner
+    digest: 1f76afbe6a2812262c11b6632b9e52751f596a546c5ca4970f810a28dcb540e2
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab-runner/img/gitlab-runner-stack-220x234.png
+    keywords:
+    - git
+    - ci
+    - deploy
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab-runner
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab-runner
+    - https://gitlab.com/gitlab-org/gitlab-runner
+    - https://docs.gitlab.com/runner/
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-0.69.0-beta/gitlab-runner-0.69.0-beta.tgz
+    version: 0.69.0-beta
+  - apiVersion: v1
+    appVersion: bleeding
+    created: "2025-08-15T04:05:29.324900293Z"
+    description: GitLab Runner
+    digest: 22cb7b4cd63e8e8ef876dbebb4bd4aae537fca1fc13da83403f1cb3c962f60b0
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab-runner/img/gitlab-runner-stack-220x234.png
+    keywords:
+    - git
+    - ci
+    - deploy
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    name: gitlab-runner
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab-runner
+    - https://gitlab.com/gitlab-org/gitlab-runner
+    - https://docs.gitlab.com/runner/
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-0.69.0-beta/gitlab-runner-0.69.0-beta.tgz
+    version: 0.69.0-beta
   hedgedoc:
   - apiVersion: v2
     created: "2024-10-03T06:59:36.727245628Z"
@@ -1333,6 +1375,22 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-0.0.1-set.by.chartpress/jupyterhub-0.0.1-set.by.chartpress.tgz
     version: 0.0.1-set.by.chartpress
+  kafka:
+  - apiVersion: v2
+    created: "2025-08-15T04:05:29.584458113Z"
+    dependencies:
+    - name: kafka
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 32.3.9
+    description: Kafka Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 32a62f3016a4af5afa094802ccba71deada7a54ab7524f3caa6340f4d14fd43b
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/01/Apache_Kafka_logo.svg
+    name: kafka
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/kafka-1.0.0/kafka-1.0.0.tgz
+    version: 1.0.0
   matomo:
   - apiVersion: v2
     created: "2025-03-31T13:04:57.001404828Z"
@@ -1726,4 +1784,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2025-07-10T08:27:22.320433996Z"
+generated: "2025-08-15T04:05:29.879249394Z"
