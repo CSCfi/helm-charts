@@ -1,0 +1,17 @@
+{{- if and .Values.rahti.route.enabled (not .Values.airflow.ingress.apiServer.enabled) }}
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ .Release.Name }}-api-server
+spec:
+  to:
+    kind: Service
+    name: {{ .Release.Name }}-api-server
+    weight: 100
+  port:
+    targetPort: api-server
+  tls:
+    termination: {{ .Values.rahti.route.tls.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.rahti.route.tls.insecureEdgeTerminationPolicy }}
+  wildcardPolicy: None
+{{- end }}
