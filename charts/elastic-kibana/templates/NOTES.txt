@@ -11,6 +11,6 @@ Get the Kibana application URL by running these commands:
   echo "KIBANA server URL: http://$KIBANA"
 {{- end }}
 
-Get the password for the default 'elastic' by running this command:
+Get the password for the default user 'elastic' by running this command:
 
   oc --namespace={{ .Release.Namespace }} get secret/elasticsearch-password -o jsonpath='{.data.elasticsearch-password}' | base64 -d

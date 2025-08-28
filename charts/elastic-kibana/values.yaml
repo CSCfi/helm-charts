@@ -16,7 +16,7 @@ elasticsearch:
 
   image:
     repository: bitnamilegacy/elasticsearch
-    tag: 9.0.4
+    tag: 9.1.2-debian-12-r0
 
   security:
     enabled: true
@@ -101,9 +101,9 @@ elasticsearch:
 
   # Kibana configuration
   kibana:
-    # image:
-    #   repository: bitnamilegacy/kibana
-    #   tag: 9.0.4-debian-12-r15
+    image:
+      repository: bitnamilegacy/kibana
+      tag: 9.1.2-debian-12-r0
 
     elasticsearch:
       hosts:

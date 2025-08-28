@@ -17,7 +17,7 @@ spec:
     {{- if eq .Release.Name "kibana" }}
     name: kibana
     {{- else }}
-    name: {{ .Release.Name }}
+    name: {{ .Release.Name }}-kibana
     {{- end }}
     weight: 100
   wildcardPolicy: None
