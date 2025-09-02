@@ -130,7 +130,7 @@ mongodb:
     usernames:
       - rocketchat
     passwords:
-      - rocketchat # Provide a root password
+      - rocketchat # Provide a password
     databases:
       - rocketchat
 
