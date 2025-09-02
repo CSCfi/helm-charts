@@ -7,7 +7,6 @@ sources:
   - https://github.com/CSCfi/helm-charts
 icon: https://airflow.apache.org/images/airflow_dark_bg.png
 dependencies:
-- name: apache-airflow
-  alias: airflow
+- name: airflow
   repository: https://airflow.apache.org
   version: 1.18.x
