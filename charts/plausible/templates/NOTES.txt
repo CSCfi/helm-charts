@@ -4,6 +4,4 @@
 
 Wait a few seconds. Time for the application to be fully deployed.
 
-Here is your Plausible URL:
-
-  echo "PLAUSIBLE server URL: {{ .Values.plausible.baseURL }}"
+Here is your Plausible URL: {{ .Values.plausible.baseURL }}

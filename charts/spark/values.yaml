@@ -11,6 +11,13 @@ route:
 # Spark #
 #########
 spark:
+  global:
+    security:
+      allowInsecureImages: true
+
+  image:
+    repository: bitnamilegacy/spark
+    tag: 4.0.0-debian-12-r20
   ## Spark master specific configuration
   ##
   master:

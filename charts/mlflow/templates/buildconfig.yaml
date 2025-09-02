@@ -1,0 +1,40 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: nginx-sidecar
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: nginx-sidecar:latest
+  source:
+    dockerfile: |
+      FROM nginx:alpine
+
+      # support running as arbitrary user which belogs to the root group
+      RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx && \
+          chown nginx:root /var/cache/nginx /var/run /var/log/nginx && \
+          # comment user directive as master process is run as user in OpenShift
+          sed -i.bak 's/^user/#user/' /etc/nginx/nginx.conf && \
+          # Create the htpasswd
+          apk add apache2-utils && \
+          {{- $auths := .Values.rahti.buildconfig.auth }}
+          {{- range $i, $auth := .Values.rahti.buildconfig.auth }}
+          {{- if eq $i 0 }}
+          htpasswd -cb /etc/nginx/htpasswd {{ $auth.user }} {{ $auth.password }}
+          {{- else }}
+          htpasswd -b /etc/nginx/htpasswd {{ $auth.user }} {{ $auth.password }}
+          {{- end }}
+          {{- if lt $i (sub (len $auths) 1) }} && \{{- end }}
+          {{- end }}
+
+      WORKDIR /usr/share/nginx/html/
+      EXPOSE 8081
+
+      USER nginx:root
+    type: Dockerfile
+  strategy:
+    type: Docker
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
