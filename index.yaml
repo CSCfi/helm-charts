@@ -1,6 +1,21 @@
 apiVersion: v1
 entries:
   airflow:
+  - apiVersion: v2
+    created: "2025-09-02T07:50:02.350708603Z"
+    dependencies:
+    - name: airflow
+      repository: https://airflow.apache.org
+      version: 1.18.x
+    description: Airflow Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: d0c39a2702edb2c35216bf7bd24abb7ee649cd3c5661918ae3e031abce71b81d
+    icon: https://airflow.apache.org/images/airflow_dark_bg.png
+    name: airflow
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/airflow-2.0.0/airflow-2.0.0.tgz
+    version: 2.0.0
   - annotations:
       artifacthub.io/changes: |
         - description: Add support for scheduler name to PODs templates
@@ -991,6 +1006,27 @@ entries:
     version: 1.12.0-dev
   elastic-kibana-helm:
   - apiVersion: v2
+    created: "2025-09-02T07:50:02.60853596Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: elasticsearch
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 22.1.x
+    description: Elastic and Kibana Helm Chart for Rahti platform Link to the repo
+      https://github.com/CSCfi/helm-charts
+    digest: b7f688e7b4ce911dbcdc830e14cb69f294eeab13ac36313771df14dad9314fba
+    icon: https://logowik.com/content/uploads/images/elastic-search2066.jpg
+    name: elastic-kibana-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/elastic-kibana-helm-1.5.0/elastic-kibana-helm-1.5.0.tgz
+    version: 1.5.0
+  - apiVersion: v2
     created: "2025-07-10T06:27:13.58279917Z"
     dependencies:
     - name: common
@@ -1119,6 +1155,27 @@ entries:
     version: 0.69.0-beta
   hedgedoc:
   - apiVersion: v2
+    created: "2025-09-02T07:50:03.237371161Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 15.x.x
+    description: Hedgedoc Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 001462360e286a7d125b4a049174479ad6aafddbce6d561c41dc39745e6a5bc8
+    icon: https://raw.githubusercontent.com/hedgedoc/hedgedoc/develop/frontend/src/app/icon.png
+    name: hedgedoc
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-1.5.0/hedgedoc-1.5.0.tgz
+    version: 1.5.0
+  - apiVersion: v2
     created: "2024-10-03T06:59:36.727245628Z"
     dependencies:
     - name: common
@@ -1198,6 +1255,24 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-1.1.2/hedgedoc-1.1.2.tgz
     version: 1.1.2
   jupyterhub:
+  - apiVersion: v2
+    created: "2025-09-02T07:50:03.519119641Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: jupyterhub
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 10.x.x
+    description: Multi-user Jupyter installation Link to the repo https://github.com/CSCfi/helm-charts
+    digest: ee14cd97bf5fd73b49fd2acf38a6969d2ebbd78aad1c89d98000a23d37c45e6a
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    name: jupyterhub
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-2.5.0/jupyterhub-2.5.0.tgz
+    version: 2.5.0
   - apiVersion: v2
     created: "2025-04-10T14:14:13.321086149Z"
     dependencies:
@@ -1393,6 +1468,26 @@ entries:
     version: 1.0.0
   matomo:
   - apiVersion: v2
+    created: "2025-09-02T07:50:03.975480994Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: matomo
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 10.x.x
+    description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 0ceca28bdb538d34c2ebdeef74547e25c3b91ccd6b63d82ed7007621aa4be682
+    icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4
+    name: matomo
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/matomo-2.5.0/matomo-2.5.0.tgz
+    version: 2.5.0
+  - apiVersion: v2
     created: "2025-03-31T13:04:57.001404828Z"
     dependencies:
     - name: common
@@ -1486,6 +1581,20 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/mlflow-1.5.7/mlflow-1.5.7.tgz
     version: 1.5.7
+  - apiVersion: v2
+    created: "2025-09-02T07:50:04.261598787Z"
+    dependencies:
+    - name: mlflow
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 5.1.x
+    description: MLflow Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: cf7a4faa0fe3edea5c2b381868244568766ddadff609e1b88318bfcc2d98ebe4
+    icon: https://raw.githubusercontent.com/mlflow/mlflow/master/assets/logo.svg
+    name: mlflow
+    type: application
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/mlflow-1.5.0/mlflow-1.5.0.tgz
+    version: 1.5.0
   - annotations:
       category: MachineLearning
       images: |
@@ -1532,6 +1641,22 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/mlflow-0.4.0/mlflow-0.4.0.tgz
     version: 0.4.0
   plausible:
+  - apiVersion: v2
+    created: "2025-09-02T07:50:04.484591812Z"
+    dependencies:
+    - alias: plausible
+      name: plausible-analytics
+      repository: https://imio.github.io/helm-charts
+      version: 0.4.x
+    description: Plausible Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 128225c6b09b780e4348961e50edd5702b3ba61cae73aee4291da2021340d4be
+    icon: https://plausible.io/uploads/plausible-community-edition.png
+    name: plausible
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/plausible-1.5.0/plausible-1.5.0.tgz
+    version: 1.5.0
   - apiVersion: v2
     created: "2025-03-20T12:39:17.503164622Z"
     dependencies:
@@ -1694,6 +1819,41 @@ entries:
     version: 1.0.0
   rocketchat:
   - apiVersion: v2
+    appVersion: 7.9.3
+    created: "2025-09-02T07:50:04.746106815Z"
+    dependencies:
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    - condition: microservices.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts
+      version: 0.15.x
+    description: Prepare to take off with the ultimate chat platform, experience the
+      next level of team communications. Link to the repo https://github.com/CSCfi/helm-charts
+    digest: ec6df840c1d9dc0e8e71aef6820a278edc8e94c111719be2412443371c22efaa
+    home: https://rocket.chat/
+    icon: https://raw.githubusercontent.com/RocketChat/Rocket.Chat.Artwork/master/Logos/icon.svg
+    keywords:
+    - chat
+    - communication
+    - http
+    - web
+    - application
+    - nodejs
+    - javascript
+    - meteor
+    maintainers:
+    - email: cloud@rocket.chat
+      name: RocketChat
+    name: rocketchat
+    sources:
+    - https://github.com/RocketChat/Docker.Official.Image/
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/rocketchat-7.9.3/rocketchat-7.9.3.tgz
+    version: 7.9.3
+  - apiVersion: v2
     appVersion: 6.4.4
     created: "2024-02-29T09:50:21.071745397Z"
     dependencies:
@@ -1764,6 +1924,27 @@ entries:
     version: 1.2.1
   spark:
   - apiVersion: v2
+    created: "2025-09-02T07:50:04.979188843Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - alias: spark
+      name: spark
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 10.x.x
+    description: Apache Spark Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 227c886197f165ea91373915a56a59d2450703e8975569d67d9295f785356a42
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/spark/img/spark-stack-220x234.png
+    name: spark
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/spark-2.5.0/spark-2.5.0.tgz
+    version: 2.5.0
+  - apiVersion: v2
     created: "2025-04-08T08:55:10.197233169Z"
     dependencies:
     - name: common
@@ -1784,4 +1965,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2025-08-15T04:05:29.879249394Z"
+generated: "2025-09-02T07:50:04.979338132Z"
