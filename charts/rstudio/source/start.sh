@@ -12,6 +12,8 @@ export USER=rstudio-server
 
 echo "Starting RStudio Server"
 
+# Increase ulimits to 16Gb
+ulimit -s 16384
 # Run rserver via script, since it only outputs error when terminal is attached
 script -q -c "/usr/lib/rstudio-server/bin/rserver" /dev/stdout &
 
@@ -21,6 +23,6 @@ cp -R /opt/shiny-server/samples/* /srv/shiny-server/
 mv /srv/shiny-server/welcome.html /srv/shiny-server/index.html
 
 echo "Starting Shiny Server"
-shiny-server > /var/log/shiny-server/server.log &
+shiny-server >/var/log/shiny-server/server.log &
 
 sleep inf
