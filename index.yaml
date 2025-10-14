@@ -1273,24 +1273,6 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-2.5.2/jupyterhub-2.5.2.tgz
     version: 2.5.2
-  - apiVersion: v2
-    created: "2025-10-14T09:36:38.235710174Z"
-    dependencies:
-    - name: common
-      repository: oci://registry-1.docker.io/bitnamicharts
-      tags:
-      - bitnami-common
-      version: 2.x.x
-    - name: jupyterhub
-      repository: oci://registry-1.docker.io/bitnamicharts
-      version: 10.x.x
-    description: Multi-user Jupyter installation Link to the repo https://github.com/CSCfi/helm-charts
-    digest: 4ead9f0fbb19174353f8112022df792ce20fc774e6e4d31bb3b48c895884d779
-    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
-    name: jupyterhub
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-2.5.1/jupyterhub-2.5.1.tgz
-    version: 2.5.1
   kafka:
   - apiVersion: v2
     created: "2025-08-15T04:05:29.584458113Z"
