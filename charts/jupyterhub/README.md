@@ -1,4 +1,4 @@
-# JupyterHub Helm Rahti 2
+# JupyterHub Helm on Rahti
 
 > [!IMPORTANT]  
 > Starting on 29 September 2025, Bitnami will be changing its policy regarding its catalog. Read more [here](https://github.com/bitnami/containers/issues/83267)  
@@ -44,6 +44,13 @@ If you want, you can set up a PostgreSQL database alongside your jupyterhub pods
 jupyterhub:
   postgresql:
     enabled: false # <-- Change this to true
+    global:
+      security:
+        allowInsecureImages: true
+    image:
+      registry: ""
+      repository: ""
+      tag: ""
     auth:
       username: bn_jupyterhub
       password: ""
@@ -54,6 +61,8 @@ jupyterhub:
     ports:
       postgresql: 5432
 ```
+
+You need to provide your own image if you want to use `postgresql` on Rahti. Since the Bitnami policy change, they provide images but with old tags. For example [postgresql](https://hub.docker.com/r/bitnamilegacy/postgresql).
 
 We don't recommend this for a production environment. Pukki has database backups and is more robust. More information [here](https://docs.csc.fi/cloud/dbaas/)
 

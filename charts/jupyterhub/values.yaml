@@ -225,7 +225,14 @@ jupyterhub:
         memory: 256Mi
 
   postgresql:
-    enabled: false
+    enabled: false 
+    global:
+      security:
+        allowInsecureImages: true
+    image:
+      registry: "satama-test.csc.fi"
+      repository: "library/postgresql"
+      tag: "18.0.0"
     auth:
       username: bn_jupyterhub
       password: ""
