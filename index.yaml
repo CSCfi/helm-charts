@@ -1256,6 +1256,24 @@ entries:
     version: 1.1.2
   jupyterhub:
   - apiVersion: v2
+    created: "2025-10-14T09:50:48.982545632Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: jupyterhub
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 10.x.x
+    description: Multi-user Jupyter installation Link to the repo https://github.com/CSCfi/helm-charts
+    digest: c7cc269705b7af11b6c53cf5e825af54045c9d6cf1195dda97ea37d289fc8e40
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    name: jupyterhub
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-2.5.2/jupyterhub-2.5.2.tgz
+    version: 2.5.2
+  - apiVersion: v2
     created: "2025-10-14T09:36:38.235710174Z"
     dependencies:
     - name: common
@@ -1788,4 +1806,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2025-10-14T09:36:38.235771642Z"
+generated: "2025-10-14T09:50:48.982616945Z"
