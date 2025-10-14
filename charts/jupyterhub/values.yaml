@@ -230,9 +230,9 @@ jupyterhub:
       security:
         allowInsecureImages: true
     image:
-      registry: "satama-test.csc.fi"
-      repository: "library/postgresql"
-      tag: "18.0.0"
+      registry: ""
+      repository: ""
+      tag: ""
     auth:
       username: bn_jupyterhub
       password: ""
