@@ -111,6 +111,26 @@
                 },
                 "postgresql": {
                     "properties": {
+                        "global": {
+                            "properties": {
+                                "allowInsecureImages": {
+                                    "type": "string"
+                                }
+                            }
+                         },
+                        "image": {
+                            "properties": {
+                                "registry": {
+                                    "type": "string"
+                                },
+                                "repository": {
+                                    "type": "string"
+                                },
+                                "tag": {
+                                    "type": "string"
+                                }
+                            }
+                        },
                         "auth": {
                             "properties": {
                                 "database": {
