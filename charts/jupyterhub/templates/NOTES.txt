@@ -51,7 +51,7 @@ Did you know there are enterprise versions of the Bitnami catalog? For enhanced 
 
 2. If you are using Native Authentication (by default), you will need to sign up to set the password with the following admin user below to create a Notebook:
 
-  echo Admin user: {{ .Values.jupyterhub.hub.adminUser }}
+  Admin user: {{ .Values.jupyterhub.hub.adminUser }}
 
 {{- if and .Values.jupyterhub.postgresql.enabled .Values.jupyterhub.externalDatabase.host -}}
 jupyterhub: Database
