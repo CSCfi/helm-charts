@@ -109,6 +109,19 @@
                     },
                     "type": "object"
                 },
+                "auxiliaryImage": {
+                    "properties": {
+                        "registry": {
+                            "type": "string"
+                        },
+                        "repository": {
+                            "type": "string"
+                        },
+                        "tag": {
+                            "type": "string"
+                        }
+                    }
+                },
                 "postgresql": {
                     "properties": {
                         "global": {

@@ -224,6 +224,11 @@ jupyterhub:
         cpu: 250m
         memory: 256Mi
 
+  auxiliaryImage:
+    registry: docker.io
+    repository: bitnami/os-shell
+    tag: latest
+
   postgresql:
     enabled: false 
     global:
