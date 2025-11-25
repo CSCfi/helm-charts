@@ -27,15 +27,16 @@ Take a look:
 There is one mandatory field that you must fill out:
 
 - `prometheus.serverFiles.prometheus.yml.scrape_configs.2.kubernetes_sd_configs.0.namespaces.names.0`
-  ```yaml
-  - job_name: 'kubernetes-pods'
-    honor_labels: true
-    kubernetes_sd_configs:
-      - role: pods
-        namespaces:
-          names:
-            -  # Enter the name of your namespace/project here
-  ```
+
+```yaml
+- job_name: 'kubernetes-pods'
+  honor_labels: true
+  kubernetes_sd_configs:
+    - role: pods
+      namespaces:
+        names:
+          -  # Enter the name of your namespace/project here
+```
 
 In order to have your pods monitored by Prometheus, you need to add these annotations:
 
