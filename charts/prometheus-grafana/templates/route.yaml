@@ -14,8 +14,8 @@ spec:
     termination: {{ .Values.route.termination }}
   to:
     kind: Service
-    {{- if eq .Release.Name "grafana" }}
-    name: grafana
+    {{- if contains "grafana" .Release.Name }}
+    name: {{- .Release.Name | trunc 63 | trimSuffix "-" }}
     {{- else }}
     name: {{ .Release.Name }}-grafana
     {{- end }}
