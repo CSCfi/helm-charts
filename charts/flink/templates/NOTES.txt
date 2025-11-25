@@ -1,0 +1,14 @@
+CHART NAME: {{ .Chart.Name }}
+CHART VERSION: {{ .Chart.Version }}
+APP VERSION: {{ .Chart.AppVersion }}
+
+** Please be patient while the chart is being deployed **
+
+{{- if .Values.route.host }}
+1. Connect to the jobmanager by using this URL:
+    echo "Browse to https://{{ .Values.route.host }}"
+{{- else }}
+1. Run these commands to check the URL:
+    export URL=$(oc --namespace {{ .Release.Namespace }} get route/flink-jobmanager -o jsonpath={.spec.host})
+    echo "Browse to https://$URL/"
+{{- end }}

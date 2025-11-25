@@ -1,0 +1,38 @@
+## @param route Configuration for the Route resource in OpenShift
+##
+route:
+  enabled: true
+  host: ""
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+
+#########
+# Flink #
+#########
+flink:
+  global:
+    security:
+      allowInsecureImages: true
+
+  image:
+    repository: bitnamilegacy/flink
+    tag: 2.1.0-debian-12-r1
+  
+  jobmanager:
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+  
+  taskmanager:
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi 
