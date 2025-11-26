@@ -1068,6 +1068,26 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/elastic-kibana-helm-1.0.0/elastic-kibana-helm-1.0.0.tgz
     version: 1.0.0
+  flink:
+  - apiVersion: v2
+    created: "2025-11-26T11:20:30.446476205Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: flink
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 2.x.x
+    description: Apache Flink is a framework and distributed processing engine for
+      stateful computations over unbounded and bounded data streams.
+    digest: d3bd6f388e80fac2df49b14fe79c5f6c6ae34e33a104d491cd00ef699834d8c1
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/flink/img/flink-stack-220x234.png
+    name: flink
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/flink-2.0.0/flink-2.0.0.tgz
+    version: 2.0.0
   gitlab-runner:
   - apiVersion: v1
     appVersion: bleeding
@@ -1854,4 +1874,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2025-11-26T06:26:13.545948747Z"
+generated: "2025-11-26T11:20:30.446559994Z"
