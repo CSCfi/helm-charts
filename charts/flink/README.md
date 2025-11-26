@@ -10,7 +10,7 @@
 
 ## TL;DR
 ```sh
-helm upgrade --install flink.
+helm upgrade --install flink .
 ```
 
 ## Getting started
