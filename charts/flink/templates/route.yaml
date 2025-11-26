@@ -1,0 +1,20 @@
+{{- if .Values.route.enabled }}
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: flink-jobmanager
+  labels:
+    app: flink
+spec:
+  host: {{ .Values.route.host }}
+  to:
+    kind: Service
+    name: {{ include "flink.jobmanager.fullname" . }}
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: {{ .Values.route.tls.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.route.tls.insecureEdgeTerminationPolicy }}
+  wildcardPolicy: None
+{{ end }}
