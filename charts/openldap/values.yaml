@@ -1,0 +1,16 @@
+openshift:
+  enabled: true
+build:
+  enabled: true
+  image:
+    registry: image-registry.openshift-image-registry.svc:5000
+    repository: openldap
+    tag: 2.6.10
+storage: 1Gi
+ldap:
+  admin:
+    user: admin
+    password: adminpassword
+  users:
+    user: customuser
+    password: custompassword
