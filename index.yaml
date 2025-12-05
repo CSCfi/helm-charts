@@ -1501,6 +1501,29 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/mlflow-0.4.0/mlflow-0.4.0.tgz
     version: 0.4.0
+  openldap:
+  - apiVersion: v1
+    appVersion: dev
+    created: "2025-12-05T10:36:55.346008433Z"
+    description: An open source implementation of the Lightweight Directory Access
+      Protocol, which is a vendor-neutral, industry standard application protocol
+      for accessing and maintaining distributed directory information services over
+      an Internet Protocol (IP) network.
+    digest: 7de4bc7deae1f3f74391900561a7720e62800caa4dd01b21c4aa20dbb1bda269
+    home: https://www.openldap.org/
+    icon: https://www.openldap.org/images/headers/LDAPworm.gif
+    keywords:
+    - docker
+    - openldap
+    maintainers:
+    - email: alvaro.gonzalez@csc.fi
+      name: Alvaro Gonzalez
+    name: openldap
+    sources:
+    - https://github.com/bitnami/containers/tree/main/bitnami/openldap
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/openldap-1.5.0-dev/openldap-1.5.0-dev.tgz
+    version: 1.5.0-dev
   plausible:
   - apiVersion: v2
     created: "2025-09-02T07:50:04.484591812Z"
@@ -1874,4 +1897,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2025-11-26T11:20:30.446559994Z"
+generated: "2025-12-05T10:36:55.346105605Z"
