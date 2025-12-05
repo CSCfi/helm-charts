@@ -1,0 +1,10 @@
+{{- if .Values.build.enabled }}
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: {{ .Values.build.image.repository }}
+spec:
+  lookupPolicy:
+    local: false
+{{- end }}
+

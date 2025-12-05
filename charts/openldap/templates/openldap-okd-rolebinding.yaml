@@ -1,0 +1,15 @@
+{{- if .Values.build.enabled }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: build-reader
+rules:
+- apiGroups:
+  - build.openshift.io
+  resources:
+  - builds
+  verbs:
+  - get
+  - list
+  - watch
+{{- end }}

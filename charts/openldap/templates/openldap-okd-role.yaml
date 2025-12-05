@@ -1,0 +1,6 @@
+{{- if .Values.build.enabled }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: build-reader
+{{- end }}

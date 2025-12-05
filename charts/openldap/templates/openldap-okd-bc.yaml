@@ -1,0 +1,34 @@
+{{- if .Values.build.enabled }}
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: {{ .Values.build.image.repository }}
+spec:
+  failedBuildsHistoryLimit: 5
+  output:
+    to:
+      kind: ImageStreamTag
+      name: {{ .Values.build.image.repository }}:{{ .Values.build.image.tag }}
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    dockerfile: |-
+      FROM docker.io/bitnamilegacy/openldap:{{ .Values.build.image.tag }}
+      # Not used, form of BuildConfig is used
+
+      USER root
+
+      RUN setcap -r /opt/bitnami/openldap/sbin/slapd
+
+      USER 1001
+    type: Dockerfile
+  strategy:
+    type: Docker
+  successfulBuildsHistoryLimit: 5
+  triggers:
+    - type: ImageChange
+    - type: ConfigChange
+status: {}
+{{- end }}
+
