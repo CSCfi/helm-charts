@@ -1384,7 +1384,7 @@ entries:
     created: "2024-04-11T09:50:13.887825657Z"
     description: Minio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
     digest: 4afeeaa4c06c8ccfb6e1773ee34defd2be99393117b1d5a8cd07bc5c6cb70164
-    icon: https://min.io/resources/img/logo.svg
+    icon: https://images.seeklogo.com/logo-png/34/1/minio-logo-png_seeklogo-340054.png
     name: minio
     sources:
     - https://github.com/CSCfi/helm-charts

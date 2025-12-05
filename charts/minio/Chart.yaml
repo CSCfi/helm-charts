@@ -5,4 +5,4 @@ description: Minio Helm Chart for Rahti platform
 version: 1.2.1
 sources:
 - https://github.com/CSCfi/helm-charts
-icon: https://min.io/resources/img/logo.svg
+icon: https://images.seeklogo.com/logo-png/34/1/minio-logo-png_seeklogo-340054.png
