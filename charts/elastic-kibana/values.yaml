@@ -15,8 +15,9 @@ elasticsearch:
       allowInsecureImages: true
 
   image:
-    repository: bitnamilegacy/elasticsearch
-    tag: 9.1.2-debian-12-r0
+    registry: satama.csc.fi
+    repository: library/elasticsearch
+    tag: 9.2.2
 
   security:
     enabled: true
@@ -79,6 +80,7 @@ elasticsearch:
   metrics:
     enabled: false
     image:
+      registry: docker.io
       repository: bitnamilegacy/elasticsearch-exporter
       tag: 1.9.0-debian-12-r15
     resources: {}
@@ -86,6 +88,7 @@ elasticsearch:
   sysctlImage:
     enabled: false
     image:
+      registry: docker.io
       repository: bitnamisecure/os-shell
       tag: latest
     resources: {}
@@ -102,8 +105,9 @@ elasticsearch:
   # Kibana configuration
   kibana:
     image:
-      repository: bitnamilegacy/kibana
-      tag: 9.1.2-debian-12-r0
+      registry: satama.csc.fi
+      repository: library/kibana
+      tag: 9.2.2
 
     elasticsearch:
       hosts:
