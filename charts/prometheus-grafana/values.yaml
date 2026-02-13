@@ -180,6 +180,12 @@ prometheus:
 ##################
 
 grafana:
+  image:
+    registry: docker.io
+    repository: grafana/grafana
+    tag: 12.3.3
+    pullPolicy: IfNotPresent
+
   resources:
     limits:
       cpu: 100m
@@ -198,6 +204,11 @@ grafana:
     name: grafana
     nameTest: grafTest
 
+  replicas: 1
+
+  deploymentStrategy:
+    type: Recreate
+
   securityContext:
     runAsUser: 
     runAsGroup: 
@@ -206,6 +217,9 @@ grafana:
   persistence:
     enabled: true
     size: 5Gi
+
+  testFramework:
+    enabled: false
 
   initChownData: 
     enabled: false
