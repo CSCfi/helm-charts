@@ -11,10 +11,10 @@ dependencies:
     version: 0.15.x
   - name: grafana
     repository: https://grafana.github.io/helm-charts
-    version: 8.10.x
+    version: 11.1.x
 description: Prometheus and Grafana Helm Chart for Rahti platform
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 2.1.0-2
+version: 2.1.1
 sources:
 - https://github.com/CSCfi/helm-charts
 icon: https://miro.medium.com/v2/resize:fit:640/format:webp/0*4G5AVIBCAKMU1Ctl.png
