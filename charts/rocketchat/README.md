@@ -28,7 +28,10 @@ By default, the MongoDB chart requires PV support on underlying infrastructure (
 To install the chart with the release name `rocketchat`:
 
 ```console
-helm upgrade --install rocketchat . --set mongodb.auth.passwords={rocketchatPassword},mongodb.auth.rootPassword=rocketchatRootPassword
+helm upgrade --install rocketchat . \
+  --set mongodb.auth.passwords={rocketchatPassword} \
+  --set mongodb.auth.rootPassword=rocketchatRootPassword \
+  --set host=[rahtiapp.fi,apps.lumi-k.eu]
 ```
 
 Usage of `Values.yaml` file is recommended over using command line arguments `--set`. You must set at least the database password and root password in the values file.
@@ -40,15 +43,16 @@ mongodb:
       - rocketchat
     rootPassword: rocketchatroot
 ```
-Regarding the OpenShift route, you must provide the `host` and `route.host`. By default, `route.host` is `rocketchat-test` and for `host` it can be either `apps.okd.lumi-k.csc.fi` if deployed on Lumi-K or `2.rahtiapp.fi` if deployed on Rahti 2.  
+Regarding the OpenShift route, you must provide the `host` and `route.host`. By default, `route.host` is `rocketchat-test` and for `host` it can be either `apps.lumi-k.eu` if deployed on Lumi-K or `rahtiapp.fi` if deployed on Rahti.  
 
 ```yaml
-host: "rahtiapp.fi"
+host: "" # <-- Edit this value. For example, rahtiapp.fi or apps.lumi-k.eu
 ...
 route:
   host: "rocketchat-test"
 ```
 Now use the following command to deploy
+
 ```console
 helm install rocketchat . -f Values.yaml
 ```

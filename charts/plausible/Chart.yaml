@@ -7,7 +7,7 @@ dependencies:
     version: 0.4.x
 description: Plausible Helm Chart for Rahti platform
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 1.5.0
+version: 1.5.1
 sources:
 - https://github.com/CSCfi/helm-charts
 icon: https://plausible.io/uploads/plausible-community-edition.png

@@ -1,12 +1,13 @@
 route:
+  host: ""
   insecureEdgeTerminationPolicy: Redirect
-  termination: edge 
+  termination: edge
 
 matomo:
   global:
     security:
       allowInsecureImages: true
-      
+
   matomoUsername: user
   matomoPassword: ""
   matomoEmail: user@example.com
@@ -15,9 +16,9 @@ matomo:
     repository: bitnamilegacy/matomo
     tag: 5.3.2-debian-12-r11
     debug: false
-  
+
   allowEmptyPassword: false
-  
+
   resources:
     requests:
       memory: 256Mi
@@ -25,10 +26,10 @@ matomo:
     limits:
       memory: 512Mi
       cpu: 500m
-  
+
   service:
     type: ClusterIP
-  
+
   ### Since the change in the Bitnami catalog (https://github.com/bitnami/containers/issues/83267), deployment of MariaDB alongside Matomo using bitnami catalog is intended for testing/development purposes
   ### This image only uses the 'latest' tag, so it is not recommended in production.
   ### The image can be build from source: https://github.com/bitnami/containers/tree/main/bitnami/mariadb
@@ -54,7 +55,7 @@ matomo:
         limits:
           memory: 512Mi
           cpu: 500m
-  
+
   externalDatabase:
     host: ""
     port: 3306
@@ -62,7 +63,7 @@ matomo:
     password: ""
     database: bitnami_matomo
     existingSecret: ""
-  
+
   metrics:
     enabled: false
     resources:

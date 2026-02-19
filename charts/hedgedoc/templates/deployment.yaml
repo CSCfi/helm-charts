@@ -19,7 +19,7 @@ spec:
       containers:
       - env:
         - name: CMD_DOMAIN
-          value: {{ .Values.hedgedoc.appname }}.{{ .Values.hedgedoc.domain }}
+          value: {{ .Values.hedgedoc.appname }}.{{ required "A valid domain must be set" .Values.hedgedoc.domain }}
         - name: CMD_URL_ADDPORT
           value: "false"
         - name: CMD_PROTOCOL_USESSL

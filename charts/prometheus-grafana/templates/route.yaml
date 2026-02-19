@@ -6,7 +6,7 @@ metadata:
     app: grafana
   name: grafana
 spec:
-  host: grafana-{{ .Release.Namespace }}.rahtiapp.fi
+  host: {{ .Values.route.grafana.host }}
   port:
     targetPort: "3000"
   tls:
@@ -32,7 +32,7 @@ metadata:
     app: prometheus
   name: prometheus
 spec:
-  host: prometheus-{{ .Release.Namespace }}.rahtiapp.fi
+  host: {{ .Values.route.prometheus.host }}
   port:
     targetPort: "9090"
   tls:

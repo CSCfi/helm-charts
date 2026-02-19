@@ -390,6 +390,9 @@
                     "properties": {
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "host": {
+                            "type": ["string", "null"]
                         }
                     },
                     "type": "object"
@@ -401,6 +404,9 @@
                     "properties": {
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "host": {
+                            "type": ["string", "null"]
                         }
                     },
                     "type": "object"

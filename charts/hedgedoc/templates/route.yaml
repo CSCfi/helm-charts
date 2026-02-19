@@ -6,7 +6,7 @@ metadata:
     app: hedgedoc
   name: hedgedoc
 spec:
-  host: {{ .Values.hedgedoc.appname }}.{{ .Values.hedgedoc.domain }}
+  host: {{ .Values.hedgedoc.appname }}.{{ required "A valid domain must be set" .Values.hedgedoc.domain }}
   port:
     targetPort: "3000"
   tls:

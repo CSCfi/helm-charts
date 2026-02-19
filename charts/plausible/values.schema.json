@@ -142,7 +142,7 @@
                         "annotations": {
                             "properties": {
                                 "haproxy.router.openshift.io/ip_whitelist": {
-                                    "type": "string"
+                                    "type": ["string","null"]
                                 },
                                 "route.openshift.io/termination": {
                                     "type": "string"

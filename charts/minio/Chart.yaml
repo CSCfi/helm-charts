@@ -2,7 +2,7 @@ apiVersion: v2
 name: minio
 description: Minio Helm Chart for Rahti platform
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 1.2.1
+version: 1.2.2
 sources:
-- https://github.com/CSCfi/helm-charts
+  - https://github.com/CSCfi/helm-charts
 icon: https://images.seeklogo.com/logo-png/34/1/minio-logo-png_seeklogo-340054.png

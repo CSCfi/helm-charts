@@ -1,22 +1,24 @@
 # Minio Helm Chart
-## TL;DR
-```sh
-helm upgrade --install minio .
-```
 
 ## Explanations
-This Helm Chart helps you to deploy Minio on CSC Rahti (Openshift 4).  
-If you want to use it with different values, you can edit `values.yaml` file and then run:  
-```sh
-helm upgrade --install minio . -f {custom_values.yaml}
-```
+
+This Helm Chart helps you to deploy Minio on CSC Rahti or Lumi-K (Openshift 4).  
 
 ## Parameters
+
+The value `.minio.domainSuffix` is required to install this Helm Chart. If you install on Rahti, use `rahtiapp.fi`. If you install on Lumi-K, use `apps.lumi-k.eu`
+
+Once set, run:
+
+```sh
+helm upgrade --install minio . -f values.yaml
+```
+
 ### minio parameters
 
 | Name                                            | Description                                                          | Value                                                   |
 | ----------------------------------------------- | -------------------------------------------------------------------- | --------------------------------------------------------|
-| `minio.domainSuffix`                            | Set the `domainSuffix` for your minio app                            | `2.rahtiapp.fi`                                         |
+| `minio.domainSuffix`                            | Set the `domainSuffix` for your minio app                            | ""                                                      |
 | `minio.whiteList`                               | Set the access of your minio app                                     | `0.0.0.0/0`                                             |
 | `minio.clusterName`                             | Name for your minio cluster                                          | `my-minio-cluster`                                      |
 | `minio.image`                                   | Name of the Minio image                                              | `minio/minio:RELEASE.2023-12-14T18-51-57Z`              |
@@ -46,7 +48,9 @@ The secretKey and the accessKey won't change if you upgrade the Chart.
 Follow the instructions after deploying the Helm Chart to retrieve the passwords.
 
 ## Cleanup
+
 To delete all the resources, simply uninstall the Helm Chart:
+
 ```sh
 helm uninstall minio
 ```

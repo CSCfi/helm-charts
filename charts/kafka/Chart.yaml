@@ -6,7 +6,7 @@ dependencies:
     version: 32.3.9
 description: Kafka Helm Chart for Rahti platform
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 1.0.0
+version: 1.0.1
 sources:
 - https://github.com/CSCfi/helm-charts
 icon: https://upload.wikimedia.org/wikipedia/commons/0/01/Apache_Kafka_logo.svg
