@@ -1,4 +1,4 @@
-# Helm charts repository for Rahti
+# Helm charts repository for Rahti and Lumi-K
 
 > [!IMPORTANT]  
 > Starting on 29 September 2025, Bitnami will be changing its policy regarding its catalog. Read more [here](https://github.com/bitnami/containers/issues/83267)  

@@ -8,20 +8,10 @@
 > - Some of our Helm Charts used `Bitnami` images. Our Helm Charts are now intended for testing/development purposes because they use `bitnamilegacy` and/or `bitnamisecure` docker repositories.  
 > - However, the Bitnami project continues to make its source code available at [bitnami/containers](https://github.com/bitnami/containers) under the Apache 2 license. You can build the image and then push it to your CSC project. You can find more information on how to push images [here](https://docs.csc.fi/cloud/rahti/images/Using_Rahti_integrated_registry/)
 
-## TL;DR
-```sh
-helm upgrade --install plausible .
-```
-
 ## Explanations
-This Helm Chart helps you to deploy Plausible on CSC Rahti (Openshift 4).  
-If you want to use it with different values, you can edit `values.yaml` file and then run:  
-```sh
-cd charts/plausible
-helm upgrade --install plausible . -f {custom_values.yaml}
-```
 
-## Parameters
+This Helm Chart helps you to deploy Plausible on CSC Rahti or Lumi-K (Openshift 4).
+
 We created a default `values.yaml` file that is compatible with our platform Rahti. This Helm Chart is using the bitnami Helm Charts for postgresql and clickhouse and also the Helm Chart from IMIO for plausible-community. Take a look:
 - [bitnami/postgresql](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
 - [bitnami/clickhouse](https://github.com/bitnami/charts/tree/main/bitnami/clickhouse)
@@ -53,8 +43,16 @@ Some mandatory values:
 
 You can whitelist IP where only a few ranges are allowed to get through the route. More information here: https://docs.csc.fi/cloud/rahti/concepts/#ip-white-listing
 
+Once set, run:
+
+```sh
+helm upgrade --install plausible . -f values.yaml
+```
+
 ## Cleanup
+
 To delete all the resources, simply uninstall the Helm Chart:
+
 ```sh
 helm uninstall plausible
 ```

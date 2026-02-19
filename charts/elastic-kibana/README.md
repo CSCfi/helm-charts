@@ -8,23 +8,14 @@
 > - Some of our Helm Charts used `Bitnami` images. Our Helm Charts are now intended for testing/development purposes because they use `bitnamilegacy` and/or `bitnamisecure` docker repositories.  
 > - However, the Bitnami project continues to make its source code available at [bitnami/containers](https://github.com/bitnami/containers) under the Apache 2 license. You can build the image and then push it to your CSC project. You can find more information on how to push images [here](https://docs.csc.fi/cloud/rahti/images/Using_Rahti_integrated_registry/)
 
-## TL;DR
-
-```sh
-helm upgrade --install elastic-kibana .
-```
-
 ## Explanations
 
-This Helm Chart helps you to deploy Elasticsearch and Kibana on CSC Rahti (Openshift 4).  
-If you want to use it with different values, you can edit `values.yaml` file and then run:  
-```sh
-helm upgrade --install elastic-kibana . -f {custom_values.yaml}
-```
+This Helm Chart helps you to deploy Elasticsearch and Kibana on CSC Rahti or Lumi-K (Openshift 4).
 
 Kibana is automatically bundled in the Elasticsearch and deployed Helm Chart with the parameter `elasticsearch.global.kibanaEnabled=true`
 
-We created a default `values.yaml` file that is compatible with our platform Rahti. This Helm Chart is using the official Helm Chart provided by bitnami.
+We created a default `values.yaml` file that is compatible with our platforms Rahti/Lumi-K. This Helm Chart is using the official Helm Chart provided by bitnami.
+
 Take a look:
 
 - [Elasticsearch](https://github.com/bitnami/charts/tree/main/bitnami/elasticsearch)
@@ -72,6 +63,14 @@ elasticsearch:
 **BE CAREFUL** in `elasticsearch.kibana.elasticsearch.security.tls` there is a parameter named `existingSecret` set to `RELEASENAME-elasticsearch-coordinating-crt`. **YOU MUST** change "RELEASENAME" by the name of the chart you will deploy.
 
 For example, if you run the command `helm install kibana .`, "RELEASENAME" must be replaced by "kibana", so `kibana-elasticsearch-coordinating-crt`. On the other hand, if the release name happens to be "elasticsearch", "RELEASENAME" must be deleted, so, `elasticsearch-coordinating-crt`.
+
+You can set an hostname in `.Values.kibana.route.host` like `my-kibana.rahtiapp.fi` or `my-kibana.apps.lumi-k.eu.fi`. If not set, it will be generated automatically
+
+Once set, run:
+
+```sh
+helm upgrade --install elastic-kibana . -f values.yaml
+```
 
 ## Cleanup
 

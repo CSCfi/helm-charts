@@ -19,7 +19,7 @@ imagePullSecrets: []
 
 ## Host for the application
 ## set it to a domain pointing to your loadbalancer
-host: rahtiapp.fi
+host: ""
 
 replicaCount: 1
 minAvailable: 1

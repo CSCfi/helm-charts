@@ -1,4 +1,4 @@
-# JupyterHub Helm on Rahti
+# JupyterHub Helm Chart
 
 > [!IMPORTANT]  
 > Starting on 29 September 2025, Bitnami will be changing its policy regarding its catalog. Read more [here](https://github.com/bitnami/containers/issues/83267)  
@@ -8,20 +8,13 @@
 > - Some of our Helm Charts used `Bitnami` images. Our Helm Charts are now intended for testing/development purposes because they use `bitnamilegacy` and/or `bitnamisecure` docker repositories.  
 > - However, the Bitnami project continues to make its source code available at [bitnami/containers](https://github.com/bitnami/containers) under the Apache 2 license. You can build the image and then push it to your CSC project. You can find more information on how to push images [here](https://docs.csc.fi/cloud/rahti/images/Using_Rahti_integrated_registry/)
 
-## TL;DR
-```sh
-helm upgrade --install jupyterhub .
-```
-
 ## Explanations
-This Helm Chart helps you to deploy JupyterHub on CSC Rahti (Openshift 4).  
-If you want to use it with different values, you can edit `values.yaml` file and then run:  
-```sh
-helm upgrade --install jupyterhub . -f {custom_values.yaml}
-```
+
+This Helm Chart helps you to deploy JupyterHub on CSC Rahti/Lumi-K (Openshift 4).
 
 ## Parameters
-We created a default `values.yaml` file that is compatible with our platform Rahti. This Helm Chart is using the bitnami Helm Charts. Have a look:
+
+We created a default `values.yaml` file that is compatible with our platform Rahti/Lumi-K. This Helm Chart is using the bitnami Helm Charts. Have a look:
 - [bitnami/jupyterhub](https://github.com/bitnami/charts/blob/main/bitnami/jupyterhub/)
 
 By default, you need to set up a PostgreSQL database on [Pukki](https://pukki.dbaas.csc.fi) and then edit the values in `values.yaml`:
@@ -62,7 +55,7 @@ jupyterhub:
       postgresql: 5432
 ```
 
-You need to provide your own image if you want to use `postgresql` on Rahti. Since the Bitnami policy change, they provide images but with old tags. For example [postgresql](https://hub.docker.com/r/bitnamilegacy/postgresql).
+You need to provide your own image if you want to use `postgresql` on Rahti or Lumi-K. Since the Bitnami policy change, they provide images but with old tags. For example [postgresql](https://hub.docker.com/r/bitnamilegacy/postgresql).
 
 We don't recommend this for a production environment. Pukki has database backups and is more robust. More information [here](https://docs.csc.fi/cloud/dbaas/)
 
@@ -71,7 +64,7 @@ Your hostname can be set by editing the values `route.host`. If omitted, the hos
 ```yaml
 route:
   enabled: true
-  host: my-jupyterhub.rahtiapp.fi # <-- Edit this value
+  host: "" # <-- Edit this value. For example, my-jupyterhub.rahtiapp.fi or my-jupyterhub.apps.lumi-k.eu
 ```
 
 Same with `jupyterhub.proxy.hostname` if you decide to enable the Ingress.
@@ -101,9 +94,16 @@ You can implement different `authenticator_class`. Take a look:
 - [Configuring authenticator classes](https://z2jh.jupyter.org/en/stable/administrator/authentication.html#configuring-authenticator-classes)
 - [OAuthenticators API reference](https://oauthenticator.readthedocs.io/en/latest/reference/api/index.html)
 
+Once set, run:
+
+```sh
+helm upgrade --install jupyterhub . -f values.yaml
+```
+
 Follow the instructions from the NOTES.txt once the application is deployed.
 
 ## Cleanup
+
 To delete all the resources, simply uninstall the Helm Chart:
 
 ```sh

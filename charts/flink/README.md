@@ -1,4 +1,4 @@
-# HedgeDoc Helm Chart
+# Flink Helm Chart
 
 > [!IMPORTANT]  
 > Starting on 29 September 2025, Bitnami will be changing its policy regarding its catalog. Read more [here](https://github.com/bitnami/containers/issues/83267)  
@@ -8,28 +8,28 @@
 > - Some of our Helm Charts used `Bitnami` images. Our Helm Charts are now intended for testing/development purposes because they use `bitnamilegacy` and/or `bitnamisecure` docker repositories.  
 > - However, the Bitnami project continues to make its source code available at [bitnami/containers](https://github.com/bitnami/containers) under the Apache 2 license. You can build the image and then push it to your CSC project. You can find more information on how to push images [here](https://docs.csc.fi/cloud/rahti/images/Using_Rahti_integrated_registry/)
 
-## TL;DR
-```sh
-helm upgrade --install flink .
-```
-
 ## Getting started
+
 [Helm](helm.sh) and `oc` CLI must be installed on your local machine.
 
 ## Introduction
-This Helm Chart helps you to deploy Flink on CSC Rahti (Openshift 4).
+
+This Helm Chart helps you to deploy Flink on CSC Rahti or Lumi-K (Openshift 4).
 
 It is highly recommended to use the Helm CLI instead of the WebUI of Rahti. If so, you can clone the GitHub repository from [here](https://github.com/CSCfi/helm-charts).  
 Helm CLI allows you to download the necessary dependencies in order to run the chart.
 
-If you want to use it with different values, you can edit `values.yaml` file and then run:  
+Once set, run:
+
 ```sh
-helm upgrade --install flink . -f {custom_values.yaml}
+helm upgrade --install flink . -f values.yaml
 ```
 
 
 ## Cleanup
+
 To delete all the resources, simply uninstall the Helm Chart:
+
 ```sh
 helm uninstall flink
 ```

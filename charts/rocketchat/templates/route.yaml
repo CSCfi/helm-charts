@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/name: {{ include "rocketchat.name" . }}
     helm.sh/chart: {{ include "rocketchat.chart" . }}
 spec:
-  host: {{ .Values.route.host }}.{{ .Values.host }}
+  host: {{ .Values.route.host }}.{{ required "A value is required for host" .Values.host }}
   to:
     kind: Service
     name: {{ template "rocketchat.fullname" . }}

@@ -8,29 +8,38 @@
 > - Some of our Helm Charts used `Bitnami` images. Our Helm Charts are now intended for testing/development purposes because they use `bitnamilegacy` and/or `bitnamisecure` docker repositories.  
 > - However, the Bitnami project continues to make its source code available at [bitnami/containers](https://github.com/bitnami/containers) under the Apache 2 license. You can build the image and then push it to your CSC project. You can find more information on how to push images [here](https://docs.csc.fi/cloud/rahti/images/Using_Rahti_integrated_registry/)
 
-## TL;DR
-```sh
-helm upgrade --install matomo .
-```
-
 ## Explanations
-This Helm Chart helps you to deploy Matomo on CSC Rahti (Openshift 4).  
-If you want to use it with different values, you can edit `values.yaml` file and then run:  
-```sh
-helm upgrade --install matomo . -f {custom_values.yaml}
-```
+
+This Helm Chart helps you to deploy Matomo on CSC Rahti or Lumi-K (Openshift 4).
 
 ## Parameters
+
 We created a default `values.yaml` file that is compatible with our platform Rahti. This Helm Chart is using the bitnami Helm Charts. Take a look:
 - [bitnami/mariadb](https://github.com/bitnami/charts/tree/main/bitnami/mariadb)
 - [bitnami/matomo](https://github.com/bitnami/charts/tree/main/bitnami/matomo)
 
 By default, it will deploy a MariaDB database alongside Matomo. The credentials are generated automatically.
 
+Your hostname can be set by editing the values `route.host`. If omitted, the hostname will be generated randomly
+
+```yaml
+route:
+  enabled: true
+  host: "" # <-- Edit this value. For example, my-matomo.rahtiapp.fi or my-matomo.apps.lumi-k.eu
+```
+
+Once set, run:
+
+```sh
+helm upgrade --install matomo . -f values.yaml
+```
+
 Follow the instructions from the NOTES.txt to retrieve the information, once the application is deployed.
 
 ## Cleanup
+
 To delete all the resources, simply uninstall the Helm Chart:
+
 ```sh
 helm uninstall matomo
 ```

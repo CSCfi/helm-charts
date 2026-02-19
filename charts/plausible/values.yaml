@@ -1,11 +1,11 @@
 plausible:
   # The hosting url of the server
   baseURL: ""
-  
+
   disableRegistration: true
-  
+
   logFailedLoginAttempts: true
-  
+
   ### The URL to the Postgres Database Connection String see -> https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING
   ### Format: postgres://<username>:<password>@<hostname_or_public_IP>:<port>/<database>
   databaseURL: ""
@@ -13,7 +13,7 @@ plausible:
   ### The URL Connection String to clickhouse DB see -> https://clickhouse.tech/docs/en/interfaces/http/
   ### Format: http://<username>:<password>@plausible-clickhouse.<your_csc_project_name>.svc.cluster.local:8123/plausible_events_db
   clickhouseDatabaseURL: ""
-  
+
   ingress:
     enabled: true
     hosts:
@@ -26,7 +26,7 @@ plausible:
   plausibleInitContainers:
     enabled: true
     curl:
-      enabled: false  # use curl method to check if clickhouse is ready. (When port 9000 is not accessible)
+      enabled: false # use curl method to check if clickhouse is ready. (When port 9000 is not accessible)
       image:
         repository: curlimages/curl
         tag: 8.13.0
@@ -46,7 +46,6 @@ plausible:
     limits:
       memory: 512Mi
       cpu: 200m
-
 
   ### PostgreSQL configuration
   ### Disable by default. Better to use Pukki database
@@ -70,7 +69,6 @@ plausible:
       password: ""
       database: plausible_db
 
-
   ### ClickHouse configuration
   clickhouse:
     enabled: true
@@ -84,41 +82,40 @@ plausible:
     image:
       repository: bitnamilegacy/clickhouse
       tag: 25.7.2-debian-12-r0
-    
+
     auth:
       username: clickhouse
       password: ""
       database: plausible_events_db
-    
+
     serviceAccount:
       create: true
 
     initdbScripts:
       db-init.sql: |
         CREATE DATABASE IF NOT EXISTS plausible_events_db
-    
+
     initContainers: []
     # https://github.com/plausible/analytics/discussions/1603 clickhouse cluster is not supported yet.
-    
+
     shards: 1
-    
+
     replicaCount: 1
-    
+
     zookeeper:
       enabled: false
-    
+
     keeper:
       enabled: false
 
     persistence:
       enabled: true
       size: 10Gi
-    
+
     resources:
       requests:
-        memory: 1Gi  
-        cpu: 500m  
+        memory: 1Gi
+        cpu: 500m
       limits:
-        memory: 2Gi  
-        cpu: 1000m  
-    
+        memory: 2Gi
+        cpu: 1000m

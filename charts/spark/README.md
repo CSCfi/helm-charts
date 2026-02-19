@@ -8,20 +8,11 @@
 > - Some of our Helm Charts used `Bitnami` images. Our Helm Charts are now intended for testing/development purposes because they use `bitnamilegacy` and/or `bitnamisecure` docker repositories.  
 > - However, the Bitnami project continues to make its source code available at [bitnami/containers](https://github.com/bitnami/containers) under the Apache 2 license. You can build the image and then push it to your CSC project. You can find more information on how to push images [here](https://docs.csc.fi/cloud/rahti/images/Using_Rahti_integrated_registry/)
 
-## TL;DR
-```sh
-helm upgrade --install spark .
-```
-
 ## Explanations
-This Helm Chart helps you to deploy Spark on CSC Rahti (Openshift 4).  
-If you want to use it with different values, you can edit `values.yaml` file and then run:  
-```sh
-helm upgrade --install spark . -f {custom_values.yaml}
-```
 
-## Parameters
-We created a default `values.yaml` file that is compatible with our platform Rahti. This Helm Chart is using the bitnami Helm Charts. Take a look:
+This Helm Chart helps you to deploy Spark on CSC Rahti or Lumi-K (Openshift 4).
+
+We created a default `values.yaml` file that is compatible with our platforms Rahti and Lumi-K. This Helm Chart is using the bitnami Helm Charts. Take a look:
 - [bitnami/spark](https://github.com/bitnami/charts/blob/main/bitnami/spark/)
 
 By default, it will use an Ingress instead of the Route Openshift API. Don't forget to set up your host:
@@ -30,7 +21,7 @@ By default, it will use an Ingress instead of the Route Openshift API. Don't for
 spark:
   ingress:
     enabled: true
-    hostname: myspark.rahtiapp.fi
+    hostname: myspark.rahtiapp.fi # or myspark.apps.lumi-k.eu
 ```
 
 You can use the Spark Master as [reverse proxy](https://github.com/bitnami/charts/blob/main/bitnami/spark/README.md#configuring-spark-master-as-reverse-proxy).
@@ -43,19 +34,26 @@ spark:
   master:
     configOptions:
       -Dspark.ui.reverseProxy=true
-      -Dspark.ui.reverseProxyUrl=https://myspark.rahtiapp.fi
+      -Dspark.ui.reverseProxyUrl=https://myspark.[rahtiapp.fi,apps.lumi-k.eu]
   worker:
     configOptions:
       -Dspark.ui.reverseProxy=true
-      -Dspark.ui.reverseProxyUrl=https://myspark.rahtiapp.fi
+      -Dspark.ui.reverseProxyUrl=https://myspark.[rahtiapp.fi,apps.lumi-k.eu]
   ingress:
     enabled: true
-    hostname: myspark.rahtiapp.fi
+    hostname: myspark.[rahtiapp.fi,apps.lumi-k.eu]
+```
+
+Once set, run:
+
+```sh
+helm upgrade --install spark . -f values.yaml
 ```
 
 Follow the instructions from the NOTES.txt once the application is deployed.
 
 ## Cleanup
+
 To delete all the resources, simply uninstall the Helm Chart:
 
 ```sh

@@ -88,7 +88,7 @@ spec:
         {{- end }}
         {{- if .Values.host }}
         - name: ROOT_URL
-          value: https://{{ .Values.route.host}}.{{ .Values.host }}
+          value: https://{{ .Values.route.host}}.{{ required "A value is required for host" .Values.host }}
         {{- end }}
         {{- if .Values.smtp.enabled }}
         {{- if not .Values.smtp.existingSecret }}

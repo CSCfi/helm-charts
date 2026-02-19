@@ -9,7 +9,7 @@ dependencies:
   - name: jupyterhub
     repository: oci://registry-1.docker.io/bitnamicharts
     version: 10.x.x
-version: 2.5.3
+version: 2.5.4
 description: Multi-user Jupyter installation
   Link to the repo https://github.com/CSCfi/helm-charts
 icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg

@@ -8,24 +8,31 @@
 > - Some of our Helm Charts used `Bitnami` images. Our Helm Charts are now intended for testing/development purposes because they use `bitnamilegacy` and/or `bitnamisecure` docker repositories.  
 > - However, the Bitnami project continues to make its source code available at [bitnami/containers](https://github.com/bitnami/containers) under the Apache 2 license. You can build the image and then push it to your CSC project. You can find more information on how to push images [here](https://docs.csc.fi/cloud/rahti/images/Using_Rahti_integrated_registry/)
 
-## TL;DR
-```sh
-helm upgrade --install hedgedoc .
-```
 ## Getting started
+
 [Helm](helm.sh) and `oc` CLI must be installed on your local machine.
 
 ## Introduction
-This Helm Chart helps you to deploy HedgeDoc on CSC Rahti (Openshift 4).
 
-It is highly recommended to use the Helm CLI instead of the WebUI of Rahti2. If so, you can clone the GitHub repository from [here](https://github.com/CSCfi/helm-charts).  
+This Helm Chart helps you to deploy HedgeDoc on CSC Rahti or Lumi-K (Openshift 4).
+
+It is highly recommended to use the Helm CLI instead of the WebUI of Rahti/Lumi-K. If so, you can clone the GitHub repository from [here](https://github.com/CSCfi/helm-charts).  
 Helm CLI allows you:
-- to download the necessary dependencies in order to run the chart, if you decide to run PostgreSQL in Rahti2.
+- to download the necessary dependencies in order to run the chart, if you decide to run PostgreSQL in Rahti/Lumi-K.
 - to set the necessary values (see command below), if you decide to run a PostgreSQL instance externally.
 
-If you want to use it with different values, you can edit `values.yaml` file and then run:  
+The values `.Values.hedgedoc.domain` is mandatory. Set `rahtiapp.fi` or `apps.lumi-k.eu`
+
+```yaml
+hedgedoc:
+  appname: my-hedgedoc
+  domain: "" # <-- Edit this value. For example, rahtiapp.fi or apps.lumi-k.eu
+```
+
+Once set, run:
+
 ```sh
-helm upgrade --install hedgedoc . -f {custom_values.yaml}
+helm upgrade --install hedgedoc . -f values.yaml
 ```
 
 By default, this Helm Chart won't deploy a postgreSQL database along Hedgedoc. If you want to connect Hedgedoc to an existing external database, you have to enable the parameters
@@ -45,8 +52,8 @@ By default, this Helm Chart won't deploy a postgreSQL database along Hedgedoc. I
 | Name                                   | Description                                             | Value                                      |
 | -------------------------------------- | ------------------------------------------------------- | ------------------------------------------ |
 | `hedgedoc.appname`                     | Name of your app. Used for the creation of the `route`  | `my-hedgedoc`                              |
-| `hedgedoc.domain`                      | Name of your domain where the Helm is deployed          | `rahtiapp.fi`                              |
-| `hedgedoc.image`                       | Name of the `hedgedoc` image                            | `quay.io/hedgedoc/hedgedoc:1.9.4`          |
+| `hedgedoc.domain`                      | Name of your domain where the Helm is deployed          | ""                                         |
+| `hedgedoc.image`                       | Name of the `hedgedoc` image                            | `quay.io/hedgedoc/hedgedoc:1.10.0          |
 | `hedgedoc.podSecurityContext`          | Set SecurityContext for the pod                         | `{}`                                       |
 | `hedgedoc.containerSecurityContext`    | Set SecurityContext for the container                   | `allowPrivilegeEscalation: false`<br>`runAsUser:`<br>`runAsGroup:`<br>`capabilities:`<br>&nbsp;&nbsp;`drop:`<br>&nbsp;&nbsp;`- ALL`<br>`runAsNonRoot: true`<br>`seccompProfile:`<br>&nbsp;&nbsp;`type: RuntimeDefault` |
 | `hedgedoc.pvc.storageSpace`            | Storage space for the PersistentVolume                  | `5Gi`                                      |
@@ -59,7 +66,7 @@ By default, this Helm Chart won't deploy a postgreSQL database along Hedgedoc. I
 
 ### PostgreSQL parameters
 
-Since we are using the `bitnami/postgresql` Helm Chart as a dependency, you can take a look to the [PostgreSQL ArtifactHub](https://artifacthub.io/packages/helm/bitnami/postgresql/15.5.0) to check the different values.
+Since we are using the `bitnami/postgresql` Helm Chart as a dependency, you can take a look at the [PostgreSQL ArtifactHub](https://artifacthub.io/packages/helm/bitnami/postgresql/15.5.0) to check the different values.
 
 This parameter is disabled by default. If you want to use a postgresql database among Hedgedoc deployment on Rahti, enable it with `postgresql.enabled`
 

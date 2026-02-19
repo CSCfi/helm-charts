@@ -5,7 +5,7 @@ metadata:
     app: matomo
   name: matomo
 spec:
-  host: matomo-{{ .Release.Namespace }}.rahtiapp.fi
+  host: {{ .Values.route.host }}
   port:
     targetPort: http
   tls:

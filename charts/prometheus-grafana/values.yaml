@@ -3,9 +3,11 @@
 route:
   grafana:
     enabled: true
+    host: ""
 
   prometheus:
     enabled: false
+    host: ""
 
   insecureEdgeTerminationPolicy: Redirect
 

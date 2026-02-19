@@ -3,7 +3,7 @@
 openshift:
   enabled: true
 
-# If openshift.enabled    
+# If openshift.enabled
 route:
   insecureEdgeTerminationPolicy: Redirect
   termination: edge
@@ -11,7 +11,7 @@ route:
 # Parameters related to the deployment of HedgeDoc
 hedgedoc:
   appname: my-hedgedoc
-  domain: 2.rahtiapp.fi
+  domain: ""
   image: quay.io/hedgedoc/hedgedoc:1.10.0
   podSecurityContext: {}
   containerSecurityContext:
@@ -61,7 +61,7 @@ postgresql:
 
   tls:
     enabled: false
-  
+
   # Use to remove the SCC and use the OpenShift SCC
   compatibility:
     openshift:

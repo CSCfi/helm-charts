@@ -1,4 +1,4 @@
-# MLflow Helm Rahti
+# MLflow Helm Chart
 
 > [!IMPORTANT]  
 > Starting on 29 September 2025, Bitnami will be changing its policy regarding its catalog. Read more [here](https://github.com/bitnami/containers/issues/83267)  
@@ -10,9 +10,11 @@
 
 
 ## Getting started
+
 [Helm](helm.sh), `oc` CLI and [openstack CLI](https://docs.csc.fi/cloud/pouta/install-client/) must be installed on your local machine.
 
 ## Introduction
+
 This Helm chart deploys MLflow on Rahti.
 
 It is highly recommended to use the Helm CLI instead of the WebUI of Rahti. If so, you can clone the GitHub repository from [here](https://github.com/CSCfi/helm-charts).  

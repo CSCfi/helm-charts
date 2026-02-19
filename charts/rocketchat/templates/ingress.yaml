@@ -32,7 +32,7 @@ spec:
   rules:
   - 
   {{- if .Values.host }}
-    host: {{ .Values.host }}
+    host: {{ required "A value is required for host" .Values.host }}
   {{- end }}
     http:
       paths:

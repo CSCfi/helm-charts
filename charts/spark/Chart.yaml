@@ -13,7 +13,7 @@ dependencies:
   version: 10.x.x
 description: Apache Spark Helm Chart for Rahti platform
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 2.5.0
+version: 2.5.1
 sources:
 - https://github.com/CSCfi/helm-charts
 icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/spark/img/spark-stack-220x234.png

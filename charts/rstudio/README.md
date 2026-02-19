@@ -1,12 +1,31 @@
 # Rstudio Helm Chart
-## TL;DR
-```sh
-helm upgrade --install rstudio .
-```
 
 ## Explanations
-This Helm Chart helps you to deploy Rstudio with Shiny on CSC Rahti 2 (Openshift 4).  
-Rstudio is accessible through NGINX. The default user is `rstudio` and the password is generated randomly. You can set you own values by editing the `values.yaml` file and then run:  
+
+This Helm Chart helps you to deploy Rstudio with Shiny on CSC Rahti or Lumi-K (Openshift 4).
+
+Rstudio is accessible through NGINX. The default user is `rstudio` and the password is generated randomly.
+
+You must set your host for rstudio and shiny in the `values.yaml` file:
+
+```yaml
+rstudio:
+[...]
+  route:
+    [...]
+    host:  # For example, my-rstudio.rahtiapp.fi or my-rstudio.apps.lumi-k.eu
+```
+
+```yaml
+shiny:
+[...]
+  route:
+    [...]
+    host:  # For example, my-shiny-app.rahtiapp.fi or my-shiny-app.apps.lumi-k.eu
+```
+
+Once set, run:
+
 ```sh
 helm upgrade --install rstudio . -f {custom_values.yaml}
 ```
@@ -48,10 +67,13 @@ helm upgrade --install rstudio . -f {custom_values.yaml}
 | `shiny.route.host`                           | If `openshift.enabled`, will create a route. REQUIRED VALUE   | ``                                |
 
 ## Cleanup
+
 To delete all the resources, simply uninstall the Helm Chart:
+
 ```sh
 helm uninstall rstudio
 ```
 
 ## Links
+
 [Rstudio server configuration](https://docs.posit.co/ide/server-pro/rstudio-server-configuration.html)

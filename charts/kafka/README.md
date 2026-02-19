@@ -1,20 +1,10 @@
 # Apache Kafka
 
-## TL;DR
-
-```sh
-helm upgrade --install kafka .
-```
-
 ## Explanations
 
 > [Helm](helm.sh) and `oc` (or `kubectl`) CLI must be installed on your local machine.
 
-This Helm Chart helps you to deploy Kafka on CSC Rahti (Openshift 4). Default upstream [values.yaml](https://github.com/bitnami/charts/blob/main/bitnami/kafka/values.yaml) is being used. If you want to use it with different values, you can download the [values.yaml](https://github.com/CSCfi/helm-charts/blob/main/charts/elastic-kibana/values.yaml) file and then run:
-
-  ```sh
-  helm upgrade --install kafka . -f {custom_values.yaml}
-  ```
+This Helm Chart helps you to deploy Kafka on CSC Rahti or Lumi-K (Openshift 4). Default upstream [values.yaml](https://github.com/bitnami/charts/blob/main/bitnami/kafka/values.yaml) is being used.
 
 You can checkout the upstream [README.md](https://github.com/bitnami/charts/blob/main/bitnami/kafka/README.md) file for reference on configuration options.
 
@@ -71,9 +61,17 @@ You can checkout the upstream [README.md](https://github.com/bitnami/charts/blob
 
 Any text message that you send in the "producer" will appear in the "consumer". You can keep both process running at the same time and see the messages flowing.
 
-## Cleanup
-To delete all the resources, simply uninstall the Helm Chart:
+Once set, run:
+
 ```sh
-helm uninstall hedgedoc
+helm upgrade --install kafka . -f {custom_values.yaml}
+```
+
+## Cleanup
+
+To delete all the resources, simply uninstall the Helm Chart:
+
+```sh
+helm uninstall kafka
 ```
 
