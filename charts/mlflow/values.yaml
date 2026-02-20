@@ -128,7 +128,7 @@ mlflow:
 
   # Disabled by default because we use an external database
   postgresql:
-    enabled: true
+    enabled: false
 
     global:
       security:
@@ -161,7 +161,7 @@ mlflow:
 
   # Disabled by default because we use an external S3 provider
   minio:
-    enabled: true
+    enabled: false
 
     global:
       security:

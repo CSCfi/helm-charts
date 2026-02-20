@@ -1538,34 +1538,6 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/minio-1.2.1/minio-1.2.1.tgz
     version: 1.2.1
   mlflow:
-  - apiVersion: v2
-    created: "2026-02-19T14:21:40.535161101Z"
-    dependencies:
-    - name: mlflow
-      repository: oci://registry-1.docker.io/bitnamicharts
-      version: 5.1.x
-    description: MLflow Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
-    digest: fb366e2eb9792579ed6fc8ea513d4ffe69ac2856d17575232d03d341bbae82be
-    icon: https://raw.githubusercontent.com/mlflow/mlflow/master/assets/logo.svg
-    name: mlflow
-    type: application
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/mlflow-1.5.1/mlflow-1.5.1.tgz
-    version: 1.5.1
-  - apiVersion: v2
-    created: "2025-09-02T07:50:04.261598787Z"
-    dependencies:
-    - name: mlflow
-      repository: oci://registry-1.docker.io/bitnamicharts
-      version: 5.1.x
-    description: MLflow Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
-    digest: cf7a4faa0fe3edea5c2b381868244568766ddadff609e1b88318bfcc2d98ebe4
-    icon: https://raw.githubusercontent.com/mlflow/mlflow/master/assets/logo.svg
-    name: mlflow
-    type: application
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/mlflow-1.5.0/mlflow-1.5.0.tgz
-    version: 1.5.0
   openldap:
   - apiVersion: v1
     appVersion: dev
