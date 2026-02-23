@@ -37,6 +37,12 @@ mlflow:
     auth:
       enabled: false
 
+    extraEnvVars:
+      - name: AWS_REQUEST_CHECKSUM_CALCULATION
+        value: when_required
+      - name: AWS_REQUEST_CHECKSUM_VALIDATION
+        value: when_required
+
     sidecars:
       - name: nginx-sidecar
         image: image-registry.openshift-image-registry.svc:5000/{{ tpl .Release.Namespace . }}/nginx-sidecar:latest
