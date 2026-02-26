@@ -1539,6 +1539,20 @@ entries:
     version: 1.2.1
   mlflow:
   - apiVersion: v2
+    created: "2026-02-26T07:20:14.558432298Z"
+    dependencies:
+    - name: mlflow
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 5.1.x
+    description: MLflow Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: e4ed4d208611d2b575af887124145233b57ea4a38950b65b5987d49a09990817
+    icon: https://raw.githubusercontent.com/mlflow/mlflow/master/assets/logo.svg
+    name: mlflow
+    type: application
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/mlflow-1.5.3/mlflow-1.5.3.tgz
+    version: 1.5.3
+  - apiVersion: v2
     created: "2026-02-20T12:47:50.368471864Z"
     dependencies:
     - name: mlflow
@@ -2093,4 +2107,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-02-20T12:47:50.368577863Z"
+generated: "2026-02-26T07:20:14.558505676Z"
