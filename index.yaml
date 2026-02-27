@@ -1149,28 +1149,6 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/flink-2.0.0/flink-2.0.0.tgz
     version: 2.0.0
-  gitlab-runner:
-  - apiVersion: v2
-    appVersion: 0.69.0-beta
-    created: "2026-02-27T06:45:48.571668647Z"
-    description: GitLab Runner
-    digest: d02899a6ec0647b403fe8a2486cae0b2109f3db5a6cb520c33fe185a95636a40
-    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab-runner/img/gitlab-runner-stack-220x234.png
-    keywords:
-    - git
-    - ci
-    - deploy
-    maintainers:
-    - email: support@gitlab.com
-      name: GitLab Inc.
-    name: gitlab-runner
-    sources:
-    - https://gitlab.com/gitlab-org/charts/gitlab-runner
-    - https://gitlab.com/gitlab-org/gitlab-runner
-    - https://docs.gitlab.com/runner/
-    urls:
-    - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-0.69.0-beta/gitlab-runner-0.69.0-beta.tgz
-    version: 0.69.0-beta
   hedgedoc:
   - apiVersion: v2
     created: "2026-02-19T14:21:39.182836009Z"
