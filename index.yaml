@@ -1603,6 +1603,28 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/openldap-1.5.0-dev/openldap-1.5.0-dev.tgz
     version: 1.5.0-dev
+  - apiVersion: v2
+    appVersion: dev
+    created: "2026-02-27T06:21:48.412606126Z"
+    description: An open source implementation of the Lightweight Directory Access
+      Protocol, which is a vendor-neutral, industry standard application protocol
+      for accessing and maintaining distributed directory information services over
+      an Internet Protocol (IP) network.
+    digest: 9d8c2912e423d3bcef39a561433556fe7c6baca5c4f618a4b80e3a43974e308c
+    home: https://www.openldap.org/
+    icon: https://www.openldap.org/images/headers/LDAPworm.gif
+    keywords:
+    - docker
+    - openldap
+    maintainers:
+    - email: alvaro.gonzalez@csc.fi
+      name: Alvaro Gonzalez
+    name: openldap
+    sources:
+    - https://github.com/bitnami/containers/tree/main/bitnami/openldap
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/openldap-1.5.0-dev/openldap-1.5.0-dev.tgz
+    version: 1.5.0-dev
   plausible:
   - apiVersion: v2
     created: "2026-02-19T14:21:40.810268929Z"
@@ -2107,4 +2129,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-02-26T07:20:14.558505676Z"
+generated: "2026-02-27T06:21:48.412736588Z"
