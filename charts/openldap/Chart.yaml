@@ -1,7 +1,7 @@
 apiVersion: v2
 name: openldap
-version: 1.5.0-dev
-appVersion: dev
+version: 1.5.0
+appVersion: 1.5.0
 description: An open source implementation of the Lightweight Directory Access Protocol, which is a vendor-neutral, industry standard application protocol for accessing and maintaining distributed directory information services over an Internet Protocol (IP) network.
 keywords:
 - docker
