@@ -1,0 +1,12 @@
+apiVersion: v2
+name: mattermost
+dependencies:
+  - name: mattermost
+    version: 2.7.0
+    repository: https://helm.mattermost.com
+description: Mattermost Helm Chart for CSC container platforms
+  Link to the repo https://github.com/CSCfi/helm-charts
+version: 1.0.0
+sources:
+- https://github.com/CSCfi/helm-charts
+icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4

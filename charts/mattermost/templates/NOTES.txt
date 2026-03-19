@@ -1,0 +1,33 @@
+Mattermost has been deployed!
+
+IMPORTANT: This is a minimal deployment requiring external database and file storage.
+Make sure you have configured:
+  - External database connection (PostgreSQL with Pukki)
+  - File storage via environment variables (S3 with Allas)
+
+Get the application URL by running these commands:
+{{- if and .Values.route.enabled (not .Values.mattermost.mattermostApp.ingress.enabled) }}
+  Route is enabled. Access Mattermost at:
+    https://{{ .Values.route.host }}
+{{- end }}
+{{- if and .Values.mattermost.mattermostApp.ingress.enabled (not .Values.route.enabled) }}
+  Ingress is enabled. Access Mattermost at:
+  {{- range $host := .Values.mattermost.mattermostApp.ingress.hosts }}
+    http{{ if $.Values.mattermost.mattermostApp.ingress.tls }}s{{ end }}://{{ $host }}
+  {{- end}}
+{{- else if contains "NodePort" .Values.mattermost.mattermostApp.service.type }}
+  export NODE_PORT=$(oc get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "mattermost.fullname" . }})
+  export NODE_IP=$(oc get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+{{- else if contains "LoadBalancer" .Values.mattermost.mattermostApp.service.type }}
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+  export SERVICE_IP=$(oc get svc --namespace {{ .Release.Namespace }} {{ include "mattermost.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  echo http://$SERVICE_IP:{{ .Values.mattermost.mattermostApp.service.externalPort }}
+{{- else if and (contains "ClusterIP" .Values.mattermost.mattermostApp.service.type) (not .Values.route.enabled) }}
+  export POD_NAME=$(oc get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "mattermost.name" . }}" -o jsonpath="{.items[0].metadata.name}")
+  echo "Visit http://127.0.0.1:8065 to use your application"
+  oc port-forward $POD_NAME 8065:{{ .Values.mattermost.mattermostApp.service.externalPort }}
+{{- end }}
+
+To check the status of your deployment:
+  oc get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "mattermost.name" . }}"

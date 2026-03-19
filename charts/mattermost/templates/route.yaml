@@ -1,0 +1,20 @@
+{{- if and .Values.route.enabled (not .Values.mattermost.mattermostApp.ingress.enabled) }}
+{{- $serviceName := include "mattermost.fullname" . -}}
+{{- $servicePort := .Values.mattermost.mattermostApp.service.externalPort -}}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: mattermost-route
+spec:
+  host: {{ required "A value for 'route.host' is required." .Values.route.host | default (include "mattermost.fullname" .) }}
+  port:
+    targetPort: {{ $servicePort }}
+  tls:
+    insecureEdgeTerminationPolicy: {{ .Values.route.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.route.termination }}
+  to:
+    kind: Service
+    name: {{ $serviceName }}
+    weight: 100
+  wildcardPolicy: None
+{{- end }}
