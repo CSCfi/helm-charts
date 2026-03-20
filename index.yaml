@@ -1451,6 +1451,23 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/matomo-1.2.1/matomo-1.2.1.tgz
     version: 1.2.1
+  mattermost:
+  - apiVersion: v2
+    created: "2026-03-20T08:37:56.777432877Z"
+    dependencies:
+    - name: mattermost
+      repository: https://helm.mattermost.com
+      version: 2.7.0
+    description: Mattermost Helm Chart for CSC container platforms Link to the repo
+      https://github.com/CSCfi/helm-charts
+    digest: 72e7d326b73c030a1950d2e1ac3589046d97d77f95566ae2b3637395418940ad
+    icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/mattermost.png
+    name: mattermost
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/mattermost-1.0.0/mattermost-1.0.0.tgz
+    version: 1.0.0
   minio:
   - apiVersion: v2
     created: "2026-02-19T14:21:40.274157417Z"
@@ -2044,4 +2061,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-03-20T08:30:29.893690966Z"
+generated: "2026-03-20T08:37:56.777502718Z"
