@@ -9,4 +9,4 @@ description: Mattermost Helm Chart for CSC container platforms
 version: 1.0.0
 sources:
 - https://github.com/CSCfi/helm-charts
-icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4
+icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/mattermost.png
