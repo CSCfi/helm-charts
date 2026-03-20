@@ -1,0 +1,47 @@
+route:
+  enabled: true
+  host: ""
+  insecureEdgeTerminationPolicy: Redirect
+  termination: edge
+
+mattermost:
+  global:
+    siteUrl: "https://"
+    mattermostLicense: ""
+    
+    features:
+      database:
+        driver: "postgres"
+        existingDatabaseSecret:
+          name: mattermost-db
+          key: mattermost.dbsecret
+      
+      fileStore:
+        driver: "amazons3"
+        url: ""
+        bucket: ""
+        region: ""
+        existingSecret:
+          name: "mattermost-s3-creds"
+          accessKeyIdKey: accessKeyId
+          secretAccessKeyKey: secretAccessKey
+  
+  mattermostApp:
+    replicaCount: 2
+  
+    image:
+      repository: mattermost/mattermost-enterprise-edition
+      tag: 11.4
+      pullPolicy: IfNotPresent
+  
+    ingress:
+      enabled: false
+      hosts: []
+  
+    resources:
+      limits:
+        cpu: 1
+        memory: 1Gi
+      requests:
+        cpu: 1
+        memory: 1Gi
