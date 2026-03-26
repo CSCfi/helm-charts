@@ -6,7 +6,7 @@ dependencies:
     repository: https://helm.mattermost.com
 description: Mattermost Helm Chart for CSC container platforms
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 1.0.0
+version: 1.0.1
 sources:
 - https://github.com/CSCfi/helm-charts
 icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/mattermost.png
