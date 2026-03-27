@@ -31,7 +31,7 @@ mattermost:
   
     image:
       repository: mattermost/mattermost-enterprise-edition
-      tag: 11.4
+      tag: release-11.6
       pullPolicy: IfNotPresent
   
     ingress:
