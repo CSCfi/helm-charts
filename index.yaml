@@ -1453,6 +1453,22 @@ entries:
     version: 1.2.1
   mattermost:
   - apiVersion: v2
+    created: "2026-03-27T06:37:52.656526643Z"
+    dependencies:
+    - name: mattermost
+      repository: https://helm.mattermost.com
+      version: 2.7.0
+    description: Mattermost Helm Chart for CSC container platforms Link to the repo
+      https://github.com/CSCfi/helm-charts
+    digest: 2d86f127880b64ad0bdecd08518810882e4e17b08c17591a088d111b982a2a99
+    icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/mattermost.png
+    name: mattermost
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/mattermost-1.0.1/mattermost-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     created: "2026-03-20T08:37:56.777432877Z"
     dependencies:
     - name: mattermost
@@ -2061,4 +2077,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-03-20T08:37:56.777502718Z"
+generated: "2026-03-27T06:37:52.656676574Z"
