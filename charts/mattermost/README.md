@@ -6,7 +6,7 @@ More information about Mattermost Entry edition: https://docs.mattermost.com/pro
 
 Compare the plans: https://mattermost.com/pricing/
 
-> ![IMPORTANT]  
+> [!IMPORTANT]  
 > CSC doesn't provide the licenses
 
 # Prerequisites
