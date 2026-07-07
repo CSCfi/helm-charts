@@ -19,7 +19,7 @@ on CSC's Rahti / LUMI-K platform.
 
 - `helm` 3.x and the `oc` CLI, logged in to your OpenShift project.
 - A backend store. The default is SQLite on a PVC; point `mlflow.mlflow.backendStoreUri`
-  at your PostgreSQL instance for production.
+  at your external PostgreSQL instance for production.
 - (Optional but recommended) An S3 bucket + credentials for artifact storage.
 
 ## Deploy

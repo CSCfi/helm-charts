@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(/tmp/linux-amd64/helm template *)"
-    ]
-  }
-}
