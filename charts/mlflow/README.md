@@ -24,19 +24,34 @@ on CSC's Rahti / LUMI-K platform.
 
 ## Deploy
 
-**Without authentication:**
+**Basic Deployment:**
 
 ```sh
 helm install mlflow .
 ```
 
-**With basic authentication** (layer the overlay on top of the base):
+**Advanced Deployment:**
+
+The `values-user-example.yaml` overlay enables basic authentication, exposes MLflow
+through an ingress, and stores artifacts in S3. Before installing, copy it and fill in
+the values that are **unique or secret to your deployment**:
+
+- **Public hostname** — the same host in `mlflow.ingress.hosts[0].host`,
+  `mlflow.server.value_options.allowed_hosts`, and `cors_allowed_origins`
+  (the last one with an `http://` / `https://` scheme).
+- **Admin password** — `authentication.adminPassword`.
+- **S3 credentials & bucket** — `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`,
+  `MLFLOW_S3_ENDPOINT_URL`, `AWS_DEFAULT_REGION` (env vars), and the bucket path in
+  `mlflow.mlflow.artifactsDestination`.
+
+> Note: Never commit real credentials. Pass secrets with `--set` at install time, or keep
+> your edited copy of the file out of version control.
 
 ```sh
 helm install mlflow . -f values-user-example.yaml
 ```
 
-Upgrade and uninstall as usual:
+**Upgrade and uninstall as usual:**
 
 ```sh
 helm upgrade mlflow . -f values-user-example.yaml
