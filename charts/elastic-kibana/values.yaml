@@ -18,7 +18,7 @@ elasticsearch:
   image:
     registry: satama.csc.fi
     repository: library/elasticsearch
-    tag: 9.2.2
+    tag: 9.4.4
 
   security:
     enabled: true
@@ -108,7 +108,7 @@ elasticsearch:
     image:
       registry: satama.csc.fi
       repository: library/kibana
-      tag: 9.2.2
+      tag: 9.4.3
 
     elasticsearch:
       hosts:
