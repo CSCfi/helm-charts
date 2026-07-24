@@ -5,7 +5,7 @@ kind: Route
 metadata:
   labels:
     app: kibana
-  name: kibana
+  name: {{ .Release.Name }}
 spec:
   host: {{ .Values.route.kibana.host }}
   port:
