@@ -1,13 +1,12 @@
 # MLflow Helm Chart
 
 A thin wrapper around the community [MLflow](https://mlflow.org) chart (vendored
-under `charts/`), adding an opt-in **basic authentication** layer for deployment
-on CSC's Rahti / LUMI-K platform.
+under `charts/mlflow/`), adding an opt-in **basic authentication** layer for
+deployment on CSC's Rahti / LUMI-K platform.
 
 ## Overview
 
-- The upstream MLflow chart is vendored as a tarball in `charts/` (it is not
-  published to a Helm repo), so no `helm dependency update` is needed.
+- Checkout the [maintenance section](#maintainer-notes)
 - This parent chart adds an `authentication` toggle. When enabled, it renders
   two Secrets (`templates/auth.yaml`).
 - Two value files:
@@ -91,4 +90,29 @@ Common values (all under the `mlflow:` key, passed to the subchart):
 | `mlflow.server.value_options` | MLflow server CLI flags (`--key=value`) |
 | `mlflow.garbageCollection` | Scheduled `mlflow gc` CronJob |
 
-See the vendored chart's `values.yaml` for the full list of subchart options.
+See `charts/mlflow/values.yaml` (the vendored subchart) for the full list of
+subchart options.
+
+## Maintainer Notes
+
+To move to a newer MLflow release, replace the vendored subchart with the
+`charts/` directory from the matching upstream tag and bump the versions:
+
+```sh
+VERSION=3.15.0
+curl -sL "https://github.com/mlflow/mlflow/archive/refs/tags/v${VERSION}.tar.gz" | \
+  tar xz "mlflow-${VERSION}/charts"
+rm -rf charts/mlflow
+mv "mlflow-${VERSION}/charts" charts/mlflow && rm -rf "mlflow-${VERSION}"
+```
+
+Then update:
+
+- `version` and `appVersion` in this chart's `Chart.yaml` to `${VERSION}`.
+- `dependencies[0].version` in `Chart.yaml` if upstream changed the subchart's
+  own `version` (it must match `charts/mlflow/Chart.yaml` exactly, or
+  `helm dependency build` fails).
+- `mlflow.image.tag` in `values.yaml` to `v${VERSION}-full`.
+
+Verify with `helm dependency build .`, `helm lint .` and `helm template .`
+before opening a PR.
