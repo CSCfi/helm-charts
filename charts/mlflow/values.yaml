@@ -1,219 +1,35 @@
-rahti:
-  route:
-    enabled: true
+authentication:
+  enabled: false
 
-    tls:
-      insecureEdgeTerminationPolicy: Redirect
-      termination: edge
-
-  buildconfig:
-    auth:
-      - user: "user"
-        password: ""
-      # - user: "user2"
-      #   password: "password2"
-      # - user: "user3"
-      #   password: "password3"
-
+# --- MLflow subchart values (community chart vendored under charts/) ---
 mlflow:
-  global:
-    security:
-      allowInsecureImages: true
-  
   image:
-    repository: bitnamilegacy/mlflow
-    tag: 3.2.0-debian-12-r7
-  
-  gitImage:
-    repository: bitnamisecure/git
-    tag: latest
-  
-  tracking:
+    repository: ghcr.io/mlflow/mlflow
+    # Defaults to chart appVersion when empty
+    tag: "v3.14.0-full"
+    pullPolicy: IfNotPresent
+
+  mlflow:
+    artifactsDestination: "/mlflow/artifacts"
+    backendStoreUri: "sqlite:////mlflow/mlflow.db"
+
+  storage:
     enabled: true
 
-    # Disabled because we'll use a sidecar container as a reverse proxy authentication.
-    # See above .rahti.buildconfig.auth.user and .rahti.buildconfig.auth.password
-    # https://docs.csc.fi/cloud/rahti/tutorials/sidecar_proxy_authentication/
-    auth:
-      enabled: false
-
-    extraEnvVars:
-      - name: AWS_REQUEST_CHECKSUM_CALCULATION
-        value: when_required
-      - name: AWS_REQUEST_CHECKSUM_VALIDATION
-        value: when_required
-
-    sidecars:
-      - name: nginx-sidecar
-        image: image-registry.openshift-image-registry.svc:5000/{{ tpl .Release.Namespace . }}/nginx-sidecar:latest
-        imagePullPolicy: Always
-        ports:
-          - containerPort: 8081
-            protocol: TCP
-        resources:
-          requests:
-            cpu: 250m
-            memory: 256Mi
-          limits:
-            cpu: 250m
-            memory: 256Mi
-        volumeMounts:
-          - name: nginx-default
-            mountPath: /etc/nginx/conf.d/
-
-    extraVolumes:
-      - name: nginx-default
-        configMap:
-          name: nginx-default
-
-    resources:
-      requests:
-        cpu: 500m
-        memory: 1024Mi
-      limits:
-        cpu: 750m
-        memory: 1536Mi
-
-    enableDefaultInitContainers: false
-
-    service:
-      type: ClusterIP
-
-      ports:
-        http: 5000
-
-      extraPorts:
-        - name: 8081-tcp
-          port: 8081
-          protocol: TCP
-          targetPort: 8081
-
-    networkPolicy:
-      enabled: false
-
-    persistence:
-      enabled: true
-      mountPath: /bitnami/mlflow
-      size: 8Gi
-
-    serviceAccount:
-      create: true
-
-    metrics:
-      enabled: false
-
-  run:
+  garbageCollection:
     enabled: true
+    schedule: "0 2 * * 0"
+    olderThan: "30d"
 
-    useJobs: false
+  ingress:
+    enabled: true
+    className: openshift-default
 
-    resources:
-      requests:
-        cpu: 100m
-        memory: 256Mi
-      limits:
-        cpu: 500m
-        memory: 512Mi
+  server:
+    flag_options:
+      - enable_workspaces
+      - serve_artifacts
 
-    enableDefaultInitContainers: false
-
-    networkPolicy:
-      enabled: false
-
-    serviceAccount:
-      create: true
-
-    persistence:
-      enabled: true
-      mountPath: /bitnami/mlflow/data
-      size: 8Gi
-
-  waitContainer:
-    repository: bitnamisecure/os-shell
-    tag: latest
-
-  # Disabled by default because we use an external database
-  postgresql:
-    enabled: false
-
-    global:
-      security:
-        allowInsecureImages: true
-    
-    image:
-      repository: bitnamisecure/postgresql
-      tag: latest
-    
-    auth:
-      username: bn_mlflow
-      password: superman
-      database: bitnami_mlflow
-      existingSecret: ""
-    
-    architecture: standalone
-    
-    primary:
-      service:
-        ports:
-          postgresql: 5432
-      initdb:
-        scripts:
-          # For authentication, Mlflow requires a different database in order to work
-          create_auth_db.sh: |
-            #!/bin/bash
-            PGPASSWORD=$POSTGRES_POSTGRES_PASSWORD psql -U postgres <<< "CREATE DATABASE {{ include "mlflow.v0.database-auth.name" . }}"
-            PGPASSWORD=$POSTGRES_POSTGRES_PASSWORD psql -U postgres <<< "GRANT ALL PRIVILEGES ON DATABASE {{ include "mlflow.v0.database-auth.name" . }} to {{ .Values.auth.username }}"
-            PGPASSWORD=$POSTGRES_POSTGRES_PASSWORD psql -U postgres <<< "ALTER DATABASE {{ include "mlflow.v0.database-auth.name" . }} OWNER TO {{ .Values.auth.username }}"
-
-  # Disabled by default because we use an external S3 provider
-  minio:
-    enabled: false
-
-    global:
-      security:
-        allowInsecureImages: true
-    
-    image:
-      repository: bitnamilegacy/minio
-      tag: 2025.7.23-debian-12-r2
-
-    auth:
-      rootUser: admin
-      rootPassword: ""
-      existingSecret: ""
-    
-    defaultBuckets: "mlflow"
-
-    provisioning:
-      enabled: true
-      extraCommands: ["mc anonymous set download provisioning/mlflow"]
-
-    tls:
-      enabled: false
-
-    console:
-      enabled: false
-
-  externalDatabase:
-    dialectDriver: postgresql
-    host: ""
-    port: 5432
-    user: ""
-    database: ""
-    authDatabase: ""
-    password: ""
-    existingSecret: ""
-    existingSecretPasswordKey: "db-password"
-
-  externalS3:
-    host: a3s.fi
-    port: 443
-    useCredentialsInSecret: true
-    accessKeyID: ""
-    accessKeySecret: ""
-    existingSecret: ""
-    existingSecretAccessKeyIDKey: "root-user"
-    existingSecretKeySecretKey: "root-password"
-    protocol: "https"
-    bucket: ""
-    serveArtifacts: true
+  podSecurityContext:
+    runAsUser: null
+    fsGroup: null

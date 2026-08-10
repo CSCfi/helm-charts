@@ -1,3 +1,4 @@
 .DS_Store
 Chart.lock
 *.tgz
+!charts/mlflow/charts/mlflow-3.14.0.tgz

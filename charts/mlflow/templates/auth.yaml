@@ -1,0 +1,46 @@
+{{- if .Values.authentication.enabled }}
+# basic_auth.ini consumed by the MLflow server via MLFLOW_AUTH_CONFIG_PATH.
+# The subchart mounts this Secret at /etc/mlflow/auth (see values-auth.yaml),
+# so the key name must stay basic_auth.ini.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mlflow-auth-config
+  labels:
+    app.kubernetes.io/name: mlflow
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+type: Opaque
+stringData:
+  basic_auth.ini: |
+    [mlflow]
+    default_permission = READ
+    database_uri = {{ .Values.authentication.database_uri | default .Values.mlflow.mlflow.backendStoreUri }}
+    admin_username = admin
+    admin_password = {{ .Values.authentication.adminPassword }}
+    authorization_function = mlflow.server.auth:authenticate_request_basic_auth
+
+---
+# Flask session-signing key (MLFLOW_FLASK_SERVER_SECRET_KEY).
+# Preserve any existing key across upgrades so sessions are not invalidated;
+# fall back to the provided value, then to a generated one on first install.
+{{- $existing := lookup "v1" "Secret" .Release.Namespace "mlflow-auth-secret" }}
+{{- $key := .Values.authentication.flaskSecretKey }}
+{{- if and (not $key) $existing $existing.data (index $existing.data "secret-key") }}
+{{- $key = index $existing.data "secret-key" | b64dec }}
+{{- end }}
+{{- if not $key }}
+{{- $key = randAlphaNum 32 }}
+{{- end }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mlflow-auth-secret
+  labels:
+    app.kubernetes.io/name: mlflow
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+type: Opaque
+stringData:
+  secret-key: {{ $key | quote }}
+{{- end }}

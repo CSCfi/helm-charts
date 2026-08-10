@@ -1,100 +1,94 @@
 # MLflow Helm Chart
 
-> [!IMPORTANT]  
-> Starting on 29 September 2025, Bitnami will be changing its policy regarding its catalog. Read more [here](https://github.com/bitnami/containers/issues/83267)  
-> - Current images will be moved to the [Bitnami Legacy Repository](https://hub.docker.com/u/bitnamilegacy) and will no longer be updated.  
-> - Some images will still be available in the [Bitnami Secure Images](https://hub.docker.com/u/bitnamisecure) but only with the `latest` tag.  
-> - To continue receiving images with the latest updates and access to different tags, you need to subscribe to the full version of Bitnami Secure Images: https://www.arrow.com/globalecs/uk/products/bitnami-secure-images/  
-> - Some of our Helm Charts used `Bitnami` images. Our Helm Charts are now intended for testing/development purposes because they use `bitnamilegacy` and/or `bitnamisecure` docker repositories.  
-> - However, the Bitnami project continues to make its source code available at [bitnami/containers](https://github.com/bitnami/containers) under the Apache 2 license. You can build the image and then push it to your CSC project. You can find more information on how to push images [here](https://docs.csc.fi/cloud/rahti/images/Using_Rahti_integrated_registry/)
+A thin wrapper around the community [MLflow](https://mlflow.org) chart (vendored
+under `charts/`), adding an opt-in **basic authentication** layer for deployment
+on CSC's Rahti / LUMI-K platform.
 
+## Overview
 
-## Getting started
+- The upstream MLflow chart is vendored as a tarball in `charts/` (it is not
+  published to a Helm repo), so no `helm dependency update` is needed.
+- This parent chart adds an `authentication` toggle. When enabled, it renders
+  two Secrets (`templates/auth.yaml`).
+- Two value files:
+  - `values.yaml` — base profile, **no authentication** (the default).
+  - `values-user-example.yaml` — example overlay that enables auth, S3 artifact storage
+    and the public hostname.
 
-[Helm](helm.sh), `oc` CLI and [openstack CLI](https://docs.csc.fi/cloud/pouta/install-client/) must be installed on your local machine.
+## Prerequisites
 
-## Introduction
+- `helm` 3.x and the `oc` CLI, logged in to your OpenShift project.
+- A backend store. The default is SQLite on a PVC; point `mlflow.mlflow.backendStoreUri`
+  at your external PostgreSQL instance for production.
+- (Optional but recommended) An S3 bucket + credentials for artifact storage.
 
-This Helm chart deploys MLflow on Rahti.
+## Deploy
 
-It is highly recommended to use the Helm CLI instead of the WebUI of Rahti. If so, you can clone the GitHub repository from [here](https://github.com/CSCfi/helm-charts).  
-Helm CLI allows you:
-- to download the necessary dependencies in order to run the chart, if you decide to run PostgreSQL and MinIO in Rahti.
-- to set the necessary values (see command below), if you decide to run a PostgreSQL instance externally and to use an external S3 service.
+**Basic Deployment:**
 
-## Test and Deploy
-Different steps are necessary to deploy this Helm Chart to Rahti:  
-
-1. By default, this Helm Chart will use the CSC S3 service Allas. Be sure to create Allas credentials.  
-   You can achieve this by [sourcing](https://docs.csc.fi/cloud/pouta/install-client/#configure-your-terminal-environment-for-openstack) your cPouta project and then type this command:  
-     
-     ```sh
-     openstack ec2 credentials create
-     ```
-   
-   Create also an Allas bucket for this deployment. (For example "mlflow")  
-
-   You can also use another external S3 service instead of Allas.
-
-2. By default, it also uses our CSC database service named [Pukki](https://pukki.dbaas.csc.fi). Be sure to have a database created on this service.  
-During the process of creation of database, it will ask you the `Allowed CIDRs`. Rahti has a common egress IP which is `86.50.229.150`. If you want a dedicated egress IP, you can send a ticket to [servicedesk@csc.fi](mailto:servicedesk@csc.fi). More information [here](https://docs.csc.fi/cloud/rahti/networking/#egress-ips).
-
-   A database named `mlflow_auth` must be created when launching your instance. This database is needed for the auth module (only if `tracking.auth.enabled=true` which is the case by default).
-
-3. Deploy MLflow:
-
-     ```sh
-     helm install mlflow . --set mlflow.externalS3.accessKeyID={ACCESS_KEY} \
-     --set mlflow.externalS3.accessKeySecret={SECRET_KEY} \
-     --set mlflow.externalS3.bucket={BUCKET_NAME} \
-     --set mlflow.externalDatabase.host={DB_PUBLIC_IP} \
-     --set mlflow.externalDatabase.user={DB_USER} \
-     --set mlflow.externalDatabase.password={DB_PASSWORD} \
-     --set mlflow.externalDatabase.database={DB_NAME}
-     ```
-
-   _Replace {ACCESS_KEY} by the access key previously created_  
-   _Replace {SECRET_KEY} by the secret key previously created_  
-   _Replace {BUCKET_NAME} by the name of the bucket previously created_  
-   _Replace {DB_PUBLIC_IP} by the public IP of your databse created on Pukki_  
-   _Replace {DB_USER} by the user created on Pukki_  
-   _Replace {DB_NAME} by the database created on Pukki_ 
-
-   Alternatively, you can edit the `values.yaml`:
-
-     ```yaml
-     [...]
-     externalDatabase:
-       host: ''
-       user: ''
-       database: ''
-       password: ''
-     [...]
-     externalS3:
-       accessKeyID: ''
-       accessKeySecret: ''
-       bucket: ''
-     ```
-
-After the deployment, the Web URL will be displayed in the NOTES 
-
-You can edit the `values.yaml`. Instead of deleting your deployment and recreating a new one, Helm lets you `upgrade` your release. Use this command:  
 ```sh
-helm upgrade mlflow . --set externalS3.accessKeyID={ACCESS_KEY} --set externalS3.accessKeySecret={SECRET_KEY} --set externalS3.bucket={BUCKET_NAME}
+helm install mlflow .
 ```
 
-## NOTES
-You can use this template by deploying PostgreSQL and MINIO in Rahti. You can enable these parameters by editing the `values.yaml`:
-```yaml
-[...]
-postgresql:
-  enabled: true
-[...]
-minio:
-  enabled: true
+**Advanced Deployment:**
+
+The `values-user-example.yaml` overlay enables basic authentication, exposes MLflow
+through an ingress, and stores artifacts in S3. Before installing, copy it and fill in
+the values that are **unique or secret to your deployment**:
+
+- **Public hostname** — the same host in `mlflow.ingress.hosts[0].host`,
+  `mlflow.server.value_options.allowed_hosts`, and `cors_allowed_origins`
+  (the last one with an `http://` / `https://` scheme).
+- **Admin password** — `authentication.adminPassword`.
+- **S3 credentials & bucket** — `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`,
+  `MLFLOW_S3_ENDPOINT_URL`, `AWS_DEFAULT_REGION` (env vars), and the bucket path in
+  `mlflow.mlflow.artifactsDestination`.
+
+> Note: Never commit real credentials. Pass secrets with `--set` at install time, or keep
+> your edited copy of the file out of version control.
+
+```sh
+helm install mlflow . -f values-user-example.yaml
 ```
 
-**It is highly recommended to use our other services (Pukki and Allas) in a production environment.**
+**Upgrade and uninstall as usual:**
 
-If, for some reasons, the Rahti node crashes while you have PostgreSQL and MinIO running, it can cause disruptions and corruption in your database.  
-Pukki also has automatic backups for your databases.
+```sh
+helm upgrade mlflow . -f values-user-example.yaml
+helm uninstall mlflow
+```
+
+## Authentication
+
+Set `authentication.enabled: true` (done in `values-user-example.yaml`). The chart then:
+
+- Creates Secret `mlflow-auth-config` holding `basic_auth.ini`.
+- Creates Secret `mlflow-auth-secret` holding the Flask session key.
+- Injects `--app-name=basic-auth`, the auth env vars, and the config volume mount
+  into the MLflow server.
+
+| Value | Description | Default |
+|-------|-------------|---------|
+| `authentication.enabled` | Enable basic auth | `false` |
+| `authentication.adminPassword` | Initial admin password (user `admin`) | — |
+| `authentication.database_uri` | Store for the auth DB | falls back to `mlflow.mlflow.backendStoreUri` |
+| `authentication.flaskSecretKey` | Flask signing key; leave empty to auto-generate and preserve across upgrades | `""` |
+
+> **Note on the auth flags:** `allowed_hosts` (server-side Host-header check) and
+> `cors_allowed_origins` (browser CORS) must match your public hostname or the web
+> UI will not load. They do **not** affect non-browser clients such as the Python
+> `mlflow` SDK. See `values-user-example.yaml` for the hostname wiring.
+
+## Configuration
+
+Common values (all under the `mlflow:` key, passed to the subchart):
+
+| Value | Description |
+|-------|-------------|
+| `mlflow.mlflow.backendStoreUri` | Tracking/metadata store URI |
+| `mlflow.storage.enabled` / `size` | PVC for SQLite + artifacts |
+| `mlflow.ingress.hosts[0].host` | Public hostname |
+| `mlflow.server.value_options` | MLflow server CLI flags (`--key=value`) |
+| `mlflow.garbageCollection` | Scheduled `mlflow gc` CronJob |
+
+See the vendored chart's `values.yaml` for the full list of subchart options.
