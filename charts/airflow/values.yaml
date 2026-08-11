@@ -6,8 +6,8 @@ rahti:
       insecureEdgeTerminationPolicy: Redirect
 
 airflow:
-  uid:
-  gid:
+  uid: null
+  gid: null
 
   ingress:
     apiServer:
@@ -62,6 +62,11 @@ airflow:
       limits:
         memory: 2Gi
         cpu: 500m
+    securityContexts:
+      pod:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     logGroomerSidecar:
       enabled: false
       resources:
@@ -73,6 +78,11 @@ airflow:
           cpu: 200m
     waitForMigrations:
       enabled: true
+      securityContexts:
+        container:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
     safeToEvict: true
 
   scheduler:
@@ -90,6 +100,11 @@ airflow:
       limits:
         memory: 1Gi
         cpu: 500m
+    securityContexts:
+      pod:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     logGroomerSidecar:
       enabled: false
       resources:
@@ -101,9 +116,15 @@ airflow:
           cpu: 200m
     waitForMigrations:
       enabled: true
+      securityContexts:
+        container:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
     safeToEvict: true
 
   createUserJob:
+    enabled: true
     resources:
       requests:
         memory: 256Mi
@@ -111,6 +132,11 @@ airflow:
       limits:
         memory: 512Mi
         cpu: 200m
+    securityContexts:
+      pod:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
   
   migrateDatabaseJob:
     enabled: true
@@ -121,6 +147,11 @@ airflow:
       limits:
         memory: 1Gi
         cpu: 500m
+    securityContexts:
+      pod:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
 
   apiServer:
     startupProbe:
@@ -131,6 +162,11 @@ airflow:
     replicas: 1
     waitForMigrations:
       enabled: true
+      securityContexts:
+        container:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
     resources:
       requests:
         memory: 2Gi
@@ -138,6 +174,11 @@ airflow:
       limits:
         memory: 2Gi
         cpu: 1000m
+    securityContexts:
+      pod:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
   
   webserver:
     enabled: true
@@ -155,7 +196,7 @@ airflow:
       enabled: true
       role: Admin
       username: admin
-      email: admin@example.com
+      email: :""
       firstName: admin
       lastName: user
       password: admin
@@ -180,6 +221,11 @@ airflow:
       limits:
         memory: 512Mi
         cpu: 200m
+    securityContexts:
+      pod:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     logGroomerSidecar:
       enabled: false
       resources:
@@ -191,6 +237,11 @@ airflow:
           cpu: 200m
     waitForMigrations:
       enabled: true
+      securityContexts:
+        container:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
   
   dagProcessor:
     enabled: true
@@ -207,6 +258,11 @@ airflow:
       limits:
         memory: 512Mi
         cpu: 200m
+    securityContexts:
+      pod:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
     logGroomerSidecar:
       enabled: false
       resources:
@@ -218,6 +274,11 @@ airflow:
           cpu: 200m
     waitForMigrations:
       enabled: true
+      securityContexts:
+        container:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
 
   flower:
     enabled: false
@@ -235,7 +296,7 @@ airflow:
       limits:
         memory: 512Mi
         cpu: 200m
-    uid:
+    uid: null
 
   redis:
     enabled: true
@@ -251,7 +312,12 @@ airflow:
       limits:
         memory: 512Mi
         cpu: 200m
-    uid:
+    securityContexts:
+      pod:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+    uid: null
 
   elasticsearch:
     enabled: false

@@ -1,5 +1,5 @@
 route:
-  host: ""
+  host:
   insecureEdgeTerminationPolicy: Redirect
   termination: edge
 
@@ -10,7 +10,7 @@ matomo:
 
   matomoUsername: user
   matomoPassword: ""
-  matomoEmail: user@example.com
+  matomoEmail: ""
 
   image:
     repository: bitnamilegacy/matomo
