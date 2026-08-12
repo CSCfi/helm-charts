@@ -57,7 +57,7 @@ You can change the default user for the Webserver by modifying the values `airfl
       enabled: true
       role: Admin
       username: admin
-      email: admin@example.com
+      email: ""
       firstName: admin
       lastName: user
       password: admin

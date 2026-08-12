@@ -225,9 +225,6 @@
                     },
                     "type": "object"
                 },
-                "gid": {
-                    "type": "null"
-                },
                 "ingress": {
                     "properties": {
                         "apiServer": {
@@ -404,9 +401,6 @@
                                 }
                             },
                             "type": "object"
-                        },
-                        "uid": {
-                            "type": "null"
                         }
                     },
                     "type": "object"
@@ -480,9 +474,6 @@
                                 }
                             },
                             "type": "object"
-                        },
-                        "uid": {
-                            "type": "null"
                         }
                     },
                     "type": "object"
@@ -704,9 +695,6 @@
                         }
                     },
                     "type": "object"
-                },
-                "uid": {
-                    "type": "null"
                 },
                 "webserver": {
                     "properties": {
