@@ -571,15 +571,20 @@
                 "buildconfig": {
                     "properties": {
                         "auth": {
-                            "properties": {
-                                "password": {
-                                    "type": "string"
-                                },
-                                "admin": {
-                                    "type": "string"
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "required": ["password"],
+                                "properties": {
+                                    "user": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "minLength": 1
+                                    }
                                 }
-                            },
-                            "type": "array"
+                            }
                         }
                     },
                     "type": "object"
