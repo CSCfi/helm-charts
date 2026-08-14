@@ -1,3 +1,8 @@
+{{- range .Values.rahti.buildconfig.auth }}
+{{- if not .password }}
+{{- fail "rahti.buildconfig.auth: password is required for all entries" }}
+{{- end }}
+{{- end }}
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
