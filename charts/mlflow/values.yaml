@@ -29,15 +29,15 @@ mlflow:
     schedule: "0 2 * * 0"
     olderThan: "30d"
 
-  ingress:
-    enabled: false
-
   server:
     flag_options:
       - disable-workspaces
       - serve-artifacts
     value_options:
       workers: 2
+
+  ingress:
+    enabled: false
 
   podSecurityContext:
     runAsUser: null

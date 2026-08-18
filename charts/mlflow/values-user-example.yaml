@@ -20,6 +20,18 @@ mlflow:
       cpu: 500m
       memory: 1Gi
 
+  mlflow:
+    artifactsDestination: "/mlflow/artifacts"
+    backendStoreUri: "sqlite:////mlflow/mlflow.db"
+
+  storage:
+    enabled: true
+
+  garbageCollection:
+    enabled: true
+    schedule: "0 2 * * 0"
+    olderThan: "30d"
+
   server:
     flag_options:
       - disable-workspaces
@@ -43,6 +55,19 @@ mlflow:
           - path: /
             pathType: Prefix
 
+  extraVolumes:
+    - name: auth-config
+      secret:
+        secretName: mlflow-auth-config
+  extraVolumeMounts:
+    - name: auth-config
+      mountPath: /etc/mlflow/auth
+      readOnly: true
+
+  podSecurityContext:
+    runAsUser: null
+    fsGroup: null
+
   env:
     - name: MLFLOW_FLASK_SERVER_SECRET_KEY
       valueFrom:
@@ -57,29 +82,3 @@ mlflow:
       value: "true"
     - name: DO_NOT_TRACK
       value: "true"
-
-
-  extraVolumes:
-    - name: auth-config
-      secret:
-        secretName: mlflow-auth-config
-  extraVolumeMounts:
-    - name: auth-config
-      mountPath: /etc/mlflow/auth
-      readOnly: true
-
-  mlflow:
-    artifactsDestination: "/mlflow/artifacts"
-    backendStoreUri: "sqlite:////mlflow/mlflow.db"
-
-  storage:
-    enabled: true
-
-  garbageCollection:
-    enabled: true
-    schedule: "0 2 * * 0"
-    olderThan: "30d"
-
-  podSecurityContext:
-    runAsUser: null
-    fsGroup: null
