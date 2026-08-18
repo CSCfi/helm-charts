@@ -40,8 +40,8 @@ mlflow:
       # Enables the basic-auth app in the MLflow server (--app-name=basic-auth).
       app_name: "basic-auth"
       workers: 2
-      allowed_hosts: "test123.apps.devel-4.okd4.csc.fi"
-      cors_allowed_origins: "https://test123.apps.devel-4.okd4.csc.fi"
+      allowed_hosts: "my-mlflow-app.<cluster-apps-domain>"
+      cors_allowed_origins: "https://my-mlflow-app.<cluster-apps-domain>"
 
   ingress:
     enabled: true
@@ -50,7 +50,7 @@ mlflow:
       route.openshift.io/termination: edge
     className: openshift-default
     hosts:
-      - host: test123.apps.devel-4.okd4.csc.fi
+      - host: my-mlflow-app.<cluster-apps-domain>
         paths:
           - path: /
             pathType: Prefix
