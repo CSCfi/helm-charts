@@ -5,15 +5,43 @@ authentication:
   adminPassword: I_am_a_long_password_123
   database_uri: ""
 
-# --- Auth wiring injected into the MLflow subchart ---
 mlflow:
+  image:
+    repository: ghcr.io/mlflow/mlflow
+    # Defaults to chart appVersion when empty
+    tag: "v3.14.0-full"
+    pullPolicy: IfNotPresent
+  
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+
   server:
+    flag_options:
+      - disable-workspaces
+      - serve-artifacts
     value_options:
       # Enables the basic-auth app in the MLflow server (--app-name=basic-auth).
       app_name: "basic-auth"
-  
-      allowed_hosts: "mlflow-my-namespace.apps.lumi-k.eu"
-      cors_allowed_origins: "http://mlflow-my-namespace.apps.lumi-k.eu"
+      workers: 2
+      allowed_hosts: "test123.apps.devel-4.okd4.csc.fi"
+      cors_allowed_origins: "https://test123.apps.devel-4.okd4.csc.fi"
+
+  ingress:
+    enabled: true
+    annotations:
+      route.openshift.io/insecureEdgeTerminationPolicy: redirect
+      route.openshift.io/termination: edge
+    className: openshift-default
+    hosts:
+      - host: test123.apps.devel-4.okd4.csc.fi
+        paths:
+          - path: /
+            pathType: Prefix
 
   env:
     - name: MLFLOW_FLASK_SERVER_SECRET_KEY
@@ -23,14 +51,13 @@ mlflow:
           key: secret-key
     - name: MLFLOW_AUTH_CONFIG_PATH
       value: /etc/mlflow/auth/basic_auth.ini
-    - name: MLFLOW_S3_ENDPOINT_URL
-      value: "https://lumidata.eu"
-    - name: AWS_DEFAULT_REGION
-      value: "lumi-prod"
-    - name: AWS_ACCESS_KEY_ID
-      value: "abc123"
-    - name: AWS_SECRET_ACCESS_KEY
-      value: "xxxx"
+    - name: MLFLOW_SERVER_ENABLE_JOB_EXECUTION
+      value: "false"
+    - name: MLFLOW_DISABLE_TELEMETRY
+      value: "true"
+    - name: DO_NOT_TRACK
+      value: "true"
+
 
   extraVolumes:
     - name: auth-config
@@ -42,12 +69,17 @@ mlflow:
       readOnly: true
 
   mlflow:
-    defaultArtifactRoot: "mlflow-artifacts:/"
-    artifactsDestination: "s3://my-bucket/mlflow"
+    artifactsDestination: "/mlflow/artifacts"
+    backendStoreUri: "sqlite:////mlflow/mlflow.db"
 
-  ingress:
-      hosts:
-        - host: mlflow-my-namespace.apps.lumi-k.eu
-          paths:
-            - path: /
-              pathType: Prefix
+  storage:
+    enabled: true
+
+  garbageCollection:
+    enabled: true
+    schedule: "0 2 * * 0"
+    olderThan: "30d"
+
+  podSecurityContext:
+    runAsUser: null
+    fsGroup: null

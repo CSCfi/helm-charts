@@ -8,6 +8,14 @@ mlflow:
     # Defaults to chart appVersion when empty
     tag: "v3.14.0-full"
     pullPolicy: IfNotPresent
+  
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
 
   mlflow:
     artifactsDestination: "/mlflow/artifacts"
@@ -22,14 +30,23 @@ mlflow:
     olderThan: "30d"
 
   ingress:
-    enabled: true
-    className: openshift-default
+    enabled: false
 
   server:
     flag_options:
-      - enable_workspaces
-      - serve_artifacts
+      - disable-workspaces
+      - serve-artifacts
+    value_options:
+      workers: 2
 
   podSecurityContext:
     runAsUser: null
     fsGroup: null
+
+  env:
+    - name: MLFLOW_SERVER_ENABLE_JOB_EXECUTION
+      value: "false"
+    - name: MLFLOW_DISABLE_TELEMETRY
+      value: "true"
+    - name: DO_NOT_TRACK
+      value: "true"
