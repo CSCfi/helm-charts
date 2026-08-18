@@ -2,16 +2,15 @@
 
 A thin wrapper around the community [MLflow](https://mlflow.org) chart (vendored
 under `charts/mlflow/`), adding an opt-in **basic authentication** layer for
-deployment on CSC's Rahti / LUMI-K platform.
+deployment on CSC's Rahti / LUMI-K platforms.
 
 ## Overview
 
-- Checkout the [maintenance section](#maintainer-notes)
 - This parent chart adds an `authentication` toggle. When enabled, it renders
   two Secrets (`templates/auth.yaml`).
 - Two value files:
-  - `values.yaml` — base profile, **no authentication** (the default).
-  - `values-user-example.yaml` — example overlay that enables auth, S3 artifact storage
+  - `values.yaml`: base profile, **no authentication** and **no ingress**.
+  - `values-user-example.yaml`: example overlay that enables auth, S3 artifact storage
     and the public hostname.
 
 ## Prerequisites
@@ -31,16 +30,16 @@ helm install mlflow .
 
 **Advanced Deployment:**
 
-The `values-user-example.yaml` overlay enables basic authentication, exposes MLflow
+The [`values-user-example.yaml`](./values-user-example.yaml) overlay enables basic authentication, exposes MLflow
 through an ingress, and stores artifacts in S3. Before installing, copy it and fill in
 the values that are **unique or secret to your deployment**:
 
-- **Public hostname** — the same host in `mlflow.ingress.hosts[0].host`,
+- **Public hostname**: the same host in `mlflow.ingress.hosts[0].host`,
   `mlflow.server.value_options.allowed_hosts`, and `cors_allowed_origins`
   (the last one with an `http://` / `https://` scheme).
-- **Admin password** — `authentication.adminPassword`.
-- **S3 credentials & bucket** — `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`,
-  `MLFLOW_S3_ENDPOINT_URL`, `AWS_DEFAULT_REGION` (env vars), and the bucket path in
+- **Admin password**: `authentication.adminPassword`.
+- **S3 credentials & bucket**: Add environment variables as `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`,
+  `MLFLOW_S3_ENDPOINT_URL`, `AWS_DEFAULT_REGION`, and the bucket path in
   `mlflow.mlflow.artifactsDestination`.
 
 > Note: Never commit real credentials. Pass secrets with `--set` at install time, or keep
@@ -90,29 +89,5 @@ Common values (all under the `mlflow:` key, passed to the subchart):
 | `mlflow.server.value_options` | MLflow server CLI flags (`--key=value`) |
 | `mlflow.garbageCollection` | Scheduled `mlflow gc` CronJob |
 
-See `charts/mlflow/values.yaml` (the vendored subchart) for the full list of
+See [`charts/mlflow/values.yaml`](./charts/mlflow/values.yaml) (the vendored subchart) for the full list of
 subchart options.
-
-## Maintainer Notes
-
-To move to a newer MLflow release, replace the vendored subchart with the
-`charts/` directory from the matching upstream tag and bump the versions:
-
-```sh
-VERSION=3.15.0
-curl -sL "https://github.com/mlflow/mlflow/archive/refs/tags/v${VERSION}.tar.gz" | \
-  tar xz "mlflow-${VERSION}/charts"
-rm -rf charts/mlflow
-mv "mlflow-${VERSION}/charts" charts/mlflow && rm -rf "mlflow-${VERSION}"
-```
-
-Then update:
-
-- `version` and `appVersion` in this chart's `Chart.yaml` to `${VERSION}`.
-- `dependencies[0].version` in `Chart.yaml` if upstream changed the subchart's
-  own `version` (it must match `charts/mlflow/Chart.yaml` exactly, or
-  `helm dependency build` fails).
-- `mlflow.image.tag` in `values.yaml` to `v${VERSION}-full`.
-
-Verify with `helm dependency build .`, `helm lint .` and `helm template .`
-before opening a PR.
