@@ -55,10 +55,13 @@ EOF
 
 > To use Allas, set the `MLFLOW_S3_ENDPOINT_URL` to `https://a3s.fi` and `AWS_DEFAULT_REGION` to `us`.
 
-Then use s3cmd tools to create a bucket. The following example bucket name is `mlflow`.
+Then use **s3cmd** tools to create a bucket. The following example bucket name is `mlflow`.
+
+After creating the bucket, you can use the following commands to set the domain, password, and object storage credentials by installing the chart.
 
 ```bash
-helm install mlflow . -f values-user-example.yaml --set mlflow.envFrom[0].secretRef.name=object-storage-creds --set mlflow.mlflow.artifactsDestination="s3://mlflow/artifacts"
+MLFLOW_DOMAIN=my-mlflow-namespace.<CLUSTER_DOMAIN>  # CLUSTER_DOMAIN for Rahti is .rahtiapp.fi and for LUMI-K is .apps.lumi-k.eu
+helm install mlflow . -f values-user-example.yaml --set authentication.adminPassword=<STRONGPASSWORD> --set mlflow.envFrom[0].secretRef.name=object-storage-creds --set mlflow.mlflow.artifactsDestination="s3://mlflow/artifacts" --set mlflow.server.value_options.allowed_hosts=$MLFLOW_DOMAIN --set mlflow.server.value_options.cors_allowed_origins=https://$MLFLOW_DOMAIN --set mlflow.ingress.hosts[0].host=$MLFLOW_DOMAIN
 ```
 
 > Note: Never commit real credentials. Pass secrets with `--set` at install time, or keep
