@@ -1,7 +1,8 @@
-route:
-  host:
-  insecureEdgeTerminationPolicy: Redirect
-  termination: edge
+global:
+  route:
+    host: "" # Edit this value
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
 
 matomo:
   global:
@@ -12,9 +13,18 @@ matomo:
   matomoPassword: ""
   matomoEmail: ""
 
+  customPostInitScripts:
+    add-trusted-host.sh: |
+      #!/bin/bash
+      CONFIG_FILE="/bitnami/matomo/config/config.ini.php"
+      if [ -f "$CONFIG_FILE" ] && ! grep -qF {{ .Values.global.route.host }} "$CONFIG_FILE"; then
+        sed -i '/^\[General\]/a trusted_hosts[] = "'{{ .Values.global.route.host }}'"' "$CONFIG_FILE"
+      fi
+
   image:
-    repository: bitnamilegacy/matomo
-    tag: 5.3.2-debian-12-r11
+    registry: satama.csc.fi
+    repository: library/matomo
+    tag: 5.11.2
     debug: false
 
   allowEmptyPassword: false
@@ -36,13 +46,14 @@ matomo:
   mariadb:
     enabled: true
     image:
-      repository: bitnamisecure/mariadb
-      tag: latest
+      registry: satama.csc.fi
+      repository: library/mariadb
+      tag: 13.0.1
     architecture: standalone
     auth:
       rootPassword: ""
-      database: bitnami_matomo
-      username: bn_matomo
+      database: matomo_db
+      username: matomo
       password: ""
     primary:
       persistence:
@@ -59,9 +70,9 @@ matomo:
   externalDatabase:
     host: ""
     port: 3306
-    user: bn_matomo
+    user: matomo
     password: ""
-    database: bitnami_matomo
+    database: matomo_db
     existingSecret: ""
 
   metrics:

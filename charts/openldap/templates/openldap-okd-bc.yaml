@@ -14,7 +14,7 @@ spec:
   runPolicy: Serial
   source:
     dockerfile: |-
-      FROM docker.io/bitnamilegacy/openldap:{{ .Values.build.image.tag }}
+      FROM satama.csc.fi/library/openldap:{{ .Values.build.image.tag }}
       # Not used, form of BuildConfig is used
 
       USER root

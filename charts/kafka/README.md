@@ -14,7 +14,7 @@ You can checkout the upstream [README.md](https://github.com/bitnami/charts/blob
 
     ```sh
     oc run kafka-client --restart='Never' \
-      --image docker.io/bitnami/kafka:4.0.0-debian-12-r8 --command -- \
+      --image satama.csc.fi/library/kafka:4.3.1 --command -- \
       sleep infinity
     ```
 

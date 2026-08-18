@@ -16,8 +16,9 @@ flink:
       allowInsecureImages: true
 
   image:
-    repository: bitnamilegacy/flink
-    tag: 2.1.0-debian-12-r1
+    registry: satama.csc.fi
+    repository: library/flink
+    tag: 2.3.0
   
   jobmanager:
     resources:
