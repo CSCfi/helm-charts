@@ -36,18 +36,34 @@ the values that are **unique or secret to your deployment**:
 
 - **Public hostname**: the same host in `mlflow.ingress.hosts[0].host`,
   `mlflow.server.value_options.allowed_hosts`, and `cors_allowed_origins`
-  (the last one with an `http://` / `https://` scheme).
+  (the last one with an `https://` scheme).
 - **Admin password**: `authentication.adminPassword`.
-- **S3 credentials & bucket**: Add environment variables as `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`,
-  `MLFLOW_S3_ENDPOINT_URL`, `AWS_DEFAULT_REGION`, and the bucket path in
-  `mlflow.mlflow.artifactsDestination`.
+
+
+### Use of an Object Storage
+
+It is possible to use CSC's Object storage services as the artifact store for MLflow. To do that, first, create credentials for Allas or LUMI-O service. Then, provide those as secret to your namespace in the following format.
+
+```bash
+oc create secret generic object-storage-creds --from-env-file=/dev/stdin <<'EOF'
+AWS_ACCESS_KEY_ID=xxxx
+AWS_SECRET_ACCESS_KEY=yyyy
+MLFLOW_S3_ENDPOINT_URL=https://lumidata.eu
+AWS_DEFAULT_REGION=lumi-prod
+EOF
+```
+
+> To use Allas, set the `MLFLOW_S3_ENDPOINT_URL` to `https://a3s.fi` and `AWS_DEFAULT_REGION` to `us`.
+
+Then use s3cmd tools to create a bucket. The following example bucket name is `mlflow`.
+
+```bash
+helm install mlflow . -f values-user-example.yaml --set mlflow.envFrom[0].secretRef.name=object-storage-creds --set mlflow.mlflow.artifactsDestination="s3://mlflow/artifacts"
+```
 
 > Note: Never commit real credentials. Pass secrets with `--set` at install time, or keep
 > your edited copy of the file out of version control.
 
-```sh
-helm install mlflow . -f values-user-example.yaml
-```
 
 **Upgrade and uninstall as usual:**
 
