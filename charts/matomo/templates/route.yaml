@@ -5,12 +5,12 @@ metadata:
     app: matomo
   name: matomo
 spec:
-  host: {{ .Values.route.host }}
+  host: {{ .Values.global.route.host }}
   port:
     targetPort: http
   tls:
-    insecureEdgeTerminationPolicy: {{ .Values.route.insecureEdgeTerminationPolicy }}
-    termination: {{ .Values.route.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.global.route.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.global.route.termination }}
   to:
     kind: Service
     name: {{ .Release.Name }}

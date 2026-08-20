@@ -1,4 +1,4 @@
-{{- if .Values.route.enabled }}
+{{- if .Values.global.route.enabled }}
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
@@ -11,7 +11,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" $annotations "context" $) | nindent 4 }}
   {{- end }}
 spec:
-  host: {{ .Values.route.host }}
+  host: {{ .Values.global.route.host }}
   to:
     kind: Service
     name: {{ printf "%s-master-svc" (include "common.names.fullname" .) }}
@@ -24,7 +24,7 @@ spec:
     targetPort: http
   {{- end }}
   tls:
-    termination: {{ .Values.route.tls.termination }}
-    insecureEdgeTerminationPolicy: {{ .Values.route.tls.insecureEdgeTerminationPolicy }}
+    termination: {{ .Values.global.route.tls.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.global.route.tls.insecureEdgeTerminationPolicy }}
   wildcardPolicy: None
 {{ end }}

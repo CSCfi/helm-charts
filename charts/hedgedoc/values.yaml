@@ -50,8 +50,9 @@ postgresql:
       allowInsecureImages: true
 
   image:
-    repository: bitnamisecure/postgresql
-    tag: latest
+    registry: satama.csc.fi
+    repository: library/postgresql
+    tag: 18.6.0
 
   auth:
     username: hedgedoc
