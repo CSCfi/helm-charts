@@ -39,10 +39,6 @@ mlflow:
   ingress:
     enabled: false
 
-  podSecurityContext:
-    runAsUser: null
-    fsGroup: null
-
   env:
     - name: MLFLOW_SERVER_ENABLE_JOB_EXECUTION
       value: "false"

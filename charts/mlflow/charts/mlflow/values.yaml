@@ -195,10 +195,11 @@ serviceMonitor:
   tlsConfig: {}
 
 # Pod-level security context applied to all containers in the pod.
+# runAsUser/fsGroup are intentionally not set so that OpenShift's restricted
+# SCC can assign IDs from the namespace's allowed range
+# see ../../maintainer.md).
 podSecurityContext:
   runAsNonRoot: true
-  runAsUser: 1000
-  fsGroup: 1000
   seccompProfile:
     type: RuntimeDefault
 

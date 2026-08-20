@@ -64,10 +64,6 @@ mlflow:
       mountPath: /etc/mlflow/auth
       readOnly: true
 
-  podSecurityContext:
-    runAsUser: null
-    fsGroup: null
-
   env:
     - name: MLFLOW_FLASK_SERVER_SECRET_KEY
       valueFrom:
