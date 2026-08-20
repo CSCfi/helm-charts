@@ -81,9 +81,9 @@ elasticsearch:
   metrics:
     enabled: false
     image:
-      registry: docker.io
-      repository: bitnamilegacy/elasticsearch-exporter
-      tag: 1.9.0-debian-12-r15
+      registry: satama.csc.fi
+      repository: library/elasticsearch-exporter
+      tag: 1.11.0
     resources: {}
 
   sysctlImage:
