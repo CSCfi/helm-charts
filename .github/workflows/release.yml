@@ -38,7 +38,8 @@ jobs:
           helm repo add grafana https://grafana-community.github.io/helm-charts &&
           helm repo add plausible https://imio.github.io/helm-charts &&
           helm repo add apache-airflow https://airflow.apache.org &&
-          helm repo add mattermost https://helm.mattermost.com
+          helm repo add mattermost https://helm.mattermost.com &&
+          helm repo add rocketchat https://rocketchat.github.io/helm-charts
           helm repo update
 
       - name: Helm Dependency
