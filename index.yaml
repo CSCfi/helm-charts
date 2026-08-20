@@ -1021,6 +1021,27 @@ entries:
     version: 1.12.0-dev
   elastic-kibana-helm:
   - apiVersion: v2
+    created: "2026-08-20T11:23:07.03638485Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: elasticsearch
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 22.1.x
+    description: Elastic and Kibana Helm Chart for Rahti platform Link to the repo
+      https://github.com/CSCfi/helm-charts
+    digest: d78d1caa38dddacbdef4ea38c21affe1e7c34ec6246b03c345ae5fed96288d07
+    icon: https://logowik.com/content/uploads/images/elastic-search2066.jpg
+    name: elastic-kibana-helm
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/elastic-kibana-helm-1.6.0/elastic-kibana-helm-1.6.0.tgz
+    version: 1.6.0
+  - apiVersion: v2
     created: "2026-07-24T12:43:12.379827338Z"
     dependencies:
     - name: common
@@ -1169,6 +1190,25 @@ entries:
     version: 1.0.0
   flink:
   - apiVersion: v2
+    created: "2026-08-20T11:23:07.202490407Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: flink
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 2.x.x
+    description: Apache Flink is a framework and distributed processing engine for
+      stateful computations over unbounded and bounded data streams.
+    digest: 03afec23e73084cae556b671b307a2c9b23775a46f6b910bd6e50ad18d8483fe
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/flink/img/flink-stack-220x234.png
+    name: flink
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/flink-2.1.0/flink-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v2
     created: "2026-02-19T14:21:38.927898488Z"
     dependencies:
     - name: common
@@ -1229,6 +1269,27 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-0.69.0/gitlab-runner-0.69.0.tgz
     version: 0.69.0
   hedgedoc:
+  - apiVersion: v2
+    created: "2026-08-20T11:23:07.383967883Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 15.x.x
+    description: Hedgedoc Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 983ee9cb3c8572c0ee4a79c645e7b9acff7c78b859bf0a9be25e647f2cc37535
+    icon: https://raw.githubusercontent.com/hedgedoc/hedgedoc/develop/frontend/src/app/icon.png
+    name: hedgedoc
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-1.6.0/hedgedoc-1.6.0.tgz
+    version: 1.6.0
   - apiVersion: v2
     created: "2026-02-19T14:21:39.182836009Z"
     dependencies:
@@ -1352,6 +1413,24 @@ entries:
     version: 1.1.2
   jupyterhub:
   - apiVersion: v2
+    created: "2026-08-20T11:23:07.562489328Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: jupyterhub
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 10.x.x
+    description: Multi-user Jupyter installation Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 59d5337737de2369ee038df96d0a029df7e9c847f39e2a0aecef5081d3f7194a
+    icon: https://hub.jupyter.org/helm-chart/images/hublogo.svg
+    name: jupyterhub
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/jupyterhub-2.6.0/jupyterhub-2.6.0.tgz
+    version: 2.6.0
+  - apiVersion: v2
     created: "2026-02-19T14:21:39.468317416Z"
     dependencies:
     - name: common
@@ -1437,6 +1516,26 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/kafka-1.0.0/kafka-1.0.0.tgz
     version: 1.0.0
   matomo:
+  - apiVersion: v2
+    created: "2026-08-20T11:23:07.748179205Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: matomo
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 10.x.x
+    description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 1687554c1cca0d33be2eaa7090701454636d2c2f9a1c72b8197b49368d47029b
+    icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4
+    name: matomo
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/matomo-2.6.0/matomo-2.6.0.tgz
+    version: 2.6.0
   - apiVersion: v2
     created: "2026-08-12T05:24:52.191052162Z"
     dependencies:
@@ -1642,6 +1741,28 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/mlflow-1.5.1/mlflow-1.5.1.tgz
     version: 1.5.1
   openldap:
+  - apiVersion: v2
+    appVersion: 1.5.0
+    created: "2026-08-20T11:23:07.89445609Z"
+    description: An open source implementation of the Lightweight Directory Access
+      Protocol, which is a vendor-neutral, industry standard application protocol
+      for accessing and maintaining distributed directory information services over
+      an Internet Protocol (IP) network.
+    digest: a8d9d2b79bd716fb456f4dea9d83e13d4d0b63e68c0c28db1ec54df357b1fd01
+    home: https://www.openldap.org/
+    icon: https://www.openldap.org/images/headers/LDAPworm.gif
+    keywords:
+    - docker
+    - openldap
+    maintainers:
+    - email: alvaro.gonzalez@csc.fi
+      name: Alvaro Gonzalez
+    name: openldap
+    sources:
+    - https://github.com/bitnami/containers/tree/main/bitnami/openldap
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/openldap-1.6.0/openldap-1.6.0.tgz
+    version: 1.6.0
   - apiVersion: v2
     appVersion: 1.5.0
     created: "2026-02-27T06:45:48.771505186Z"
@@ -2121,6 +2242,27 @@ entries:
     version: 1.2.1
   spark:
   - apiVersion: v2
+    created: "2026-08-20T11:23:08.059134508Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - alias: spark
+      name: spark
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 10.x.x
+    description: Apache Spark Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: c5e8f96ef4c6b153dc5d2837b6ba0c1af1fc4a707456897805ac9b3825815b5b
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/spark/img/spark-stack-220x234.png
+    name: spark
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/spark-2.6.0/spark-2.6.0.tgz
+    version: 2.6.0
+  - apiVersion: v2
     created: "2026-02-19T14:21:41.892465242Z"
     dependencies:
     - name: common
@@ -2183,4 +2325,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-08-20T10:24:37.807574595Z"
+generated: "2026-08-20T11:23:08.059318955Z"
