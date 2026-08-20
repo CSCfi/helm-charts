@@ -2059,6 +2059,21 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/rocketchat-6.4.4/rocketchat-6.4.4.tgz
     version: 6.4.4
+  - apiVersion: v2
+    created: "2026-08-20T10:24:37.497605745Z"
+    dependencies:
+    - name: rocketchat
+      repository: https://rocketchat.github.io/helm-charts
+      version: 7.0.x
+    description: Rcoket.Chat Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: c8f0fd8fd3c3e00652615c46b9b141587026117bdc517a14634e3d5bc8990d41
+    icon: https://raw.githubusercontent.com/RocketChat/Rocket.Chat.Artwork/master/Logos/icon.svg
+    name: rocketchat
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/rocketchat-2.0.0/rocketchat-2.0.0.tgz
+    version: 2.0.0
   rstudio:
   - apiVersion: v2
     created: "2026-02-19T14:21:41.639597252Z"
@@ -2168,4 +2183,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-08-14T09:05:04.984661533Z"
+generated: "2026-08-20T10:24:37.807574595Z"
