@@ -24,10 +24,21 @@ mlflow:
   storage:
     enabled: true
 
+
   garbageCollection:
-    enabled: true
+    enabled: false
     schedule: "0 2 * * 0"
     olderThan: "30d"
+
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: mlflow
+            topologyKey: kubernetes.io/hostname
 
   server:
     flag_options:

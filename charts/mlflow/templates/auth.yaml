@@ -17,7 +17,7 @@ stringData:
     default_permission = READ
     database_uri = {{ .Values.authentication.database_uri | default .Values.mlflow.mlflow.backendStoreUri }}
     admin_username = admin
-    admin_password = {{ .Values.authentication.adminPassword }}
+    admin_password = {{ required "authentication.adminPassword must be set when authentication.enabled=true" .Values.authentication.adminPassword }}
     authorization_function = mlflow.server.auth:authenticate_request_basic_auth
 
 ---

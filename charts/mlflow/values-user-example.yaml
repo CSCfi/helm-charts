@@ -27,6 +27,7 @@ mlflow:
   storage:
     enabled: true
 
+  # Enabling gc relies on the pod-affinity in values.yaml
   garbageCollection:
     enabled: true
     schedule: "0 2 * * 0"
