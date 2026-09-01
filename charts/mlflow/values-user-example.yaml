@@ -1,0 +1,81 @@
+authentication:
+  enabled: true
+
+  # CHANGE the admin credentials before deploying to any real environment.
+  adminPassword: I_am_a_long_password_123
+  database_uri: ""
+
+mlflow:
+  image:
+    repository: ghcr.io/mlflow/mlflow
+    # Defaults to chart appVersion when empty
+    tag: "v3.14.0-full"
+    pullPolicy: IfNotPresent
+  
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+
+  mlflow:
+    artifactsDestination: "/mlflow/artifacts"
+    backendStoreUri: "sqlite:////mlflow/mlflow.db"
+
+  storage:
+    enabled: true
+
+  # Enabling gc relies on the pod-affinity in values.yaml
+  garbageCollection:
+    enabled: true
+    schedule: "0 2 * * 0"
+    olderThan: "30d"
+
+  server:
+    flag_options:
+      - disable-workspaces
+      - serve-artifacts
+    value_options:
+      # Enables the basic-auth app in the MLflow server (--app-name=basic-auth).
+      app_name: "basic-auth"
+      workers: 2
+      allowed_hosts: "my-mlflow-app.<cluster-apps-domain>"
+      cors_allowed_origins: "https://my-mlflow-app.<cluster-apps-domain>"
+
+  ingress:
+    enabled: true
+    annotations:
+      route.openshift.io/insecureEdgeTerminationPolicy: redirect
+      route.openshift.io/termination: edge
+    className: openshift-default
+    hosts:
+      - host: my-mlflow-app.<cluster-apps-domain>
+        paths:
+          - path: /
+            pathType: Prefix
+
+  extraVolumes:
+    - name: auth-config
+      secret:
+        secretName: mlflow-auth-config
+  extraVolumeMounts:
+    - name: auth-config
+      mountPath: /etc/mlflow/auth
+      readOnly: true
+
+  env:
+    - name: MLFLOW_FLASK_SERVER_SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: mlflow-auth-secret
+          key: secret-key
+    - name: MLFLOW_AUTH_CONFIG_PATH
+      value: /etc/mlflow/auth/basic_auth.ini
+    - name: MLFLOW_SERVER_ENABLE_JOB_EXECUTION
+      value: "false"
+    - name: MLFLOW_DISABLE_TELEMETRY
+      value: "true"
+    - name: DO_NOT_TRACK
+      value: "true"
