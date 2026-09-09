@@ -1246,6 +1246,24 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/flink-2.0.0/flink-2.0.0.tgz
     version: 2.0.0
+  gitlab-runner:
+  - apiVersion: v2
+    created: "2026-09-09T05:05:43.150266188Z"
+    dependencies:
+    - name: gitlab-runner
+      repository: https://charts.gitlab.io
+      version: 0.92.x
+    description: GitLab Runner Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: a0b2bc6690f66437f68c44e807b2342db396ff6233a90372db17858d770e721d
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab-runner/img/gitlab-runner-stack-220x234.png
+    name: gitlab-runner
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab-runner
+    - https://gitlab.com/gitlab-org/gitlab-runner
+    - https://docs.gitlab.com/runner/
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-1.0.0/gitlab-runner-1.0.0.tgz
+    version: 1.0.0
   hedgedoc:
   - apiVersion: v2
     created: "2026-08-20T11:23:07.383967883Z"
@@ -2198,4 +2216,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-08-20T11:23:08.059318955Z"
+generated: "2026-09-09T05:05:43.150370403Z"
