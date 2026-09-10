@@ -2088,6 +2088,17 @@ entries:
     version: 2.0.0
   rstudio:
   - apiVersion: v2
+    created: "2026-09-10T09:05:46.943456665Z"
+    description: RStudio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: cdcfe6c3cd8a28c53803a260f5866ba354e0aef763f13579ca863027b8244f12
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/0e/Eo_circle_light-blue_white_letter-r.svg
+    name: rstudio
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/rstudio-1.2.5/rstudio-1.2.5.tgz
+    version: 1.2.5
+  - apiVersion: v2
     created: "2026-02-19T14:21:41.639597252Z"
     description: RStudio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
     digest: f3e2d47f642f3b173be02ece4f93bf632f7fcecc25c15be13112fb478ca174b2
@@ -2216,4 +2227,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-09-09T05:05:43.150370403Z"
+generated: "2026-09-10T09:05:46.943631321Z"
