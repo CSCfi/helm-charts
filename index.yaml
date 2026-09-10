@@ -1681,6 +1681,23 @@ entries:
     version: 1.2.1
   mlflow:
   - apiVersion: v2
+    appVersion: 3.14.0
+    created: "2026-09-10T12:41:28.859749014Z"
+    dependencies:
+    - name: mlflow
+      repository: ""
+      version: 0.1.0
+    description: MLflow Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: e58b9b1db634fec45d2d4b91797e9f54a5499a803609b9d7473eebc81ec2905b
+    icon: https://raw.githubusercontent.com/mlflow/mlflow/master/assets/logo.svg
+    name: mlflow
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    type: application
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/mlflow-3.14.0/mlflow-3.14.0.tgz
+    version: 3.14.0
+  - apiVersion: v2
     created: "2026-08-14T09:05:04.984327727Z"
     dependencies:
     - name: mlflow
@@ -2227,4 +2244,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-09-10T09:05:46.943631321Z"
+generated: "2026-09-10T12:41:28.859894516Z"
