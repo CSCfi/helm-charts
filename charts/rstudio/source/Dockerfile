@@ -10,6 +10,7 @@ RUN /rocker_scripts/install_shiny_server.sh
 
 RUN apt-get update && apt-get upgrade -y && apt-get install --no-install-recommends -y \
     apt-utils \
+    curl \
     libnss-wrapper \
     libnode72 \
     libbz2-dev \
@@ -51,6 +52,7 @@ RUN install2.r -e shiny rmarkdown shinythemes shinydashboard && \
     echo "R_LIBS=\${R_LIBS-'/home/rstudio-server/R/library'}" >/usr/local/lib/R/etc/Renviron.site
 
 COPY start.sh /usr/local/bin/start.sh
+COPY healthcheck.sh /usr/local/bin/healthcheck.sh
 
 RUN rstudio-server verify-installation
 

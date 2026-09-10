@@ -42,6 +42,20 @@ spec:
         securityContext:
         {{- .Values.rstudio.containerSecurityContext | toYaml | nindent 10 }}
         {{- end }}
+        readinessProbe:
+          exec:
+            command: ["/usr/local/bin/healthcheck.sh"]
+          initialDelaySeconds: 10   # rserver + shiny-server take a few seconds to bind
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 2       # pulled from Service endpoints quickly on a hang
+        livenessProbe:
+          exec:
+            command: ["/usr/local/bin/healthcheck.sh"]
+          initialDelaySeconds: 30   # give readiness a head start so we don't restart
+          periodSeconds: 20         # a pod that's merely still starting up
+          timeoutSeconds: 5
+          failureThreshold: 3       # ~1 minute of consistent failure before restart
       restartPolicy: Always
       {{- if .Values.openshift.enabled }}
       securityContext:
