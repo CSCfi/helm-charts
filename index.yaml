@@ -1511,6 +1511,27 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/kafka-1.0.0/kafka-1.0.0.tgz
     version: 1.0.0
+  matomo:
+  - apiVersion: v2
+    created: "2026-10-21T17:15:49.71970483Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: matomo
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 10.x.x
+    description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: c9941a52b592f5203319562e8f3742accfb284882042f50db043db7ae20852de
+    icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4
+    name: matomo
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/matomo-2.6.1/matomo-2.6.1.tgz
+    version: 2.6.1
   mattermost:
   - apiVersion: v2
     created: "2026-03-27T06:37:52.656526643Z"
@@ -2132,4 +2153,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-09-10T12:41:28.859894516Z"
+generated: "2026-10-21T17:15:49.719852777Z"
