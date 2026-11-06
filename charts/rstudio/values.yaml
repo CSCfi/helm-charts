@@ -13,8 +13,6 @@ rstudio:
       drop:
       - ALL
     runAsNonRoot: true
-    seccompProfile:
-      type: RuntimeDefault
   pvc:
     mountName: rstudio-server-home
     storageSize: 5Gi

@@ -200,8 +200,6 @@ serviceMonitor:
 # see ../../maintainer.md).
 podSecurityContext:
   runAsNonRoot: true
-  seccompProfile:
-    type: RuntimeDefault
 
 # Container-level security context applied to the mlflow container.
 securityContext:

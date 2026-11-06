@@ -46,7 +46,7 @@ helm upgrade --install rstudio . -f {custom_values.yaml}
 | Name                                           | Description                                                   | Value                             |
 | ---------------------------------------------- | ------------------------------------------------------------- | --------------------------------- |
 | `rstudio.podSecurityContext`                   | Set SecurityContext for the pod                               | `{}`                              |
-| `rstudio.containerSecurityContext`             | Set SecurityContext for the container                         | `allowPrivilegeEscalation: false`<br>`runAsUser:`<br>`runAsGroup:`<br>`capabilities:`<br>&nbsp;&nbsp;`drop:`<br>&nbsp;&nbsp;`- ALL`<br>`runAsNonRoot: true`<br>`seccompProfile:`<br>&nbsp;&nbsp;`type: RuntimeDefault` |
+| `rstudio.containerSecurityContext`             | Set SecurityContext for the container                         | `allowPrivilegeEscalation: false`<br>`runAsUser:`<br>`runAsGroup:`<br>`capabilities:`<br>&nbsp;&nbsp;`drop:`<br>&nbsp;&nbsp;`- ALL`<br>`runAsNonRoot: true` |
 | `rstudio.pvc.mountName`                        | Name for the `PersistentVolumeClaim`                          | `rstudio-server-home`             |
 | `rstudio.pvc.storageSize`                      | Storage size for the `PersistentVolumeClaim`                  | `5Gi`                             |
 | `rstudio.route.insecureEdgeTerminationPolicy`  | If `openshift.enabled`, will create a route                   | `Redirect`                        |
