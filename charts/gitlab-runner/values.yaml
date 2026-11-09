@@ -2,7 +2,7 @@ gitlab-runner:
   image:
     registry: registry.gitlab.com
     image: gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-ocp
-    tag: v17.3.1
+    tag: v19.5.1
 
   gitlabUrl: https://gitlab.ci.csc.fi/
 
@@ -62,6 +62,8 @@ gitlab-runner:
     config: |
       [[runners]]
         [runners.kubernetes]
-          helper_image = "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v17.3.1"
+          helper_image = "registry.gitlab.com/gitlab-org/ci-cd/gitlab-runner-ubi-images/gitlab-runner-helper-ocp:v19.5.1"
+          use_service_account_image_pull_secrets = true
+          service_account = "gitlab-runner"
           [runners.kubernetes.pod_security_context]
             run_as_non_root = true

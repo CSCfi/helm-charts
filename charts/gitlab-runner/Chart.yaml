@@ -2,7 +2,7 @@ apiVersion: v2
 name: gitlab-runner
 description: GitLab Runner Helm Chart for Rahti platform
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 1.0.0
+version: 1.0.1
 sources:
 - https://gitlab.com/gitlab-org/charts/gitlab-runner
 - https://gitlab.com/gitlab-org/gitlab-runner
@@ -11,4 +11,4 @@ icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab-runner/img/gitla
 dependencies:
   - name: gitlab-runner
     repository: https://charts.gitlab.io
-    version: 0.92.x
+    version: 0.92.5
