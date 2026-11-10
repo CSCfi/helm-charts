@@ -19,8 +19,8 @@ Then update:
   `helm dependency build` fails).
 - `mlflow.image.tag` in `values.yaml` to `v${VERSION}-full`.
 
-- In `charts/mlflow/values.yaml`, remove `runAsUser` and `fsGroup` from
-  `podSecurityContext` (keep `runAsNonRoot` and `seccompProfile`). Hardcoded
+- In `charts/mlflow/values.yaml`, remove `runAsUser`, `fsGroup`, and `seccompProfile` from
+  `podSecurityContext` (keep `runAsNonRoot`). Hardcoded
   IDs are rejected by OpenShift's `restricted-v2` on Rahti/LUMI-K, and a `null` override from the parent chart does not remove them on Helm 4.
 
 Verify with `helm dependency build .`, `helm lint .` and `helm template .`

@@ -65,8 +65,7 @@ airflow:
     securityContexts:
       pod:
         runAsNonRoot: true
-        seccompProfile:
-          type: RuntimeDefault
+
     logGroomerSidecar:
       enabled: false
       resources:
@@ -81,8 +80,7 @@ airflow:
       securityContexts:
         container:
           runAsNonRoot: true
-          seccompProfile:
-            type: RuntimeDefault
+
     safeToEvict: true
 
   scheduler:
@@ -103,8 +101,7 @@ airflow:
     securityContexts:
       pod:
         runAsNonRoot: true
-        seccompProfile:
-          type: RuntimeDefault
+
     logGroomerSidecar:
       enabled: false
       resources:
@@ -119,8 +116,7 @@ airflow:
       securityContexts:
         container:
           runAsNonRoot: true
-          seccompProfile:
-            type: RuntimeDefault
+
     safeToEvict: true
 
   createUserJob:
@@ -135,8 +131,7 @@ airflow:
     securityContexts:
       pod:
         runAsNonRoot: true
-        seccompProfile:
-          type: RuntimeDefault
+
   
   migrateDatabaseJob:
     enabled: true
@@ -150,8 +145,7 @@ airflow:
     securityContexts:
       pod:
         runAsNonRoot: true
-        seccompProfile:
-          type: RuntimeDefault
+
 
   apiServer:
     startupProbe:
@@ -165,8 +159,7 @@ airflow:
       securityContexts:
         container:
           runAsNonRoot: true
-          seccompProfile:
-            type: RuntimeDefault
+
     resources:
       requests:
         memory: 2Gi
@@ -177,8 +170,7 @@ airflow:
     securityContexts:
       pod:
         runAsNonRoot: true
-        seccompProfile:
-          type: RuntimeDefault
+
   
   webserver:
     enabled: true
@@ -224,8 +216,7 @@ airflow:
     securityContexts:
       pod:
         runAsNonRoot: true
-        seccompProfile:
-          type: RuntimeDefault
+
     logGroomerSidecar:
       enabled: false
       resources:
@@ -240,8 +231,7 @@ airflow:
       securityContexts:
         container:
           runAsNonRoot: true
-          seccompProfile:
-            type: RuntimeDefault
+
   
   dagProcessor:
     enabled: true
@@ -261,8 +251,7 @@ airflow:
     securityContexts:
       pod:
         runAsNonRoot: true
-        seccompProfile:
-          type: RuntimeDefault
+
     logGroomerSidecar:
       enabled: false
       resources:
@@ -277,8 +266,7 @@ airflow:
       securityContexts:
         container:
           runAsNonRoot: true
-          seccompProfile:
-            type: RuntimeDefault
+
 
   flower:
     enabled: false
@@ -315,8 +303,7 @@ airflow:
     securityContexts:
       pod:
         runAsNonRoot: true
-        seccompProfile:
-          type: RuntimeDefault
+
     uid: null
 
   elasticsearch:

@@ -22,8 +22,6 @@ hedgedoc:
       drop:
       - ALL
     runAsNonRoot: true
-    seccompProfile:
-      type: RuntimeDefault
   pvc:
     storageSpace: 5Gi
   random_pw_secret_key: database-password # Used by random_pw_reusable function in _helpers.tpl

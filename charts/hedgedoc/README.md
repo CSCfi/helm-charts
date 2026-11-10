@@ -56,7 +56,7 @@ By default, this Helm Chart won't deploy a postgreSQL database along Hedgedoc. I
 | `hedgedoc.domain`                      | Name of your domain where the Helm is deployed          | ""                                         |
 | `hedgedoc.image`                       | Name of the `hedgedoc` image                            | `quay.io/hedgedoc/hedgedoc:1.10.0          |
 | `hedgedoc.podSecurityContext`          | Set SecurityContext for the pod                         | `{}`                                       |
-| `hedgedoc.containerSecurityContext`    | Set SecurityContext for the container                   | `allowPrivilegeEscalation: false`<br>`runAsUser:`<br>`runAsGroup:`<br>`capabilities:`<br>&nbsp;&nbsp;`drop:`<br>&nbsp;&nbsp;`- ALL`<br>`runAsNonRoot: true`<br>`seccompProfile:`<br>&nbsp;&nbsp;`type: RuntimeDefault` |
+| `hedgedoc.containerSecurityContext`    | Set SecurityContext for the container                   | `allowPrivilegeEscalation: false`<br>`runAsUser:`<br>`runAsGroup:`<br>`capabilities:`<br>&nbsp;&nbsp;`drop:`<br>&nbsp;&nbsp;`- ALL`<br>`runAsNonRoot: true` |
 | `hedgedoc.pvc.storageSpace`            | Storage space for the PersistentVolume                  | `5Gi`                                      |
 | `hedgedoc.random_pw_secret_key`        | Key to store the password                               | `database-password`                        |
 | `hedgedoc.secret.databaseName`         | Name of the database. Linked to `postgresql.auth.database`. EDIT `postgresql.auth.database` instead of this value!                                    | `{{ tpl .Values.postgresql.auth.database . }}` |

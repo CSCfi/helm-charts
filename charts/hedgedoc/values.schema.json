@@ -30,14 +30,6 @@
                         },
                         "runAsUser": {
                             "type": "null"
-                        },
-                        "seccompProfile": {
-                            "properties": {
-                                "type": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
                         }
                     },
                     "type": "object"
