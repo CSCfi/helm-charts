@@ -27,6 +27,36 @@ Here is the link to the official documentation on how to install the Helm Chart:
 
 - https://docs.gitlab.com/runner/install/kubernetes/
 
+## Enable the serviceaccount to pull images
+
+When installing this Helm Chart, a service account named `gitlab-runner` is created. Here is the procedure to enable it to pull images from the internal image registry and/or from a private image registry (such as [CSC Satama](satama.csc.fi) or DockerHub)
+
+### From Rahti/Lumi-K internal image registry
+
+You must add the following rolebinding to your `gitlab-runner` serviceaccount after deploying the Helm Chart in your namespace:
+
+```sh
+oc -n <your-namespace> add-role-to-user \
+    system:image-puller \
+    system:serviceaccount:<your-namespace>:gitlab-runner \
+```
+
+### From private image registy
+
+```sh
+oc -n <your-namespace> create secret private-registry regcred \
+    --docker-server=registry.example.com \
+    --docker-username=myuser \
+    --docker-password=mypassword \
+```
+
+Then, patch the serviceaccount:
+
+```sh
+oc -n <your-namespace> patch serviceaccount gitlab-runner \
+    -p '{"imagePullSecrets": [{"name": "regcred"}]}'
+```
+
 ## Cleanup
 
 To delete all the resources, simply uninstall the Helm Chart:
