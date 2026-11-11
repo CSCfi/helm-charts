@@ -1248,6 +1248,23 @@ entries:
     version: 2.0.0
   gitlab-runner:
   - apiVersion: v2
+    created: "2026-11-11T13:40:53.377329029Z"
+    dependencies:
+    - name: gitlab-runner
+      repository: https://charts.gitlab.io
+      version: 0.92.5
+    description: GitLab Runner Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: ed318ede3a18263764f251db379766050835022e88b575b025e1e0461e37fbc0
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab-runner/img/gitlab-runner-stack-220x234.png
+    name: gitlab-runner
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab-runner
+    - https://gitlab.com/gitlab-org/gitlab-runner
+    - https://docs.gitlab.com/runner/
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-1.0.1/gitlab-runner-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     created: "2026-09-09T05:05:43.150266188Z"
     dependencies:
     - name: gitlab-runner
@@ -2153,4 +2170,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-10-21T17:15:49.719852777Z"
+generated: "2026-11-11T13:40:53.956455079Z"
