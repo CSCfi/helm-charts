@@ -29,7 +29,7 @@ Here is the link to the official documentation on how to install the Helm Chart:
 
 ## Enable the serviceaccount to pull images
 
-When installing this Helm Chart, a service account named `gitlab-runner` is created. Here is the procedure to enable it to pull images from the internal image registry and/or from a private image registry (such as [CSC Satama](satama.csc.fi) or DockerHub)
+When installing this Helm Chart, a service account named `gitlab-runner` is created. Here is the procedure to enable it to pull images from the internal image registry and/or from a private image registry (such as [CSC Satama](https://satama.csc.fi) or DockerHub)
 
 ### From Rahti/Lumi-K internal image registry
 
