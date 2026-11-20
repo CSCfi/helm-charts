@@ -2,6 +2,21 @@ apiVersion: v1
 entries:
   airflow:
   - apiVersion: v2
+    created: "2026-11-20T10:17:48.116780302Z"
+    dependencies:
+    - name: airflow
+      repository: https://airflow.apache.org
+      version: 1.22.x
+    description: Airflow Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 48dfb9f1de5fc095fba12d6b98230c532d248b1cb39e73849d6673a89ce36d53
+    icon: https://airflow.apache.org/images/airflow_dark_bg.png
+    name: airflow
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/airflow-2.0.2/airflow-2.0.2.tgz
+    version: 2.0.2
+  - apiVersion: v2
     created: "2026-08-12T05:24:52.053075635Z"
     dependencies:
     - name: airflow
@@ -1248,6 +1263,23 @@ entries:
     version: 2.0.0
   gitlab-runner:
   - apiVersion: v2
+    created: "2026-11-20T10:17:48.278970196Z"
+    dependencies:
+    - name: gitlab-runner
+      repository: https://charts.gitlab.io
+      version: 0.92.5
+    description: GitLab Runner Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 9f821fe8411b6545aa19bfa85698487f56df163d430d8c5a14b85935f27f3ef6
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab-runner/img/gitlab-runner-stack-220x234.png
+    name: gitlab-runner
+    sources:
+    - https://gitlab.com/gitlab-org/charts/gitlab-runner
+    - https://gitlab.com/gitlab-org/gitlab-runner
+    - https://docs.gitlab.com/runner/
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-1.0.2/gitlab-runner-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
     created: "2026-11-11T13:40:53.377329029Z"
     dependencies:
     - name: gitlab-runner
@@ -1282,6 +1314,27 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/gitlab-runner-1.0.0/gitlab-runner-1.0.0.tgz
     version: 1.0.0
   hedgedoc:
+  - apiVersion: v2
+    created: "2026-11-20T10:17:48.409520597Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 15.x.x
+    description: Hedgedoc Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: d409ea8669650feffb2de18fdb6704c3084d1738668e8ae2932fa0adb073e270
+    icon: https://raw.githubusercontent.com/hedgedoc/hedgedoc/develop/frontend/src/app/icon.png
+    name: hedgedoc
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/hedgedoc-1.6.1/hedgedoc-1.6.1.tgz
+    version: 1.6.1
   - apiVersion: v2
     created: "2026-08-20T11:23:07.383967883Z"
     dependencies:
@@ -1530,6 +1583,26 @@ entries:
     version: 1.0.0
   matomo:
   - apiVersion: v2
+    created: "2026-11-20T10:17:48.608958383Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - name: matomo
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 10.x.x
+    description: Matomo Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: f1fe94bf0aaf2283e3c79f514fde9675d5cb43ac515feee272dd91f790dceda5
+    icon: https://avatars.githubusercontent.com/u/698038?s=280&v=4
+    name: matomo
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/matomo-2.6.2/matomo-2.6.2.tgz
+    version: 2.6.2
+  - apiVersion: v2
     created: "2026-10-21T17:15:49.71970483Z"
     dependencies:
     - name: common
@@ -1606,6 +1679,23 @@ entries:
     - https://github.com/CSCfi/helm-charts/releases/download/minio-1.2.1/minio-1.2.1.tgz
     version: 1.2.1
   mlflow:
+  - apiVersion: v2
+    appVersion: 3.14.1
+    created: "2026-11-20T10:17:48.770537669Z"
+    dependencies:
+    - name: mlflow
+      repository: ""
+      version: 0.1.0
+    description: MLflow Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 20ad182facd57deac77129e6f2a17a40dbbeebeebf879e37f49247482ed36a19
+    icon: https://raw.githubusercontent.com/mlflow/mlflow/master/assets/logo.svg
+    name: mlflow
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    type: application
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/mlflow-3.14.1/mlflow-3.14.1.tgz
+    version: 3.14.1
   - apiVersion: v2
     appVersion: 3.14.0
     created: "2026-09-10T12:41:28.859749014Z"
@@ -2031,6 +2121,17 @@ entries:
     version: 2.0.0
   rstudio:
   - apiVersion: v2
+    created: "2026-11-20T10:17:48.926220412Z"
+    description: RStudio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
+    digest: 9effd7130f7763453899e0d17c73bc4d838206dcd7c2b755efbef316e8919711
+    icon: https://upload.wikimedia.org/wikipedia/commons/0/0e/Eo_circle_light-blue_white_letter-r.svg
+    name: rstudio
+    sources:
+    - https://github.com/CSCfi/helm-charts
+    urls:
+    - https://github.com/CSCfi/helm-charts/releases/download/rstudio-1.2.6/rstudio-1.2.6.tgz
+    version: 1.2.6
+  - apiVersion: v2
     created: "2026-09-10T09:05:46.943456665Z"
     description: RStudio Helm Chart for Rahti platform Link to the repo https://github.com/CSCfi/helm-charts
     digest: cdcfe6c3cd8a28c53803a260f5866ba354e0aef763f13579ca863027b8244f12
@@ -2170,4 +2271,4 @@ entries:
     urls:
     - https://github.com/CSCfi/helm-charts/releases/download/spark-2.0.0/spark-2.0.0.tgz
     version: 2.0.0
-generated: "2026-11-11T13:40:53.956455079Z"
+generated: "2026-11-20T10:17:48.926331383Z"
