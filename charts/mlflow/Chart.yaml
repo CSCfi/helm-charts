@@ -2,8 +2,8 @@ apiVersion: v2
 name: mlflow
 description: MLflow Helm Chart for Rahti platform
   Link to the repo https://github.com/CSCfi/helm-charts
-version: 3.14.0
-appVersion: "3.14.0"
+version: 3.14.1
+appVersion: "3.14.1"
 type: application
 sources:
 - https://github.com/CSCfi/helm-charts

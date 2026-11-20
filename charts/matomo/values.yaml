@@ -24,7 +24,7 @@ matomo:
   image:
     registry: satama.csc.fi
     repository: library/matomo
-    tag: 5.14.1
+    tag: 5.14.2
     debug: false
 
   allowEmptyPassword: false
